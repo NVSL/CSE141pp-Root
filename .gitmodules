@@ -1,6 +1,6 @@
 [submodule "CSE141pp-DJR"]
 	path = CSE141pp-DJR
-	url = ./CSE141pp-Config
+	url = ./CSE141pp-DJR
 [submodule "CSE141pp-LabPython"]
 	path = CSE141pp-LabPython
 	url = ./CSE141pp-LabPython/
