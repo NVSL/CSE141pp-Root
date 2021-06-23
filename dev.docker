@@ -1,0 +1,175 @@
+FROM cse142-core:latest
+ARG DEVEL_ROOT
+
+USER root
+
+WORKDIR /cse142L
+ADD ./ ./
+RUN bash setup.sh
+
+RUN mkdir -p /tmp/emulation
+
+ARG DOCKER_DEVEL_IMAGE
+ENV THIS_DOCKER_IMAGE ${DOCKER_DEVEL_IMAGE}
+
+ARG GOOGLE_APPLICATION_CREDENTIALS
+RUN mkdir -p /cse142L/secrets/
+ENV GOOGLE_APPLICATION_CREDENTIALS /cse142L/CSE141pp-Config/secrets/archlab-testing-credentials.json
+ENV GOOGLE_CLOUD_PROJECT ucsdgadgetron
+ENV CLOUD_MODE EMULATION
+ENV PUBSUB_TOPIC DJR_jobs2
+ENV PUBSUB_SUBSCRIPTION DJR_jobs_subscription
+ENV EMULATION_DIR /tmp/emulation
+ENV DJR_DOCKER_SCRATCH /tmp/djr_scratch
+
+
+
+# this checks out everything 
+#RUN  /bin/bash -c "(cd /course/; export INJECT_OAUTH_TOKEN=y; BUILDING_DOCKER_IMAGE=y ./${CONFIG_REPO_ROOT_NAME}/setup.sh;)"
+
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ${DIR_MONETA}; make)"
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab; make install-prereqs;)"
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab; make)"
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab/archcloud; pip3 install -e .)"
+
+#this is just to make sure we rebuild it on each version
+#COPY ${CONFIG_REPO_ROOT}/docker/VERSION /VERSION # redo
+
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../CSE141pp-SimpleCNN; git pull; make clean datasets test tidy)" # redoo
+
+#RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; git pull; . ./config.sh; cd ../cse141pp-archlab/archcloud; git pull; pip3 install -e .)"  # aaaaaaaaa
+#RUN sudo touch /test
+
+
+
+
+#RUN sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-9 90 --slave /usr/bin/g++ g++ /usr/bin/g++-9
+#RUN sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-8 80 --slave /usr/bin/g++ g++ /usr/bin/g++-8
+#RUN sudo update-alternatives --install /usr/bin/gcc gcc /usr/bin/gcc-7 70 --slave /usr/bin/g++ g++ /usr/bin/g++-7
+
+#RUN sudo apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386libboost-all-dev curl gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev
+
+#USER root
+#RUN sudo apt-get update -y
+#RUN sudo apt-get install -y vim less curl
+#RUN sudo apt-get install -y screen
+
+# ARG GITHUB_OAUTH_TOKEN
+# ARG CONFIG_REPO_ROOT_NAME
+# ARG MONETA_REPO_ROOT_NAME
+# ARG MONETA_PIN_REPO_ROOT_NAME
+
+# WORKDIR /home/jovyan/
+# RUN (cd /home/jovyan/; git clone https://github.com/NVSL/CSE141pp-Tool-Moneta.git)
+# RUN (ls -lrt;)
+# RUN (ls -lrt; mv work/ old/ ; mv CSE141pp-Tool-Moneta/ work/ ; ls -lrt work/setup/; cd work; make)
+# RUN (cd /; git clone https://${GITHUB_OAUTH_TOKEN}@github.com/NVSL/CSE141pp-Tool-Moneta-Pin.git /pin;)
+# ENV PIN_ROOT=/pin
+# ENV PYTHONPATH=/home/jovyan/work/moneta/moneta
+# RUN (cd /home/jovyan/work; pip install -r setup/requirements.txt;)
+
+# WORKDIR /home/jovyan/work
+
+# # Fix Windows to Linux file endings 
+# WORKDIR ${DIR_SETUP}
+# RUN sed -i 's/\r$//' bashrc_aliases 
+# RUN cat bashrc_aliases >> ~/.bashrc
+# RUN echo ".container{width: 90%;}" >> /opt/conda/lib/python3.7/site-packages/notebook/static/custom/custom.css
+
+# RUN python compile_pin.py
+
+# RUN (cp -f /pin/source/tools/ManualExamples/obj-intel64/trace_tool.so /home/jovyan/work/setup/ ; ls -lrt;)
+
+
+#COPY --from=jupyter-image /home/jovyan .
+
+# ARG CONFIG_REPO_ROOT_NAME 
+# ARG CONFIG_REPO_ROOT 
+# ARG IN_DEPLOYMENT 
+# ARG GIT_BRANCH 
+# ARG RUNLAB_STATUS_DIRECTORY 
+# ARG CLOUD_MODE
+
+# ENV CONFIG_REPO_ROOT_NAME=$CONFIG_REPO_ROOT_NAME
+# ENV CONFIG_REPO_ROOT=$CONFIG_REPO_ROOT
+# ENV IN_DEPLOYMENT=$IN_DEPLOYMENT
+# ENV CLOUD_MODE=$CLOUD_MODE
+
+#USER root
+
+# Install any needed packages specified in requirements.txt
+#RUN sudo apt install -y software-properties-common python3-apt
+#RUN sudo add-apt-repository ppa:deadsnakes/ppa
+#RUN add-apt-repository ppa:jonathonf/python-3.6
+#RUN sudo add-apt-repository ppa:ubuntu-toolchain-r/test
+#RUN sudo add-apt-repository ppa:longsleep/golang-backports
+#RUN sudo apt-get update --fix-missing
+
+#RUN sudo apt-get install -y kmod less git emacs gcc make g++ sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors gdb msr-tools libc6-dev-i386 vim libboost-all-dev curl gfortran clang graphviz  python3-pip python-dev build-essential docker.io man libjpeg-dev unzip libpng-dev cmake zip unzip golang-go groff pandoc libomp-dev
+
+#RUN sudo apt-get install -y libhdf5-dev
+#RUN sudo apt-get install -y screen
+
+#RUN sudo curl -L https://github.com/jgm/pandoc/releases/download/2.9.1.1/pandoc-2.9.1.1-1-amd64.deb -o pandoc.deb
+#RUN sudo dpkg -i pandoc.deb
+
+#RUN sudo apt-get install -y linux-headers-$(uname -r) linux-tools-$(uname -r) || true
+
+#RUN sudo apt upgrade --fix-missing
+#RUN sudo apt-get install -y linux-tools-4.4.0-134-generic
+#RUN grep "linux-tools.*generic" /var/lib/dpkg/status
+#RUN sudo apt-get install -y linux-tools-4.15.0-140-generic
+
+
+#RUN sudo apt-get install -y python3.6
+#RUN sudo apt-get install -y python3.5
+#RUN (ls -lrt /usr/local/bin; ls -lrt /usr/bin)
+#RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.5 1
+#RUN sudo update-alternatives --install /usr/bin/python3 python3 /usr/bin/python3.6 2
+
+#RUN sudo apt-get install -y python python-pip python-dev
+#RUN sudo apt-get install -y python3 python3-pip # this needs to happen before pip3 is used
+#RUN pip install --upgrade pip
+#RUN sudo pip install virtualenv
+#RUN sudo pip3 install --upgrade pip<
+#RUN sudo pip3 install --upgrade virtualenv
+
+# Testing tools
+#RUN git clone https://github.com/google/googletest.git
+#RUN /bin/bash -c "(ls -lrt; echo $CWD;)"
+#RUN (cd googletest;  cmake CMakeLists.txt; make)
+#ENV GOOGLE_TEST_ROOT /googletest
+#RUN /bin/bash -c "(ls -lrt; echo $CWD;)"
+#RUN (git clone https://github.com/bats-core/bats-core.git; cd bats-core; ./install.sh /usr/local)
+
+# # Our software
+# RUN sudo mkdir -p /course/
+# ARG GITHUB_OAUTH_TOKEN
+# ARG CONFIG_REPO_ROOT_NAME
+# #RUN /bin/bash -c echo ${CONFIG_REPO_ROOT_NAME}
+# RUN (cd /course; git clone -b $GIT_BRANCH https://${GITHUB_OAUTH_TOKEN}@github.com/NVSL/${CONFIG_REPO_ROOT_NAME}.git;) #redooooo
+
+# # this checks out everything 
+# RUN  /bin/bash -c "(cd /course/; export INJECT_OAUTH_TOKEN=y; BUILDING_DOCKER_IMAGE=y ./${CONFIG_REPO_ROOT_NAME}/setup.sh;)"
+
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ${DIR_MONETA}; make)"
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab; make install-prereqs;)"
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab; make)"
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../cse141pp-archlab/archcloud; pip3 install -e .)"
+
+# #this is just to make sure we rebuild it on each version
+# #COPY ${CONFIG_REPO_ROOT}/docker/VERSION /VERSION # redo
+
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; . ./config.sh; cd ../CSE141pp-SimpleCNN; git pull; make clean datasets test tidy)" # redoo
+
+# RUN  /bin/bash -c "(cd /course/${CONFIG_REPO_ROOT_NAME}; git pull; . ./config.sh; cd ../cse141pp-archlab/archcloud; git pull; pip3 install -e .)"  # aaaaaaaaa
+# RUN sudo touch /test
+
+# RUN mkdir -p $RUNLAB_STATUS_DIRECTORY
+# ENV IN_DOCKER yes
+# ARG DOCKER_DEVEL_IMAGE
+# ENV THIS_DOCKER_IMAGE ${DOCKER_DEVEL_IMAGE}
+# RUN mkdir /test_volume
+# RUN echo hello > /test_volume/hello
+# VOLUME ["/test_volume"] # redoo
+# WORKDIR /course
