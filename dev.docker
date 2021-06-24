@@ -1,11 +1,10 @@
-FROM cse142-core:latest
+FROM cse142l-core:latest
 ARG DEVEL_ROOT
 
 USER root
 
+
 WORKDIR /cse142L
-ADD ./ ./
-RUN bash setup.sh
 
 RUN mkdir -p /tmp/emulation
 

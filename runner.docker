@@ -1,0 +1,6 @@
+FROM cse142l-dev:latest
+USER root
+WORKDIR /cse142L
+ADD ./ ./
+RUN bash setup.sh
+

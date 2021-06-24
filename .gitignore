@@ -6,3 +6,5 @@
 .python_history
 .bash_history
 messages.pot
+
+*.image

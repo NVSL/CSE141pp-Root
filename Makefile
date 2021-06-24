@@ -1,8 +1,9 @@
 
 default: runner.image
 
+.PHONY: requirements.txt
 requirements.txt:
-	pip freeze  --all  --local  > $@
+	pip freeze  --all  --local --exclude-editable > $@
 
 BUILD_ARGS=--build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)
 

@@ -1,17 +1,25 @@
 FROM ubuntu
 USER root
-WORKDIR /
+# this turns off some stupid prompting from apt-get install
+ARG DEBIAN_FRONTEND=noninteractive
+
 RUN apt-get update --fix-missing
 RUN apt-get update
-RUN apt-get install -y software-properties-common
+RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git 
+RUN apt-get install -y gcc-8 g++-8  #gcc-7 g++-7 gcc-9 g++-9 # g++9 has a bug we hit.
 RUN add-apt-repository ppa:deadsnakes/ppa  # for python3.9
 RUN apt update
-RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl python3-pip build-essential docker.io man unzip zip cmake python-dev
-RUN apt-get install -y gcc-8 g++-8  #gcc-7 g++-7 gcc-9 g++-9 # g++9 has a bug we hit.
+
 RUN apt-get install -y python3.9 python3-pip
 RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 10
 RUN pip3 install --upgrade pip
+
+WORKDIR /tmp
+
+# we update this occasionally.  It makes rebuilding the derived images much faster.
+COPY requirements.txt ./ 
+RUN pip install -r requirements.txt
 
 
 ENV IN_DOCKER yes
