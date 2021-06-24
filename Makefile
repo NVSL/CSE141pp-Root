@@ -1,6 +1,8 @@
 
-default: core.image dev.image
-.PHONY: %.image
+default: runner.image
+
+requirements.txt:
+	pip freeze  --all  --local  > $@
 
 BUILD_ARGS=--build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)
 
@@ -16,12 +18,21 @@ BUILD_ARGS=--build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDE
 # --build-arg CLOUD_MODE=CLOUD
 
 IMAGE_VERSION=s21-dev
-DOCKER_DEVEL_IMAGE=cse142-dev:$(IMAGE_VERSION)
-DOCKER_CORE_IMAGE=cse142-core:$(IMAGE_VERSION)
+DOCKER_DEVEL_IMAGE=cse142l-dev:$(IMAGE_VERSION)
+DOCKER_CORE_IMAGE=cse142l-core:$(IMAGE_VERSION)
+DOCKER_RUNNER_IMAGE=cse142l-runner:$(IMAGE_VERSION)
 DEVEL_ROOT=$(PWD)
 
-dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
+djr-docker-job.image: IMAGE_NAME=djr-docker-job
+
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
+dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
+runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
+
+
+core.image: djr-docker-job.image
+dev.image: core.image
+runner.image : dev.image
 
 ifeq ($(FROM_SCRATCH),yes)
 BUILD_OPTS=--no-cache
@@ -33,3 +44,8 @@ endif
 #	endif
 	docker build --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg DEVEL_ROOT=$(DEVEL_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) .
 	docker tag $(IMAGE_NAME) $(subst $(IMAGE_VERSION),latest,$(IMAGE_NAME))
+	touch $@
+
+.PHONY: clean
+clean:
+	rm -rf *.image
