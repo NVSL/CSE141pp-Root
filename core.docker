@@ -3,6 +3,10 @@ USER root
 # this turns off some stupid prompting from apt-get install
 ARG DEBIAN_FRONTEND=noninteractive
 
+# Put us in the pacific time zone
+ENV TZ=America/Los_Angeles
+RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
+
 RUN apt-get update --fix-missing
 RUN apt-get update
 RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git 
@@ -17,7 +21,7 @@ RUN pip3 install --upgrade pip
 
 WORKDIR /tmp
 
-# we update this occasionally.  It makes rebuilding the derived images much faster.
+# Update requirements.txt occasionally with pip --freeze so most of the stuff we need is already load.  Therefore rebuilding the derived images much faster.
 COPY requirements.txt ./ 
 RUN pip install -r requirements.txt
 
