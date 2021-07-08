@@ -1,9 +1,17 @@
 
-default: runner.image
+default: runner.image dev.image core.image service.image
 
 .PHONY: requirements.txt
 requirements.txt:
 	pip freeze  --all  --local --exclude-editable > $@
+
+IMAGE_VERSION=s21-dev
+DOCKER_DEVEL_IMAGE=$(DOCKER_ORG)/cse142l-dev:$(IMAGE_VERSION)
+DOCKER_CORE_IMAGE=$(DOCKER_ORG)/cse142l-core:$(IMAGE_VERSION)
+DOCKER_RUNNER_IMAGE=$(DOCKER_ORG)/cse142l-runner:$(IMAGE_VERSION)
+DOCKER_SERVICE_IMAGE=$(DOCKER_ORG)/cse142l-service:$(IMAGE_VERSION)
+#DOCKER_USER_IMAGE=$(DOCKER_ORG)/cse142l-user:$(IMAGE_VERSION)
+DEVEL_ROOT=$(PWD)
 
 BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)\
@@ -11,15 +19,12 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg PUBSUB_TOPIC=$(PUBSUB_TOPIC)\
 --build-arg PUBSUB_SUBSCRIPTION=$(PUBSUB_SUBSCRIPTION)\
 --build-arg DJR_DOCKER_SCRATCH=$(DJR_DOCKER_SCRATCH)\
---build-arg THIS_DOCKER_IMAGE=$(IMAGE_NAME)
-
-IMAGE_VERSION=s21-dev
-DOCKER_DEVEL_IMAGE=cse142l-dev:$(IMAGE_VERSION)
-DOCKER_CORE_IMAGE=cse142l-core:$(IMAGE_VERSION)
-DOCKER_RUNNER_IMAGE=cse142l-runner:$(IMAGE_VERSION)
-DOCKER_SERVICE_IMAGE=cse142l-service:$(IMAGE_VERSION)
-DOCKER_USER_IMAGE=cse142l-user:$(IMAGE_VERSION)
-DEVEL_ROOT=$(PWD)
+--build-arg THIS_DOCKER_IMAGE=$(IMAGE_NAME)\
+--build-arg DOCKER_DEVEL_IMAGE=$(DOCKER_DEVEL_IMAGE)\
+--build-arg DOCKER_CORE_IMAGE=$(DOCKER_CORE_IMAGE)\
+--build-arg DOCKER_RUNNER_IMAGE=$(DOCKER_RUNNER_IMAGE)\
+--build-arg DOCKER_SERVICE_IMAGE=$(DOCKER_SERVICE_IMAGE)#\
+#--build-arg DOCKER_USER_IMAGE=$(DOCKER_USER_IMAGE)
 
 #djr-docker-job.image: IMAGE_NAME=djr-docker-job
 
@@ -27,25 +32,30 @@ core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
 dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)
-user.image: IMAGE_NAME=$(DOCKER_USER_IMAGE)
+#user.image: IMAGE_NAME=$(DOCKER_USER_IMAGE)
 
+IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE)
 
 core.image:
-dev.image: core.image
-service.image: dev.image
+dev.image: service.image
+service.image: core.image
 runner.image : dev.image
 
 ifeq ($(FROM_SCRATCH),yes)
 BUILD_OPTS=--no-cache
 endif
 
-%.image: %.docker
+%.image: dockerfiles/%.docker
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
 	docker build --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg DEVEL_ROOT=$(DEVEL_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) .
 	docker tag $(IMAGE_NAME) $(subst $(IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
+
+.PHONY: perms
+perms:
+	@echo $(DOCKER_ACCESS_TOKEN) | docker login  --password-stdin --username $(DOCKER_USERNAME) #>/dev/null 2>&1
 
 .PHONY: clean
 clean:
@@ -56,3 +66,7 @@ test:
 	$(MAKE) -C CSE141pp-DJR test
 	$(MAKE) -C CSE141pp-LabPython test
 
+.PHONY: push
+push: perms
+	for i in $(IMAGES); do docker push $$i; done
+	for i in $(subst :$(IMAGE_VERSION),:latest,$(IMAGES)); do docker push $$i; done

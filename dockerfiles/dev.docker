@@ -1,11 +1,17 @@
-FROM cse142l-core:latest
+ARG DOCKER_SERVICE_IMAGE
+FROM $DOCKER_SERVICE_IMAGE
 ARG DEVEL_ROOT
 
 USER root
 
 WORKDIR /cse142L
-
 RUN mkdir -p /tmp/emulation
+
+# In the service container, we used pip install -e (via setup.sh).  That
+# created links to stuff in the directory.  We delete it, then mount devel
+# directories here later.
+
+RUN rm -rf *
 
 ARG THIS_DOCKER_IMAGE
 ENV THIS_DOCKER_IMAGE ${THIS_DOCKER_IMAGE}
