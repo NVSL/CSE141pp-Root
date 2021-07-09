@@ -5,14 +5,6 @@ default: runner.image dev.image core.image service.image
 requirements.txt:
 	pip freeze  --all  --local --exclude-editable > $@
 
-IMAGE_VERSION=s21-dev
-DOCKER_DEVEL_IMAGE=$(DOCKER_ORG)/cse142l-dev:$(IMAGE_VERSION)
-DOCKER_CORE_IMAGE=$(DOCKER_ORG)/cse142l-core:$(IMAGE_VERSION)
-DOCKER_RUNNER_IMAGE=$(DOCKER_ORG)/cse142l-runner:$(IMAGE_VERSION)
-DOCKER_SERVICE_IMAGE=$(DOCKER_ORG)/cse142l-service:$(IMAGE_VERSION)
-#DOCKER_USER_IMAGE=$(DOCKER_ORG)/cse142l-user:$(IMAGE_VERSION)
-DEVEL_ROOT=$(PWD)
-
 BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)\
 --build-arg GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT)\
@@ -49,8 +41,8 @@ endif
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
-	docker build --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg DEVEL_ROOT=$(DEVEL_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) .
-	docker tag $(IMAGE_NAME) $(subst $(IMAGE_VERSION),latest,$(IMAGE_NAME))
+	docker build --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) .
+	docker tag $(IMAGE_NAME) $(subst $(DOCKER_IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
 
 .PHONY: perms
@@ -61,6 +53,12 @@ perms:
 clean:
 	rm -rf *.image
 
+
+.PHONY:bootstrap
+bootstrap:
+	python3 -m venv ./.bootstrap-venv
+	(. .bootstrap-venv/bin/activate; ./setup.sh)
+
 .PHONY:test
 test:
 	$(MAKE) -C CSE141pp-DJR test
@@ -69,4 +67,4 @@ test:
 .PHONY: push
 push: perms
 	for i in $(IMAGES); do docker push $$i; done
-	for i in $(subst :$(IMAGE_VERSION),:latest,$(IMAGES)); do docker push $$i; done
+	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker push $$i; done
