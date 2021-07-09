@@ -4,7 +4,7 @@ if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
 else
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
-   
+    export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
     export DOCKER_IMAGE_VERSION=s21-dev
     export DOCKER_CORE_IMAGE=$DOCKER_ORG/cse142l-core:$DOCKER_IMAGE_VERSION
     export DOCKER_DEVEL_IMAGE=$DOCKER_ORG/cse142l-dev:$DOCKER_IMAGE_VERSION
