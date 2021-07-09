@@ -1,0 +1,8 @@
+#!/usr/bin/env bash
+
+set -e
+
+cd $CSE142L_ROOT
+. .bootstrap-venv/bin/activate
+cse142 dev $@
+
