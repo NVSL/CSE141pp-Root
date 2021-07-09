@@ -16,4 +16,4 @@ cd CSE141pp-Root
 . env.sh
 cse142dev
 ```
-	
+

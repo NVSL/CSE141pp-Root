@@ -1,9 +1,9 @@
 [submodule "CSE141pp-Config"]
 	path = CSE141pp-Config
-	url = https://github.com/NVSL/CSE141pp-Config.git
+	url = git@github.com:NVSL/CSE141pp-Config.git
 [submodule "CSE141pp-DJR"]
 	path = CSE141pp-DJR
-	url = https://github.com/NVSL/CSE141pp-DJR.git
+	url = git@github.com:NVSL/CSE141pp-DJR.git
 [submodule "CSE141pp-LabPython"]
 	path = CSE141pp-LabPython
-	url = https://github.com/NVSL/CSE141pp-LabPython.git
+	url = git@github.com:NVSL/CSE141pp-LabPython.git
