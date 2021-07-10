@@ -62,16 +62,20 @@ git pull
 If you want to avoid typing your password you can do:
 
 ```
-eval `ssh-agent`
-ssh-add
+ssh-login
 ```
 
+To setup an ssh agent and add your key.
 
-# Creating Your Account
+
+## Creating Your Account
 
 `cse142dev` drops you into docker container that has priviliged, direct access
 to the resources above, so you don't have to authenticate to use it.  You will
 use this capability to create an account for yourself.
+
+The command lines to create and edit users are similar to those you'll use to
+manipulate other data (e.g., jobs and labs).
 
 First, check if everything is working (it may take a little bit.  Direct access
 is slow.):
@@ -89,7 +93,7 @@ This should give you list of current users.  It will at least include
 To create your user with admin priviliges:
 
 ```
-	cse142 --no-http user create --email <your @ucsd.edu or @eng.ucsd.edu email> --name "<your full name>" --role "ADMIN"
+cse142 --no-http user create --email <your @ucsd.edu or @eng.ucsd.edu email> --name "<your full name>" --role "ADMIN"
 ```
 
 Check to see that it worked:
@@ -98,7 +102,15 @@ Check to see that it worked:
 cse142 --no-http user list
 ```
 
-You should see yourself.
+You should see yourself:
+
+```
+3341f94e-254d-4f58-9f5c-a825e067f9a7	sjswanson@ucsd.edu	sjswanson@ucsd.edu	['USER']
+cb531cf4-2aa3-4e48-8629-3c36ffadee4c	swanson@eng.ucsd.edu	swanson@eng.ucsd.edu	['ADMIN']
+```
+
+The fields are a unique ID, email, full name, and roles (for permissions).
+
 
 Now you can authenticate:
 
@@ -108,4 +120,142 @@ cse142 login <your email>
 
 and follow the instructions to login via a web browser.
 
+You should then be able to 
 
+```
+cse142 user list
+```
+
+You should see yourself again.  If you made a mistake you can edit your account like so:
+
+```
+cse142 user update sjswanson@ucsd.edu --set name="Steven Swanson"
+```
+
+You can pass either your email or the id.
+
+To see more detail about yourself do:
+
+```
+cse142 user list -l sjswanson@ucsd.edu
+```
+
+and get
+
+```
+{   'created_time': datetime.datetime(2021, 7, 10, 5, 59, 55, 399152, tzinfo=tzutc()),
+    'email': 'sjswanson@ucsd.edu',
+    'id': '3341f94e-254d-4f58-9f5c-a825e067f9a7',
+    'last_authenticated_time': datetime.datetime(2021, 7, 10, 5, 59, 55, 399208, tzinfo=tzutc()),
+    'last_login_time': None,
+    'mood': '',
+    'name': 'Steven Swanson',
+    'namespace': 'default',
+    'project_id': 'cse142l-dev',
+    'roles': ['USER'],
+    'secret': ''}
+```
+
+
+
+
+## Running A Job
+
+The job runner is supposed to approximate the experience of running command
+line commands on a machine in the cloud.  Each job runs in a fresh docker
+container that is nearly identical to the one you are working in but has fewer
+permissions.
+
+Each job is run in the context of a "lab" that specifies which exact docker
+image to use.  You can see the list of available labs with 
+
+```
+cse142 lab list
+```
+
+You should get something like this:
+
+```
+76c847c9-c3fa-4d3b-b56e-87fcfab46edf	test	2021-07-06 10:35:00-07:00	stevenjswanson/cse142l-runner:latest	test2
+```
+
+The field  are id, short-name, due date, docker image, and full name.
+
+To run your first job:
+
+```
+mkdir t
+cd t
+cse142 job run --lab test "echo hello world"
+```
+
+You'll get something like this:
+
+```
+You are submitting a job for lab test2 (test).
+Creating job e4e80402-9217-4835-9e6b-56c7ef3b4977 0.00 0.00
+Ready for submission. 1.27 1.27
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'PUBLISHED'. 0.56 1.83
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'PUBLISHED'. 1.08 2.90
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'RUNNING'. 1.07 3.97
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'RUNNING'. 1.06 5.03
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'DONE_RUNNING'. 1.06 6.09
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'DONE_RUNNING'. 1.14 7.24
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'DONE_RUNNING'. 1.07 8.31
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 is in state 'DONE_RUNNING'. 1.06 9.36
+Job e4e80402-9217-4835-9e6b-56c7ef3b4977 succeeded. 1.06 10.42
+Writing results 1.00 11.42
+hello world
+Job Complete 0.55 11.97
+```
+
+It tracks the lifetime of the job.  The numbers at the end are the latency
+since last update and total execution time.  You can see the output of your job
+near the bottom.
+
+You can list the jobs you've run with
+
+```
+cse142 job list
+```
+
+## Life Cycle of a Job
+
+The steps in a jobs execution are as follows:
+
+1. Create the job object.
+2. Recursively zip up most of the files in the current directory. ("Ready for submission")
+3. Upload them to the cloud.
+4. Submit the job for execution (state "PUBLISHED")
+5. One of the job runners pulls it (state "SCHEDULED", not shown here)
+6. Runs it (state "RUNNING")
+7. Zips up modified files (state "DONE_RUNNING")
+8. Upload the modified files to the cloud.
+9. Finish up ("succeeded")
+
+All the while, your `cse142` command is polling the job for updates.  When it
+sees it's succeeded, it downloads the zip file of updated files, and unzips it.
+It also prints the `stdout`/`stderr` for the command ("hello world").
+
+We created the `t` directory above to prevent the job for sucking in all the
+source code in your directory.  It takes a long time (and might fail).
+
+## More Complicated Jobs
+
+Here are some things to try:
+
+Create `main.c`:
+
+```
+#include<stdio.h>
+
+void main() {
+	printf("Hello world\n");
+}
+```
+
+Then:
+
+```
+cse142 job run --lab test 'gcc main.c -o main; ./main'
+```

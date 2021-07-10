@@ -27,7 +27,13 @@ else
     export DOCKER_ACCESS_TOKEN=$(cat $SECRETS_DIRECTORY/docker_hub_token)
     export GOOGLE_CREDENTIALS_FILE=cse142l-dev-c775b40fa9bf.json
     export GOOGLE_APPLICATION_CREDENTIALS=$SECRETS_DIRECTORY/$GOOGLE_CREDENTIALS_FILE
-
+    export ALLOWED_GOOGLE_DOMAINS="ucsd.edu,eng.ucsd.edu"
+    
     PATH=$PATH:$CSE142L_ROOT/bin/
     
 fi
+
+function ssh-login () {
+    eval `ssh-agent`
+    ssh-add
+}
