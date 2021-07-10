@@ -11,6 +11,8 @@
 4. Give `--no-http` some sensible meaning.  It currently means different things for different cli tools.
 5. Maybe bring over environment variables
 * make it easy to hide some objects.
+* DJRDirectClient is never in "testing" mode
+
 
 # Done
 

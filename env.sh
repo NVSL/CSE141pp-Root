@@ -17,11 +17,11 @@ else
     export PUBSUB_TOPIC=CSE142L_testing1
     export PUBSUB_SUBSCRIPTION=DJR_jobs_subscription
     export EMULATION_DIR=/tmp/emulation
-    export CLOUD_MODE=EMULATION
+    export CLOUD_MODE=CLOUD
     export DJR_DOCKER_SCRATCH=/tmp/djr_scratch
     export GOOGLE_CLOUD_PROJECT=cse142l-dev
     
-    export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets/
+    export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets
     export PACKET_PROJECT_ID=1a5e2c60-b31f-49f9-85a1-84b4c5d8033f
     export DOCKER_USERNAME=stevenjswanson
     export DOCKER_ACCESS_TOKEN=$(cat $SECRETS_DIRECTORY/docker_hub_token)
