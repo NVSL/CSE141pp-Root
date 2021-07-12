@@ -259,3 +259,17 @@ Then:
 ```
 cse142 job run --lab test 'gcc main.c -o main; ./main'
 ```
+
+and then
+
+```
+gcc main.c -o main
+cse142 job run --lab test './main'
+```
+
+or even
+
+```
+cse142 job run --lab test 'gcc main.c -o main'
+./main
+	```
