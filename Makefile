@@ -41,7 +41,7 @@ endif
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
-	docker build --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) .
+	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) . 2>&1 | tee $*.log
 	docker tag $(IMAGE_NAME) $(subst $(DOCKER_IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
 
@@ -57,7 +57,7 @@ clean:
 .PHONY:bootstrap
 bootstrap:
 	python3 -m venv ./.bootstrap-venv
-	(. .bootstrap-venv/bin/activate; ./setup.sh)
+	(. .bootstrap-venv/bin/activate; cd CSE141pp-LabPython; make setup)
 
 .PHONY:test
 test:
@@ -68,3 +68,8 @@ test:
 push: perms
 	for i in $(IMAGES); do docker push $$i; done
 	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker push $$i; done
+
+.PHONY: setup
+setup:
+	for d in $(SUBDIRS); do (cd $d;  make setup );done
+

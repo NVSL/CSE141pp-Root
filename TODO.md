@@ -3,9 +3,14 @@
 
 *** Make the labs work
 
+* rate limit student submissions 
+* make jobs cancelable while running.
 * create /tmp/djr_scratch if it doesn't exist
 * large file upload
 * test job timeouts
+* Cancelation probably doesn't for non-admin accounts.
+   * make it a job store operation and make sure it's atomic
+   * Provide test-and-set primitive on http UPDATE so we can do an atomic state transition.
 * make --limit show the most recent jobs
 4. Figure out what to do with the secrets
 4. Fix app secret in REST/app.py

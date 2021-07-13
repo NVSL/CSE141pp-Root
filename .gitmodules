@@ -7,3 +7,27 @@
 [submodule "CSE141pp-LabPython"]
 	path = CSE141pp-LabPython
 	url = git@github.com:NVSL/CSE141pp-LabPython.git
+[submodule "CSE141pp-SimpleCNN"]
+	path = CSE141pp-LabPython
+	url = git@github.com:NVSL/CSE141pp-SimpleCNN.git
+[submodule "CSE141pp-Tool-Moneta"]
+	path = CSE141pp-LabPython
+	url = git@github.com:NVSL/CSE141pp-Tool-Moneta.git
+[submodule "cse141pp-archlab"]
+	path = cse141pp-archlab
+	url = git@github.com:NVSL/CSE141pp-LabPython.git
+[submodule "CSE141pp-Tool-Moneta-Pin"]
+	path = CSE141pp-Tool-Moneta-Pin
+	url = git@github.com:NVSL/CSE141pp-Tool-Moneta-Pin.git
+[submodule "labs/CSE141pp-Lab-Tiny"]
+	path = labs/CSE141pp-Lab-Tiny
+	url = git@github.com:NVSL/CSE141pp-Lab-Tiny.git
+[submodule "labs/CSE141pp-Lab-Test"]
+	path = labs/CSE141pp-Lab-Test
+	url = git@github.com:NVSL/CSE141pp-Lab-Test.git
+[submodule "labs/CSE141pp-Lab-Introduction-to-the-Development-Environment"]
+	path = labs/CSE141pp-Lab-Introduction-to-the-Development-Environment
+	url = git@github.com:NVSL/CSE141pp-Lab-Introduction-to-the-Development-Environment.git
+[submodule "labs/CSE141pp-Lab-FinalProject"]
+	path = labs/CSE141pp-Lab-FinalProject
+	url = git@github.com:NVSL/CSE141pp-Lab-FinalProject.git

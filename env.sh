@@ -1,7 +1,26 @@
+
+
 if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
     echo "Doesn't look like you are in the root directory.  Source this from the config directory."
     CONFIG_FAILED=yes
 else
+
+    function source-env () {
+	if ! [ -d $1 ]; then
+	    echo "$1 doesn't exist"
+	    return 1
+	fi
+	if [ -e $1/env.sh ]; then
+	    ! [ -v BE_QUIET ] && echo "sourcing $1/env.sh"
+	    pushd $1 > /dev/null
+	    . ./env.sh
+	    popd > /dev/null
+	fi
+	return 0
+    }
+
+
+    
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
@@ -28,6 +47,17 @@ else
     export GOOGLE_CREDENTIALS_FILE=cse142l-dev-c775b40fa9bf.json
     export GOOGLE_APPLICATION_CREDENTIALS=$SECRETS_DIRECTORY/$GOOGLE_CREDENTIALS_FILE
     export ALLOWED_GOOGLE_DOMAINS="ucsd.edu,eng.ucsd.edu"
+
+    export MONETA_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta
+    export CANELA_ROOT=$CSE142L_ROOT/CSE141pp-SimpleCNN
+
+    export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
+    
+    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
+
+    for d in $SUBDIRS; do 
+	source-env $d
+    done
     
     PATH=$PATH:$CSE142L_ROOT/bin/
     

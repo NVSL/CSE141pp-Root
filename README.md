@@ -51,9 +51,17 @@ the root of your `CSE141pp-Root` directory.  You can edit your files from
 outside the container using the editor of your choice and the changes will be
 reflected here.
 
-Your home directory is mounted at `/root`.
+The first time you do this, you should do
 
-If you have your .ssh keys setup, you should be able to do:
+```
+./setup.sh
+```
+
+To build everything from source.  AFter that, `cse142dev` should be all you need to get into docker and start working.
+
+## Setting up SSH
+
+Your home directory from outside docker is mounted at `/root`.  If you have your .ssh keys setup, you should be able to do:
 
 ```
 git pull

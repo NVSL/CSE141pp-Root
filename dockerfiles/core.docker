@@ -8,6 +8,8 @@ ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir /cse142L
 
+#####  Basics
+
 RUN apt-get update --fix-missing
 RUN apt-get update
 RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git 
@@ -15,11 +17,7 @@ RUN apt-get install -y gcc-8 g++-8  #gcc-7 g++-7 gcc-9 g++-9 # g++9 has a bug we
 RUN add-apt-repository ppa:deadsnakes/ppa  # for python3.9
 RUN apt update
 
-RUN apt-get install -y python3.9 python3-pip python3.9-venv
-RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
-RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 10
-RUN pip3 install --upgrade pip
-
+##### Google Cloud
 
 # https://cloud.google.com/sdk/docs/install#deb
 #RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" >> /etc/apt/sources.list.d/google-cloud-sdk.list
@@ -28,6 +26,24 @@ RUN pip3 install --upgrade pip
 #RUN apt-get update && sudo apt-get install google-cloud-sdk
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y
       
+
+##### Python
+
+RUN apt-get install -y python3.9 python3-pip python3.9-venv
+RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
+RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 10
+RUN pip3 install --upgrade pip
+
+##### Development
+
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev
+
+#RUN  apt-get install -y linux-headers-$(uname -r) linux-tools-$(uname -r) || true
+
+#RUN  apt-get install -y linux-tools-4.4.0-134-generic
+#RUN grep "linux-tools.*generic" /var/lib/dpkg/status
+#RUN  apt-get install -y linux-tools-4.15.0-140-generic
+
 
 
 WORKDIR /tmp

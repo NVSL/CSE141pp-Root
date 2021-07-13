@@ -50,7 +50,7 @@ pytest-cov==2.12.1
 pytest-timeout==1.4.2
 python-dateutil==2.8.1
 pytz==2021.1
-PyYAML==5.4.1
+PyYAML
 requests==2.25.1
 rsa==4.7.2
 setuptools==49.2.1

@@ -1,7 +1,10 @@
 #!/bin/bash
-for d in CSE141pp-DJR CSE141pp-LabPython ; do
+echo $SUBDIRS
+for d in $SUBDIRS; do
     (cd $d;
-     pip install -e .
+     if [ -e Makefile ] || [ -e makefile ]; then
+	 make setup
+     fi
     )
 done
-    
+
