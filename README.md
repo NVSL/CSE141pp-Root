@@ -66,8 +66,7 @@ The first time you do this, you should do
 ./setup.sh
 ```
 
-To build everything from source.  After that, `bin/cse142dev` from
-`CSE141pp-Root` should be all you need to get into docker and start working.
+To build everything from source.  It will take a little while.  After that, invoking `CSE141pp-Root/bin/cse142dev` should be all you need to get into docker and start working.
 
 
 ## Setting up SSH
@@ -159,7 +158,7 @@ To see more detail about yourself do:
 cse142 user list -l sjswanson@ucsd.edu
 ```
 
-and get
+and get something like
 
 ```
 {   'created_time': datetime.datetime(2021, 7, 10, 5, 59, 55, 399152, tzinfo=tzutc()),
@@ -302,4 +301,17 @@ the tools more pleasant to use, please let Professor Swanson know.
 
 ## Running a Lab 
 
+To get started working on lab, let's run the final project.  It's here:
+
+```
+cd labs/CSE141pp-Lab-FinalProject/
+```
+
+You should be able to run the lab locally with 
+
+```
+make
+```
+
+It'll take a little while.  Ignore the `make: runlab: Command not found`
 
