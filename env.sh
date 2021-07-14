@@ -22,6 +22,17 @@ else
 	    echo $i=$(eval  "echo \$$i")
 	done
     }
+    
+    function ssh-login () {
+	
+	if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
+	    eval `ssh-agent`
+	    ssh-add
+	else
+	    echo Agent is already running PID = $SSH_AGENT_PID
+	fi
+    }
+    
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
@@ -61,10 +72,9 @@ else
     done
     
     PATH=$PATH:$CSE142L_ROOT/bin/
-    
+
+    if [[ $- == *i* ]]; then
+	ssh-login
+    fi
 fi
 
-function ssh-login () {
-    eval `ssh-agent`
-    ssh-add
-}
