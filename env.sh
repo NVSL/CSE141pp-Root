@@ -16,7 +16,12 @@ else
 	fi
 	return 0
     }
-    
+
+    function whereami () {
+	for i in THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
+	    echo $i=$(eval  "echo \$$i")
+	done
+    }
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
