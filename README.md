@@ -26,6 +26,15 @@ either their @eng or @ucsd.edu email addresses.)
 
 To set up your development environment initially:
 
+First, I suggest you set up an ssh-agent to avoid typing your password over and over:
+
+```
+eval `ssh-agent`
+ssh-add
+```
+
+Then 
+
 ```
 git clone --recurse-submodules git@github.com:NVSL/CSE141pp-Root.git
 ```
