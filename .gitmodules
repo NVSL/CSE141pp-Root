@@ -31,3 +31,6 @@
 [submodule "labs/CSE141pp-Lab-FinalProject"]
 	path = labs/CSE141pp-Lab-FinalProject
 	url = git@github.com:NVSL/CSE141pp-Lab-FinalProject.git
+[submodule "labs/CSE141pp-Lab-Complex-DataStructures"]
+	path = labs/CSE141pp-Lab-Complex-DataStructures
+	url = git@github.com:NVSL/CSE141pp-Lab-Complex-DataStructures.git
