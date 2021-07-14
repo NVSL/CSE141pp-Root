@@ -8,6 +8,7 @@ ENV TZ=America/Los_Angeles
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir /cse142L
 
+
 #####  Basics
 
 RUN apt-get update --fix-missing; apt-get update
@@ -41,7 +42,9 @@ RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-esse
 #RUN grep "linux-tools.*generic" /var/lib/dpkg/status
 #RUN  apt-get install -y linux-tools-4.15.0-140-generic
 
+##### Slow-building libraries we use
 
+RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
 
 WORKDIR /tmp
 
@@ -51,4 +54,5 @@ RUN pip install -r requirements.txt
 
 
 ENV IN_DOCKER yes
+ARG THIS_DOCKER_IMAGE
 ENV THIS_DOCKER_IMAGE ${DOCKER_IMAGE}

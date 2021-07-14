@@ -36,9 +36,7 @@ runner.image : dev.image
 
 test.image:
 
-ifeq ($(FROM_SCRATCH),yes)
 BUILD_OPTS=--no-cache
-endif
 
 %.image: dockerfiles/%.docker
 #>ifneq ($(REBUILD),yes)

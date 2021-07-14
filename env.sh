@@ -9,7 +9,7 @@ else
 	    return 1
 	fi
 	if [ -e $1/env.sh ]; then
-	    [ "$BE_QUIET." = "." ] && echo "sourcing $1/env.sh"
+	    #[ "$BE_QUIET." = "." ] && echo "sourcing $1/env.sh"
 	    pushd $1 > /dev/null
 	    . ./env.sh
 	    popd > /dev/null
@@ -74,6 +74,7 @@ else
     PATH=$PATH:$CSE142L_ROOT/bin/
 
     if [[ $- == *i* ]]; then
+	whereami
 	ssh-login
     fi
 fi

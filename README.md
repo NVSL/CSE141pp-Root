@@ -315,3 +315,8 @@ make
 
 It'll take a little while.  Ignore the `make: runlab: Command not found`
 
+Then you can run it in the cloud with 
+
+```
+cse142 job run --lab test 'make clean; make'
+```

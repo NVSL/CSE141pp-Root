@@ -4,6 +4,8 @@
 *** Make the labs work
 
 
+* Add auto dependence tracking to make file.
+* reconsider how we implement solution checking.
 * rate limit student submissions 
 * make jobs cancelable while running.
 * create /tmp/djr_scratch if it doesn't exist
@@ -22,7 +24,7 @@
 5. Maybe bring over environment variables
 * make it easy to hide some objects.
 * DJRDirectClient is never in "testing" mode
-* silly names for jobs
+* silly names for jobs https://github.com/and3rson/codename/blob/master/codename/codename.py
 * ability to easily re-run a job.
 
 * cse142 lab update --set foo  gives unhandled exception
