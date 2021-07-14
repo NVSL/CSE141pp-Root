@@ -10,12 +10,9 @@ RUN mkdir /cse142L
 
 #####  Basics
 
-RUN apt-get update --fix-missing
-RUN apt-get update
-RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git 
-RUN apt-get install -y gcc-8 g++-8  #gcc-7 g++-7 gcc-9 g++-9 # g++9 has a bug we hit.
-RUN add-apt-repository ppa:deadsnakes/ppa  # for python3.9
-RUN apt update
+RUN apt-get update --fix-missing; apt-get update
+RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git gcc-8 g++-8 && apt-get clean -y #gcc-7 g++-7 gcc-9 g++-9 # g++9 has a bug we hit.
+RUN add-apt-repository ppa:deadsnakes/ppa; apt update  # for python3.9
 
 ##### Google Cloud
 
@@ -24,19 +21,19 @@ RUN apt update
 #RUN apt-get install apt-transport-https ca-certificates gnupg
 #RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
 #RUN apt-get update && sudo apt-get install google-cloud-sdk
-RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y
+RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y && apt-get clean -y
       
 
 ##### Python
 
-RUN apt-get install -y python3.9 python3-pip python3.9-venv
+RUN apt-get install -y python3.9 python3-pip python3.9-venv && apt-get clean -y
 RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
 RUN update-alternatives --install /usr/bin/python python /usr/bin/python3.9 10
 RUN pip3 install --upgrade pip
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev && apt-get clean -y
 
 #RUN  apt-get install -y linux-headers-$(uname -r) linux-tools-$(uname -r) || true
 

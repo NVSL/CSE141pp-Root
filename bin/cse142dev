@@ -2,7 +2,15 @@
 
 set -e
 
+if [ "$CSE142L_ROOT." = "." ]; then
+    MY_PATH="`dirname \"$0\"`"              # relative
+    MY_PATH="`( cd \"$MY_PATH\" && pwd )`"
+    CSE142L_ROOT=$MY_PATH/..
+    echo $CSE142L_ROOT
+fi
+
 cd $CSE142L_ROOT
 . .bootstrap-venv/bin/activate
+. env.sh
 cse142 dev $@
 

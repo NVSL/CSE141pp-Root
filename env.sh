@@ -1,5 +1,3 @@
-
-
 if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
     echo "Doesn't look like you are in the root directory.  Source this from the config directory."
     CONFIG_FAILED=yes
@@ -11,15 +9,13 @@ else
 	    return 1
 	fi
 	if [ -e $1/env.sh ]; then
-	    ! [ -v BE_QUIET ] && echo "sourcing $1/env.sh"
+	    [ "$BE_QUIET." = "." ] && echo "sourcing $1/env.sh"
 	    pushd $1 > /dev/null
 	    . ./env.sh
 	    popd > /dev/null
 	fi
 	return 0
     }
-
-
     
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson

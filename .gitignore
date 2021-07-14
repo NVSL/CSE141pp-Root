@@ -9,3 +9,6 @@ messages.pot
 
 *.image
 .bootstrap-venv
+*.log
+t
+old

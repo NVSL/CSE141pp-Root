@@ -3,6 +3,7 @@
 
 *** Make the labs work
 
+
 * rate limit student submissions 
 * make jobs cancelable while running.
 * create /tmp/djr_scratch if it doesn't exist
@@ -22,6 +23,13 @@
 * make it easy to hide some objects.
 * DJRDirectClient is never in "testing" mode
 * silly names for jobs
+* ability to easily re-run a job.
+
+* cse142 lab update --set foo  gives unhandled exception
+
+* Need to move field update permissions into Job subclasses.  Had to have a DockerJob field to the JobAPI.
+* Redesign BaseObject so we declare fields allowing us to set type, default, and marshalling functions.  maybe uniqueness constraints too.
+
 
 # Done
 

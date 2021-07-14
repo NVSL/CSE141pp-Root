@@ -8,14 +8,14 @@
 	path = CSE141pp-LabPython
 	url = git@github.com:NVSL/CSE141pp-LabPython.git
 [submodule "CSE141pp-SimpleCNN"]
-	path = CSE141pp-LabPython
+	path = CSE141pp-SimpleCNN
 	url = git@github.com:NVSL/CSE141pp-SimpleCNN.git
 [submodule "CSE141pp-Tool-Moneta"]
-	path = CSE141pp-LabPython
+	path = CSE141pp-Tool-Moneta
 	url = git@github.com:NVSL/CSE141pp-Tool-Moneta.git
 [submodule "cse141pp-archlab"]
 	path = cse141pp-archlab
-	url = git@github.com:NVSL/CSE141pp-LabPython.git
+	url = git@github.com:NVSL/cse141pp-archlab.git
 [submodule "CSE141pp-Tool-Moneta-Pin"]
 	path = CSE141pp-Tool-Moneta-Pin
 	url = git@github.com:NVSL/CSE141pp-Tool-Moneta-Pin.git

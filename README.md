@@ -57,7 +57,9 @@ The first time you do this, you should do
 ./setup.sh
 ```
 
-To build everything from source.  AFter that, `cse142dev` should be all you need to get into docker and start working.
+To build everything from source.  After that, `bin/cse142dev` from
+`CSE141pp-Root` should be all you need to get into docker and start working.
+
 
 ## Setting up SSH
 
@@ -280,4 +282,15 @@ or even
 ```
 cse142 job run --lab test 'gcc main.c -o main'
 ./main
-	```
+```
+
+## Dogfooding
+
+We would like the course tools to be as user-friendly as possible.  So, please
+use them for developing the labs.  IF you have feedback about how we can make
+the tools more pleasant to use, please let Professor Swanson know.
+
+
+## Running a Lab 
+
+

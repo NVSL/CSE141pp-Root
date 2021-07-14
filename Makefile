@@ -24,6 +24,7 @@ core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
 dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)
+test.image: IMAGE_NAME=test-image
 #user.image: IMAGE_NAME=$(DOCKER_USER_IMAGE)
 
 IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE)
@@ -32,6 +33,8 @@ core.image:
 dev.image: service.image
 service.image: core.image
 runner.image : dev.image
+
+test.image:
 
 ifeq ($(FROM_SCRATCH),yes)
 BUILD_OPTS=--no-cache

@@ -1,0 +1,7 @@
+#!/bin/bash
+
+pushd .
+for i in $SUBDIRS; do
+    echo ========= $i ==========
+    (cd $i; git "$@")
+done    
