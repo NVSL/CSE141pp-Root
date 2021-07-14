@@ -60,7 +60,7 @@ clean:
 .PHONY:bootstrap
 bootstrap:
 	python3 -m venv ./.bootstrap-venv
-	(. .bootstrap-venv/bin/activate; cd CSE141pp-LabPython; make setup)
+	(. .bootstrap-venv/bin/activate; cd CSE141pp-LabPython; make setup; cd CSE141pp-DJR; make setup)
 
 .PHONY:test
 test:
