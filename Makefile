@@ -70,6 +70,11 @@ push: perms
 	for i in $(IMAGES); do docker push $$i; done
 	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker push $$i; done
 
+.PHONY: pull
+pull: perms
+	for i in $(IMAGES); do docker pull $$i; done
+	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
+
 .PHONY: setup
 setup:
 	for d in $(SUBDIRS); do (cd $d;  make setup );done

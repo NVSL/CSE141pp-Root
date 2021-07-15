@@ -47,6 +47,31 @@ cd CSE141pp-Root
 make bootstrap
 ```
 
+You'll need to build the docker images locally:
+
+```
+cd CSE141pp-Root
+make
+```
+
+This will run for a while.  You can do then do
+
+```
+docker images
+```
+
+and see them:
+
+```
+REPOSITORY                       TAG             IMAGE ID       CREATED         SIZE
+stevenjswanson/cse142l-runner    latest          e3cb52c116d7   2 hours ago     12.2GB
+stevenjswanson/cse142l-runner    s21-dev         e3cb52c116d7   2 hours ago     12.2GB
+stevenjswanson/cse142l-dev       latest          c90dcd27a70e   2 hours ago     7.84GB
+stevenjswanson/cse142l-dev       s21-dev         c90dcd27a70e   2 hours ago     7.84GB
+stevenjswanson/cse142l-service   latest          d28b327b0ada   2 hours ago     7.84GB
+stevenjswanson/cse142l-service   s21-dev         d28b327b0ada   2 hours ago     7.84GB
+```
+
 Then, to get yourself into a development docker container:
 
 ```
@@ -60,6 +85,9 @@ the root of your `CSE141pp-Root` directory.  You can edit your files from
 outside the container using the editor of your choice and the changes will be
 reflected here.
 
+`cse142dev` automaticaly creates an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If `cse142dev` asks for a password, this is why.
+
+
 The first time you do this, you should do
 
 ```
@@ -68,29 +96,18 @@ The first time you do this, you should do
 
 To build everything from source.  It will take a little while.  After that, invoking `CSE141pp-Root/bin/cse142dev` should be all you need to get into docker and start working.
 
-
-## Setting up SSH
-
-Your home directory from outside docker is mounted at `/root`.  If you have your .ssh keys setup, you should be able to do:
+From inside the docker container you can see information about the docker container with 
 
 ```
-git pull
+whereami
 ```
-
-If you want to avoid typing your password you can do:
-
-```
-ssh-login
-```
-
-To setup an ssh agent and add your key.
-
 
 ## Creating Your Account
 
 `cse142dev` drops you into docker container that has priviliged, direct access
 to the resources above, so you don't have to authenticate to use it.  You will
-use this capability to create an account for yourself.
+use this capability to create an account for yourself.  From then on, you'll
+authenticate and use it as a student would.
 
 The command lines to create and edit users are similar to those you'll use to
 manipulate other data (e.g., jobs and labs).
@@ -237,6 +254,20 @@ You can list the jobs you've run with
 cse142 job list
 ```
 
+As an admin, you'll see all the jobs run on the system.  It'll be a lot.
+
+You can list the last job you ran with 
+
+```
+cse142 job list LAST
+```
+
+or 
+
+```
+cse142 job list -l LAST
+```
+
 ## Life Cycle of a Job
 
 The steps in a jobs execution are as follows:
@@ -292,11 +323,19 @@ cse142 job run --lab test 'gcc main.c -o main'
 ./main
 ```
 
-## Dogfooding
+## Dogfooding and Testing
 
 We would like the course tools to be as user-friendly as possible.  So, please
 use them for developing the labs.  IF you have feedback about how we can make
 the tools more pleasant to use, please let Professor Swanson know.
+
+In particular, `cse142` should meeting the following requirements
+
+1.  The user should never get at python stack dump.  If you get one, it's bug
+    please send me the command line and the output.
+2.  You shouldn't see "Command failed due to uncaught exception" errors either.  They are a catchall to avoid stack dumps.   If you can 
+2.  The error messages make sense.  If you find one misleading or confusing, let me know.
+3.  The use of color should be consistent.
 
 
 ## Running a Lab 
@@ -318,5 +357,5 @@ It'll take a little while.  Ignore the `make: runlab: Command not found`
 Then you can run it in the cloud with 
 
 ```
-cse142 job run --lab test 'make clean; make'
-```
+cse142 job run --lab test 'make clean; make```
+
