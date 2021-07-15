@@ -67,3 +67,17 @@
 1. Google login.
 3. Merge deploy directory into config directory
 3. Implement 'djr user *' functionality to create/delete/etc. users
+
+# Benchmark Algorithm
+
+git clone starter_repo
+make -m starter_repo/Makefile command
+
+
+
+git clone starter_repo
+spec= starter_repo/lab.json
+cp spec['input_files'] -> starter_repo
+cd starter_repo
+run spec['commands'][command]
+cp spec['output_files'] ../
