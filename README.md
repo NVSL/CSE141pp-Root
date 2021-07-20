@@ -89,7 +89,7 @@ reflected here.
 `cse142dev` automaticaly creates an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If `cse142dev` asks for a password, this is why.
 
 
-The first time you do this, you should do
+The first time you do this, you should do (after getting inside docker with `cse142dev`)
 
 ```
 ./setup.sh

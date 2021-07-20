@@ -75,7 +75,7 @@ pull: perms
 	for i in $(IMAGES); do docker pull $$i; done
 	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
 
-.PHONY: setup
-setup:
-	for d in $(SUBDIRS); do (cd $d;  make setup );done
+.PHONY: manifest.txt
+manifest.txt:
+	for d in $(SUBDIRS); do (cd $$d;  echo =========== $$d ==============; git rev-parse HEAD; git status; git diff);done > $@
 

@@ -3,6 +3,7 @@ FROM $DOCKER_CORE_IMAGE
 USER root
 WORKDIR /cse142L
 ADD ./ ./
+RUN make manifest.txt
 RUN bash -c '. env.sh; bash ./setup.sh'
 ARG THIS_DOCKER_IMAGE
 ENV THIS_DOCKER_IMAGE ${THIS_DOCKER_IMAGE}
