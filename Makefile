@@ -77,5 +77,5 @@ pull: perms
 
 .PHONY: manifest.txt
 manifest.txt:
-	for d in $(SUBDIRS); do (cd $$d;  echo =========== $$d ==============; git rev-parse HEAD; git status; git diff);done > $@
+	for d in . $(SUBDIRS); do (cd $$d;  echo =========== $$d ==============; git rev-parse HEAD; git status; git diff);done > $@
 
