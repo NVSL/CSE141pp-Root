@@ -42,7 +42,7 @@ BUILD_OPTS=--no-cache
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
-	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) . 2>&1 | tee $*.log
+	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) --build-arg THIS_DOCKER_IMAGE_UUID=$$(uuidgen) . 2>&1 | tee $*.log
 	docker tag $(IMAGE_NAME) $(subst $(DOCKER_IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
 
