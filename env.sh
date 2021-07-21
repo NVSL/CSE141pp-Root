@@ -58,6 +58,7 @@ else
     export DOCKER_ACCESS_TOKEN=$(cat $SECRETS_DIRECTORY/docker_hub_token)
     export GOOGLE_CREDENTIALS_FILE=cse142l-dev-c775b40fa9bf.json
     export GOOGLE_APPLICATION_CREDENTIALS=$SECRETS_DIRECTORY/$GOOGLE_CREDENTIALS_FILE
+    export GITHUB_OAUTH_TOKEN=$(cat $SECRETS_DIRECTORY/git_oauth_token)
     export ALLOWED_GOOGLE_DOMAINS="ucsd.edu,eng.ucsd.edu"
 
     export MONETA_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta
