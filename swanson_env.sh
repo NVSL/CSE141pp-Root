@@ -10,24 +10,40 @@ else
     export PUBSUB_SUBSCRIPTION=DJR_swanson_testing_subscription
     export DJR_SERVER=http://$REAL_IP_ADDR:5000
 
-    function restart_proxy_service () {
+    function check_dir() {
 	if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
 	    echo "Doesn't look like you are in the root directory.  Source this from the config directory."
 	    return 1
 	fi
-	docker container stop proxy-service
-	docker container rm proxy-service
+    }
+    function start_proxy_service () {
+	check_dir || return 1
+	stop_proxy_service
 	DJR_SERVER=http://0.0.0.0:5000  cse142 dev --detach  --publish published=5000,target=5000  --name proxy-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 -v server"
     }
-    function restart_runner_service () {
-	if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
-	    echo "Doesn't look like you are in the root directory.  Source this from the config directory."
-	    return 1
-	fi
-	docker container stop runner-service
-	docker container rm runner-service
+
+    function debug_proxy_service () {
+	check_dir || return 1
+	stop_proxy_service
+	export DJR_SERVER=http://0.0.0.0:5000
+	cse142 dev --interactive --publish published=5000,target=5000  --env DEBUG_HTTP_REQUESTS=yes --name proxy-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 -v server"
+    }
+    
+    function start_runner_service () {
+	check_dir || return 1
+	stop_runner_service
 	cse142 dev --detach  --name runner-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 --no-http -v runner --no-docker"
     }
-	
+
+    function stop_runner_service() {
+	docker container stop runner-service
+	docker container rm runner-service
+    }
+    
+    function stop_proxy_service() {
+	docker container stop proxy-service
+	docker container rm proxy-service
+    }
+    
 fi
 

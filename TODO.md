@@ -3,14 +3,14 @@
 
 ## Requirements For Class
 
-* make benchmarks work
 * rate limit student submissions (only one non-completed job at a time)
+
+* make benchmarks work
 * need cancelation support
 * make gradescope work
 * get moneta working
 * Add auto dependence tracking to make file.
 * test job timeouts
-* reconsider how we implement solution checking.
 * make --limit show the most recent jobs instead of the oldest
 4. Figure out what to do with the secrets
 4. Fix app secret in REST/app.py
@@ -57,6 +57,7 @@
 
 # Done
 
+* reconsider how we implement solution checking.
 5. Maybe bring over environment variables
 * format dates in job listing and labspec listing
 * Command to watch running job
