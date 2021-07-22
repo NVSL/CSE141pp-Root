@@ -3,9 +3,9 @@
 
 ## Requirements For Class
 
-* rate limit student submissions (only one non-completed job at a time)
-  * need cancelation support
 * make benchmarks work
+* rate limit student submissions (only one non-completed job at a time)
+* need cancelation support
 * make gradescope work
 * get moneta working
 * Add auto dependence tracking to make file.
@@ -21,6 +21,9 @@
 * Add CRCs to manifest
 * filter out moneta trace files
 * Tool to monitor runners
+* Stream job output via telnet
+
+* Check that stderr capture works when using docker.
 
 ##
 

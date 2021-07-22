@@ -33,6 +33,7 @@ else
 	fi
     }
     
+    export CLOUD_NAMESPACE=default
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
