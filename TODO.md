@@ -2,9 +2,10 @@
 
 ## Requirements For Class
 
+* get moneta working
+
 * make benchmarks work
 * make gradescope work
-* get moneta working
 * Add auto dependence tracking to make file.
 * make --limit show the most recent jobs instead of the oldest
 4. Figure out what to do with the secrets

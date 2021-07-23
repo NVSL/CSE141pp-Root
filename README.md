@@ -1,6 +1,6 @@
 # Setting up CSE142L Development
 
-## System Overview
+## Lab Job Runner Overview
 
 The course's lab runner provide allow students to run short-running jobs on
 bare-metal servers in the cloud.  The basic flow is this:
@@ -22,19 +22,26 @@ numerous subcommands to manipulate the above resources and submit jobs.
 User authenticate to the system using their UCSD Google credentials (i.e,
 either their @eng or @ucsd.edu email addresses.)
 
+## Prerequisites
+
+You'll need docker installed.  We have a document about doing that here: 
+
+https://github.com/NVSL/CSE141pp-Lab-Introduction-to-the-Development-Environment/blob/master/RunningDocker.md
+
+For linux, 
+Followed this guide to install: https://docs.docker.com/engine/install/ubuntu/#install-using-the-repository 
+And this guide to run docker as a non-root user: https://docs.docker.com/engine/install/linux-postinstall/ 
+
+
+## Moneta Overview
+
+Moneta is our memory trace visualizer.  It uses a command line tool called
+`mtrace` to generate traces and `jupyter-notebook` to view them.  The process
+below includes the installation of Moneta as well.
 
 ## Getting into Docker
 
-To set up your development environment initially:
-
-First, I suggest you set up an ssh-agent to avoid typing your password over and over:
-
-```
-eval `ssh-agent`
-ssh-add
-```
-
-Then 
+To set up your development environment initially, first do 
 
 ```
 git clone --recurse-submodules git@github.com:NVSL/CSE141pp-Root.git
@@ -42,11 +49,20 @@ git clone --recurse-submodules git@github.com:NVSL/CSE141pp-Root.git
 
 This clones the root repo and several sub-repos.
 
+You may need to do install python 3.9's `venv` package.  On linux you do it  like this:
+
+```
+sudo apt install python3.9-venv
+```
+
+Next build install the tools we use to build the docker images:
+
 ```
 cd CSE141pp-Root
-. env.sh
-make bootstrap
+. env.sh  # this initializes some environment variables and sets your PATH
+make bootstrap # this creates a python virtual environment to hold the tools we use to invoke docker properly.
 ```
+
 
 You'll need to build the docker images locally:
 
@@ -55,7 +71,7 @@ cd CSE141pp-Root
 make
 ```
 
-This will run for a while.  You can do then do
+This will run for a while.  You can then do
 
 ```
 docker images
@@ -77,8 +93,7 @@ Then, to get yourself into a development docker container:
 
 ```
 cd CSE141pp-Root
-. env.sh
-cse142dev
+bin/cse142dev
 ```
 
 This will drop you into `/cse142L` in the docker container which is mapped to
@@ -86,8 +101,10 @@ the root of your `CSE141pp-Root` directory.  You can edit your files from
 outside the container using the editor of your choice and the changes will be
 reflected here.
 
-`cse142dev` automaticaly creates an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If `cse142dev` asks for a password, this is why.
-
+If `cse142dev` find a `.ssh` directory in your home direcotry, it will create
+an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If
+`cse142dev` asks for a password, this is why.  It'll save you from having to
+type your password over and over again.
 
 The first time you do this, you should do (after getting inside docker with `cse142dev`)
 
@@ -95,7 +112,9 @@ The first time you do this, you should do (after getting inside docker with `cse
 ./setup.sh
 ```
 
-To build everything from source.  It will take a little while.  After that, invoking `CSE141pp-Root/bin/cse142dev` should be all you need to get into docker and start working.
+to build everything from source.  It will take a little while.  After that,
+invoking `CSE141pp-Root/bin/cse142dev` is all you'll need to do to get into
+docker and start working.
 
 From inside the docker container you can see information about the docker container with 
 
@@ -103,10 +122,35 @@ From inside the docker container you can see information about the docker contai
 whereami
 ```
 
-## Creating Your Account
+## Accessing Moneta
+
+From inside docker, you can run `jupyter-notebook --allow-root .` to start up
+jupyter notebook server.  The output will look something like this
+
+```
+[I 22:38:48.814 NotebookApp] Writing notebook server cookie secret to /root/.local/share/jupyter/runtime/notebook_cookie_secret
+[I 22:38:49.494 NotebookApp] JupyterLab extension loaded from /opt/conda/lib/python3.7/site-packages/jupyterlab
+[I 22:38:49.494 NotebookApp] JupyterLab application directory is /opt/conda/share/jupyter/lab
+[I 22:38:49.497 NotebookApp] Serving notebooks from local directory: /cse142L
+[I 22:38:49.497 NotebookApp] The Jupyter Notebook is running at:
+[I 22:38:49.497 NotebookApp] http://swanson-dev-192.168.4.21:8888/?token=9480933a7aae975a670f6293f8fb4f94582be04f07a123a0
+[I 22:38:49.497 NotebookApp]  or http://127.0.0.1:8888/?token=9480933a7aae975a670f6293f8fb4f94582be04f07a123a0
+[I 22:38:49.498 NotebookApp] Use Control-C to stop this server and shut down all kernels (twice to skip confirmation).
+[C 22:38:49.506 NotebookApp]
+
+    To access the notebook, open this file in a browser:
+        file:///root/.local/share/jupyter/runtime/nbserver-49-open.html
+    Or copy and paste one of these URLs:
+        http://swanson-dev-192.168.4.21:8888/?token=9480933a7aae975a670f6293f8fb4f94582be04f07a123a0
+     or http://127.0.0.1:8888/?token=9480933a7aae975a670f6293f8fb4f94582be04f07a123a0
+```
+
+You should be able to acces it via the `127.0.0.1:8888` url at the end.
+
+## Creating Your Job Runner Account
 
 `cse142dev` drops you into docker container that has priviliged, direct access
-to the resources above, so you don't have to authenticate to use it.  You will
+to the job runner above, so you don't have to authenticate to use it.  You will
 use this capability to create an account for yourself.  From then on, you'll
 authenticate and use it as a student would.
 
@@ -146,7 +190,6 @@ cb531cf4-2aa3-4e48-8629-3c36ffadee4c	swanson@eng.ucsd.edu	swanson@eng.ucsd.edu	[
 ```
 
 The fields are a unique ID, email, full name, and roles (for permissions).
-
 
 Now you can authenticate:
 

@@ -1,4 +1,4 @@
-FROM ubuntu
+FROM jupyter/scipy-notebook:dc9744740e12 
 USER root
 # this turns off some stupid prompting from apt-get install
 ARG DEBIAN_FRONTEND=noninteractive

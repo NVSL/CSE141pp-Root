@@ -1,7 +1,23 @@
+
 if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
     echo "Doesn't look like you are in the root directory.  Source this from the config directory."
     CONFIG_FAILED=yes
 else
+
+    function ssh-login () {
+	
+	if ! [ -e $HOME/.ssh/ ]; then
+	    echo "$HOME/.ssh doesn't exist, so I'm not setting up an ssh-agent for you.  You'll need to type your password to clone each repo."
+	    return 1
+	fi
+	
+	if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
+	    eval `ssh-agent`
+	else
+	    echo Agent is already running socket = $SSH_AUTH_SOCK
+	fi
+	ssh-add
+    }
 
     function source-env () {
 	if ! [ -d $1 ]; then
@@ -18,20 +34,11 @@ else
     }
 
     function whereami () {
-	for i in THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
+	for i in THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER THIS_DOCKER_IMAGE_UUID WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
 	    echo $i=$(eval  "echo \$$i")
 	done
     }
     
-    function ssh-login () {
-	
-	if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
-	    eval `ssh-agent`
-	    ssh-add
-	else
-	    echo Agent is already running PID = $SSH_AGENT_PID
-	fi
-    }
     
     export CLOUD_NAMESPACE=default
     export CSE142L_ROOT=$PWD

@@ -31,8 +31,8 @@ IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKE
 
 core.image:
 dev.image: service.image
-service.image: core.image
-runner.image : dev.image
+service.image: runner.image
+runner.image : core.image
 
 test.image:
 
