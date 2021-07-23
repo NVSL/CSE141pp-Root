@@ -26,14 +26,21 @@ else
 	check_dir || return 1
 	stop_proxy_service
 	export DJR_SERVER=http://0.0.0.0:5000
-	cse142 dev --interactive --publish published=5000,target=5000  --env DEBUG_HTTP_REQUESTS=yes --name proxy-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 -v server"
+	cse142 dev --interactive --publish published=5000,target=5000  --env DEBUG_EXCEPTIONS=yes --name proxy-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 -v server"
     }
     
     function start_runner_service () {
 	check_dir || return 1
 	stop_runner_service
-	cse142 dev --detach  --name runner-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 --no-http -v runner --no-docker"
+	cse142 dev --detach  --name runner-service  --image stevenjswanson/cse142l-dev:latest bash -c "cse142 --no-http -v runner $@"
     }
+
+    function debug_runner_service () {
+	check_dir || return 1
+	stop_runner_service
+	cse142 dev --interactive --name runner-service   --env DEBUG_EXCEPTIONS=yes --image stevenjswanson/cse142l-dev:latest bash -c "cse142 --no-http -v runner $@"
+    }
+    
 
     function stop_runner_service() {
 	docker container stop runner-service

@@ -1,16 +1,11 @@
 # TODO
 
-
 ## Requirements For Class
 
-* rate limit student submissions (only one non-completed job at a time)
-
 * make benchmarks work
-* need cancelation support
 * make gradescope work
 * get moneta working
 * Add auto dependence tracking to make file.
-* test job timeouts
 * make --limit show the most recent jobs instead of the oldest
 4. Figure out what to do with the secrets
 4. Fix app secret in REST/app.py
@@ -24,7 +19,7 @@
 * Stream job output via telnet
 
 * Check that stderr capture works when using docker.
-
+* build error for CANELA testes during docker build
 ##
 
 * maybe add email/username to Job 
@@ -57,6 +52,9 @@
 
 # Done
 
+* test job timeouts
+* rate limit student submissions (only one non-completed job at a time)
+* need cancelation support
 * reconsider how we implement solution checking.
 5. Maybe bring over environment variables
 * format dates in job listing and labspec listing
