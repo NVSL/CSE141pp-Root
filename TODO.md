@@ -2,37 +2,32 @@
 
 ## Requirements For Class
 
-* get moneta working
 
 * make benchmarks work
-* make gradescope work
-* Add auto dependence tracking to make file.
+	* make gradescope work
+* add cron job to cleanup stalled jobs
+  * to create a stalled job, start a job and then kill the runner.
+  * maybe have it email me when this happens.
+* ability to easily re-run a job.
 * make --limit show the most recent jobs instead of the oldest
 4. Figure out what to do with the secrets
 4. Fix app secret in REST/app.py
 3. Setup simpler cli for students.
-   * alias for `cse142 job run`
+     * alias for `cse142 job run`
 * silly names for jobs https://github.com/and3rson/codename/blob/master/codename/codename.py
-* ability to easily re-run a job.
-* Add CRCs to manifest
-* filter out moneta trace files
 * Tool to monitor runners
 * Stream job output via telnet
-
-* Check that stderr capture works when using docker.
 * build error for CANELA testes during docker build
+ 
 ##
 
-* maybe add email/username to Job 
-* make 'LAST' return the last job for the current user
-* make jobs cancelable while running.
-* Cancelation probably doesn't for non-admin accounts.
-   * make it a job store operation and make sure it's atomic
-   * Provide test-and-set primitive on http UPDATE so we can do an atomic state transition.
 
-* create /tmp/djr_scratch if it doesn't exist
+* standardize output formatting
+  * put errors in stderr (err=True for click.echo)
+  * abstract away formatting for errors, info, warnings by color
+  * standarize usage
+  
 * efficient large file upload
-
 
 5. Update config/cloud/bootstrap_server.sh
 
@@ -53,6 +48,14 @@
 
 # Done
 
+* make jobs cancelable while running.
+* make 'LAST' return the last job for the current user
+* maybe add email/username to Job 
+* Check that stderr capture works when using docker.
+* filter out moneta trace files
+* Add CRCs to manifest
+* Add auto dependence tracking to make file.
+* get moneta working
 * test job timeouts
 * rate limit student submissions (only one non-completed job at a time)
 * need cancelation support

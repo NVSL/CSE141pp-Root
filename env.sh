@@ -14,9 +14,13 @@ else
 	if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
 	    eval `ssh-agent`
 	else
-	    echo Agent is already running socket = $SSH_AUTH_SOCK
+	    echo Agent is already running socket = $SSH_AUTH_SOCK.  Not starting.
 	fi
-	ssh-add
+	if [ $(ssh-add -l | grep -v "The agent has no identities" | wc -l)  =  0 ]; then
+	    ssh-add
+	else
+	    echo It already has an identity loaded.  Not adding.
+	fi
     }
 
     function source-env () {
@@ -53,8 +57,7 @@ else
 
     export DJR_JOB_TYPE=CSE142L.CSE142LJob.CSE142LJob
     export CSE142L_RUNNER_DOCKER_IMAGE=stevenjswanson/cse142l-runner:latest
-    export PUBSUB_TOPIC=CSE142L_testing1
-    export PUBSUB_SUBSCRIPTION=DJR_jobs_subscription
+    export DJR_CLUSTER=djr-default-cluster
     export EMULATION_DIR=/tmp/emulation
     export CLOUD_MODE=CLOUD
     export DJR_DOCKER_SCRATCH=/tmp/djr_scratch
@@ -80,7 +83,6 @@ else
 	source-env $d
     done
     
-    PATH=$PATH:$CSE142L_ROOT/bin/
 
     if [[ $- == *i* ]]; then
 	whereami

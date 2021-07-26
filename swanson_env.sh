@@ -6,8 +6,7 @@ else
     . ./env.sh
     
     export CLOUD_NAMESPACE=swanson-testing
-    export PUBSUB_TOPIC=CSE142L_swanson_testing
-    export PUBSUB_SUBSCRIPTION=DJR_swanson_testing_subscription
+    export DJR_CLUSTER=swanson
     export DJR_SERVER=http://$REAL_IP_ADDR:5000
 
     function check_dir() {
