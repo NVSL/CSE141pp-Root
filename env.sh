@@ -38,11 +38,21 @@ else
     }
 
     function whereami () {
-	for i in THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER THIS_DOCKER_IMAGE_UUID WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
+	for i in DJR_CLUSTER THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER THIS_DOCKER_IMAGE_UUID WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
 	    echo $i=$(eval  "echo \$$i")
 	done
     }
     
+    function prompter() {
+	if git rev-parse --abbrev-ref HEAD 2> /dev/null > /dev/null; then
+	    PS1="\h:\w $DEPLOYED_TEXT$MISMATCH($(git rev-parse --abbrev-ref HEAD))\$ "
+	else
+	    PS1="\h:\w $DEPLOYED_TEXT$MISMATCH\$ "
+	fi
+    }
+
+	
+    PROMPT_COMMAND=prompter
     
     export CLOUD_NAMESPACE=default
     export CSE142L_ROOT=$PWD
