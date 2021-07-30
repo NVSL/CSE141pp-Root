@@ -25,6 +25,7 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 #djr-docker-job.image: IMAGE_NAME=djr-docker-job
 
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
+moneta_core.image: IMAGE_NAME=moneta_core
 dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)

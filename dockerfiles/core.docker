@@ -17,9 +17,7 @@ ENV PATH=/usr/bin:/usr/local/bin:$PATH
 
 RUN apt-get update --fix-missing; apt-get update
 #RUN apt-get install -y  software-properties-common curl
-RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git gcc-8 g++-8 libhdf5-dev uuid-runtime  openssh-client && apt-get clean -y
-
-
+RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git gcc-8 g++-8 libhdf5-dev uuid-runtime  openssh-client  && apt-get clean -y 
 ##### Python
 
 RUN add-apt-repository ppa:deadsnakes/ppa; apt-get update  # for python3.9
@@ -44,7 +42,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev && apt-get clean -y
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev radare2  libradare2-dev && apt-get clean -y
 
 #RUN  apt-get install -y linux-headers-$(uname -r) linux-tools-$(uname -r) || true
 #RUN  apt-get install -y linux-tools-4.4.0-134-generic

@@ -12,3 +12,6 @@ messages.pot
 *.log
 t
 old
+__pycache__
+job-*
+*.egg-info
