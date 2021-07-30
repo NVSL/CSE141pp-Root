@@ -4,25 +4,6 @@ if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
     CONFIG_FAILED=yes
 else
 
-    function ssh-login () {
-	
-	if ! [ -e $HOME/.ssh/ ]; then
-	    echo "$HOME/.ssh doesn't exist, so I'm not setting up an ssh-agent for you.  You'll need to type your password to clone each repo."
-	    return 1
-	fi
-	
-	if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
-	    eval `ssh-agent`
-	else
-	    echo Agent is already running socket = $SSH_AUTH_SOCK.  Not starting.
-	fi
-	if [ $(ssh-add -l | grep -v "The agent has no identities" | wc -l)  =  0 ]; then
-	    ssh-add
-	else
-	    echo It already has an identity loaded.  Not adding.
-	fi
-    }
-
     function source-env () {
 	if ! [ -d $1 ]; then
 	    echo "$1 doesn't exist"
@@ -37,22 +18,10 @@ else
 	return 0
     }
 
-    function whereami () {
-	for i in DJR_CLUSTER THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER THIS_DOCKER_IMAGE_UUID WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
-	    echo $i=$(eval  "echo \$$i")
-	done
-    }
-    
-    function prompter() {
-	if git rev-parse --abbrev-ref HEAD 2> /dev/null > /dev/null; then
-	    PS1="\h:\w $DEPLOYED_TEXT$MISMATCH($(git rev-parse --abbrev-ref HEAD))\$ "
-	else
-	    PS1="\h:\w $DEPLOYED_TEXT$MISMATCH\$ "
-	fi
-    }
-
-	
-    PROMPT_COMMAND=prompter
+    export HTTP_ROOT_REPO=https://github.com/NVSL/CSE141pp-Root.git
+    export ROOT_REPO_BRANCH=main
+    export HTTP_ARCHLAB_REPO=https://github.com/NVSL/cse141pp-archlab.git
+    export ARCHLAB_REPO_BRANCH=master
     
     export CLOUD_NAMESPACE=default
     export CSE142L_ROOT=$PWD
@@ -92,9 +61,47 @@ else
     for d in $SUBDIRS; do 
 	source-env $d
     done
-    
 
+    
+    # this checks if we are in an interactive shell.
     if [[ $- == *i* ]]; then
+
+	function ssh-login () {
+	    
+	    if ! [ -e $HOME/.ssh/ ]; then
+		echo "$HOME/.ssh doesn't exist, so I'm not setting up an ssh-agent for you.  You'll need to type your password to clone each repo."
+		return 1
+	    fi
+	    
+	    if [ "$SSH_AUTH_SOCK." == "." ] || [ "$1." == "-f." ]; then
+		eval `ssh-agent`
+	    else
+		echo Agent is already running socket = $SSH_AUTH_SOCK.  Not starting.
+	    fi
+	    if [ $(ssh-add -l | grep -v "The agent has no identities" | wc -l)  =  0 ]; then
+		ssh-add
+	    else
+		echo It already has an identity loaded.  Not adding.
+	    fi
+	}
+
+	function whereami () {
+	    for i in DJR_CLUSTER THIS_DOCKER_IMAGE THIS_DOCKER_CONTAINER THIS_DOCKER_IMAGE_UUID WORK_OUTSIDE_OF_DOCKER REAL_IP_ADDR; do
+		echo $i=$(eval  "echo \$$i")
+	    done
+	}
+	
+	function prompter() {
+	    if git rev-parse --abbrev-ref HEAD 2> /dev/null > /dev/null; then
+		PS1="\h:\w $DEPLOYED_TEXT$MISMATCH($(git rev-parse --abbrev-ref HEAD))\$ "
+	    else
+		PS1="\h:\w $DEPLOYED_TEXT$MISMATCH\$ "
+	    fi
+	}
+
+	
+
+	PROMPT_COMMAND=prompter
 	whereami
 	ssh-login
     fi

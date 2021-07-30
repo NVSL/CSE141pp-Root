@@ -4,7 +4,9 @@
 
 
 * make benchmarks work
-	* make gradescope work
+* make gradescope work
+* fix autograder stuff
+
 * add cron job to cleanup stalled jobs
   * to create a stalled job, start a job and then kill the runner.
   * maybe have it email me when this happens.

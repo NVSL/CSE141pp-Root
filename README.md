@@ -52,7 +52,7 @@ This clones the root repo and several sub-repos.
 You may need to do install python 3.9's `venv` package.  On linux you do it  like this:
 
 ```
-sudo apt install python3.9-venv
+sudo apt install python3.9-venv python3.8-venv
 ```
 
 Next build install the tools we use to build the docker images:
@@ -63,15 +63,7 @@ cd CSE141pp-Root
 make bootstrap # this creates a python virtual environment to hold the tools we use to invoke docker properly.
 ```
 
-
-You'll need to build the docker images locally:
-
-```
-cd CSE141pp-Root
-make
-```
-
-This will run for a while.  You can then do
+If you are on the devel server (see instructions at the end of this document), the docker images are probably already there.  Check with 
 
 ```
 docker images
@@ -87,6 +79,26 @@ stevenjswanson/cse142l-dev       latest          c90dcd27a70e   2 hours ago     
 stevenjswanson/cse142l-dev       s21-dev         c90dcd27a70e   2 hours ago     7.84GB
 stevenjswanson/cse142l-service   latest          d28b327b0ada   2 hours ago     7.84GB
 stevenjswanson/cse142l-service   s21-dev         d28b327b0ada   2 hours ago     7.84GB
+```
+
+If they aren't there, you can try to download them with 
+
+```
+cd CSE141pp-Root
+make pull
+```
+
+If that doesn't work, you'll need to build the docker images locally with:
+
+```
+cd CSE141pp-Root
+make
+```
+
+This will run for a while.  You can then do
+
+```
+docker images
 ```
 
 Then, to get yourself into a development docker container:
@@ -106,7 +118,8 @@ an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If
 `cse142dev` asks for a password, this is why.  It'll save you from having to
 type your password over and over again.
 
-The first time you do this, you should do (after getting inside docker with `cse142dev`)
+The first time you do this, you'll need to run this command to set yourself up
+to do development (after getting inside docker with `cse142dev`):
 
 ```
 ./setup.sh
@@ -145,7 +158,9 @@ jupyter notebook server.  The output will look something like this
      or http://127.0.0.1:8888/?token=9480933a7aae975a670f6293f8fb4f94582be04f07a123a0
 ```
 
-You should be able to acces it via the `127.0.0.1:8888` url at the end.
+If you are running on your own machine, you should be able to acces it via the `127.0.0.1:8888` url at the end.
+
+If you are on the devolpment server, replace `127.0.0.1` with the IP address you used to connect to the devel server.
 
 ## Creating Your Job Runner Account
 
@@ -401,5 +416,71 @@ It'll take a little while.  Ignore the `make: runlab: Command not found`
 Then you can run it in the cloud with 
 
 ```
-cse142 job run --lab test 'make clean; make```
+cse142 job run --lab test 'make clean; make
+```
+
+## Starting the Runner Service
+
+!!! You probably don't need to do this.
+
+First, start a swarm:
+
+```
+docker swarm init --advertise-addr <MANAGER-IP>
+```
+
+Then start the runner service:
+
+```
+cse142 dev --service --name runner-service --image stevenjswanson/cse142l-service:latest bash -c "cse142 cluster runner"
+```
+
+ignore this:
+#--mount type=bind,source=/home/swanson/CSE141pp-Root,dst=/cse142L --mount type=bind,source=/root,dst=/root --mount type=bind,source=/cse142L/CSE141pp-Config/secrets,dst=/cse142L/CSE141pp-Config/secrets
+
+
+## Logging into the Development Server
+
+Get the IP address of the devel server from Steve, we'll call it `IP`.
+
+You have access to the root account on the server, but you shouln't use it.
+Create and use your own account below, it prevents us from getting in eachother's way.
+
+Do 
+
+```
+ssh root@IP
+```
+
+to log in as root.
+
+Create your account and allow it to `sudo` and use docker:
+
+```
+adduser <your @ucsd or @eng email without the @ part>
+adduser <your username> sudo
+adduser <your username> docker
+```
+
+Then, install your ssh public key:
+
+```
+su <your username>
+mkdir ~/.ssh
+cat >> ~/.ssh/authorized_keys
+```
+
+And then paste in your public key.
+
+Then set perms on your `.ssh` directory:
+
+```
+chmod go-rwx -R ~/.ssh
+```
+
+Logout and then back in:
+
+```
+ssh <username>@IP
+```
 

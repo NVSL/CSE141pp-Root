@@ -13,8 +13,8 @@ if [ "$APTGET." = "." ]; then
     APTGET=apt-get
 fi
 
-mkdir -p /tmp/cse142L-install
-cd /tmp/cse142L-install
+mkdir -p /bootstrap/cse142L
+cd /bootstrap/cse142L
 
 ###############################################################################
 #	Propagate configuration information
@@ -38,6 +38,7 @@ cd /tmp/cse142L-install
 
 
 $APTGET update --fix-missing
+echo -ne 'Y\n1\n' $APTGET dist-upgrade -y
 $APTGET -y install git emacs
 $APTGET install -y python3.9 python3-pip python3.9-venv
 curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
@@ -50,7 +51,7 @@ pip3 install --upgrade pip
 # https://docs.docker.com/engine/install/ubuntu/
 
 if ! docker --version; then
-    $APTGET install \
+    $APTGET install -y \
 	    apt-transport-https \
 	    ca-certificates \
 	    curl \
@@ -61,8 +62,8 @@ if ! docker --version; then
     echo \
 	"deb [arch=amd64 signed-by=/usr/share/keyrings/docker-archive-keyring.gpg] https://download.docker.com/linux/ubuntu \
   $(lsb_release -cs) stable" > /etc/apt/sources.list.d/docker.list
-
-    $APTGET install docker-ce docker-ce-cli containerd.io
+    $APTGET update
+    $APTGET install -y docker-ce docker-ce-cli containerd.io
 fi
 
 #curl -fsSL https://download.docker.com/linux/ubuntu/gpg | apt-key add -
@@ -82,9 +83,9 @@ fi
 #	pull Docker images
 ###############################################################################
 
-pushd $INSTALL_ROOT
-make pull
-popd 
+# pushd $INSTALL_ROOT
+# make pull
+# popd 
 
 ###############################################################################
 #       Mount point for iso images (for spec)
@@ -107,7 +108,20 @@ mkdir -p /mnt/iso
 #	build and install cache control module
 ###############################################################################
 
-$APTGET -y install kmod linux-headers-generic build-essential linux-headers-$(uname -r)
+# this nonsense is for ubuntu 20.10, which doesn't provide a kernel header
+# package for the default kernel it ships with.
+# We fake it with a slightly higher patch level and then let it build with a soft link.
+if [ "$(uname -r)" = "5.8.0-26-generic" ]; then 
+    export EFFECTIVE_UNAME=5.8.0-63-generic
+else
+    export EFFECTIVE_UNAME=$(uname -r)
+fi
+
+$APTGET -y install kmod linux-headers-generic build-essential linux-headers-$EFFECTIVE_UNAME
+
+if [ "$(uname -r)" = "5.8.0-26-generic" ]; then 
+    ln -sf /lib/modules/5.8.0-63-generic/build /lib/modules/5.8.0-26-generic/build
+fi
 
 pushd $INSTALL_ROOT/cse141pp-archlab/cache_control/
 make

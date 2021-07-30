@@ -1,7 +1,11 @@
-
+.PHONY: default
 default: runner.image dev.image core.image service.image
 
-.PHONY: requirements.txt
+.PHONY: setup
+setup:
+	pip install -e .
+
+.PHONY: require	ments.txt
 requirements.txt:
 	pip freeze  --all  --local --exclude-editable > $@
 
