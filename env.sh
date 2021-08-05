@@ -124,7 +124,7 @@ else
 	}
 
 	function deployed() {
-	    export IN_DEPLOYMENT=DEPLOYED
+	    export IN_DEPLOYMENT=yes
 	    reconfig
 	}
 
