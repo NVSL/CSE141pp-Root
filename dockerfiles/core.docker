@@ -7,8 +7,15 @@ ARG DEBIAN_FRONTEND=noninteractive
 
 # Put us in the pacific time zone
 ENV TZ=America/Los_Angeles
+
 RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir /cse142L
+
+ENV IN_DOCKER yes
+ARG THIS_DOCKER_IMAGE
+ENV THIS_DOCKER_IMAGE ${DOCKER_IMAGE}
+ARG THIS_DOCKER_IMAGE_UUID
+ENV THIS_DOCKER_IMAGE_UUID $THIS_DOCKER_IMAGE_UUID
 
 # the base image puts /opt/conda at the beginning of PATH.  Here we give our version of python priority.
 ENV PATH=/usr/bin:/usr/local/bin:$PATH
@@ -16,10 +23,9 @@ ENV PATH=/usr/bin:/usr/local/bin:$PATH
 #####  Basics
 
 RUN apt-get update --fix-missing; apt-get update
-#RUN apt-get install -y  software-properties-common curl
 RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git gcc-8 g++-8 libhdf5-dev uuid-runtime  openssh-client  && apt-get clean -y 
-##### Python
 
+##### Python
 RUN add-apt-repository ppa:deadsnakes/ppa; apt-get update  # for python3.9
 RUN apt-get install -y python3.9 python3-pip python3.9-venv && apt-get clean -y
 #   RUN curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
@@ -34,20 +40,14 @@ RUN pip3 install --upgrade setuptools
 ##### Google Cloud
 
 # https://cloud.google.com/sdk/docs/install#deb
-#RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] https://packages.cloud.google.com/apt cloud-sdk main" >> /etc/apt/sources.list.d/google-cloud-sdk.list
-#RUN apt-get install apt-transport-https ca-certificates gnupg
-#RUN curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | sudo apt-key --keyring /usr/share/keyrings/cloud.google.gpg add -
-#RUN apt-get update && sudo apt-get install google-cloud-sdk
 RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.cloud.google.com/apt cloud-sdk main" | tee -a /etc/apt/sources.list.d/google-cloud-sdk.list && curl https://packages.cloud.google.com/apt/doc/apt-key.gpg | apt-key --keyring /usr/share/keyrings/cloud.google.gpg  add - && apt-get update -y && apt-get install google-cloud-sdk -y && apt-get clean -y
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid linux-tools-generic lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev radare2  libradare2-dev && apt-get clean -y
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev radare2  libradare2-dev && apt-get clean -y
+RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get clean -y
+#RUN apt-get install -y linux-tools-5.8.0-63-generic linux-cloud-tools-5.8.0-63-generic  && apt-get clean -y
 
-#RUN  apt-get install -y linux-headers-$(uname -r) linux-tools-$(uname -r) || true
-#RUN  apt-get install -y linux-tools-4.4.0-134-generic
-#RUN grep "linux-tools.*generic" /var/lib/dpkg/status
-#RUN  apt-get install -y linux-tools-4.15.0-140-generic
 
 ##### Slow-building libraries we use
 
@@ -60,39 +60,3 @@ COPY requirements.txt ./
 RUN pip3 install -r requirements.txt
 WORKDIR /cse142L
 
-ENV IN_DOCKER yes
-ARG THIS_DOCKER_IMAGE
-ENV THIS_DOCKER_IMAGE ${DOCKER_IMAGE}
-ENV THIS_DOCKER_IMAGE_UUID $THIS_DOCKER_IMAGE_UUID
-
-#ENTRYPOINT /bin/bash
-##### Moneta
-#RUN sudo apt-get install -y libhdf5-dev
-#RUN sudo apt-get install -y screen
-
-# WORKDIR /home/jovyan/
-# RUN (cd /home/jovyan/; git clone https://github.com/NVSL/CSE141pp-Tool-Moneta.git)
-# RUN (ls -lrt;)
-# RUN (ls -lrt; mv work/ old/ ; mv CSE141pp-Tool-Moneta/ work/ ; ls -lrt work/setup/; cd work; make)
-# RUN (cd /; git clone https://${GITHUB_OAUTH_TOKEN}@github.com/NVSL/CSE141pp-Tool-Moneta-Pin.git /pin;)
-# ENV PIN_ROOT=/pin
-# ENV PYTHONPATH=/home/jovyan/work/moneta/moneta
-# RUN (cd /home/jovyan/work; pip install -r setup/requirements.txt;)
-
-# WORKDIR /home/jovyan/work
-
-# # Fix Windows to Linux file endings 
-# WORKDIR ${DIR_SETUP}
-# RUN sed -i 's/\r$//' bashrc_aliases 
-# RUN cat bashrc_aliases >> ~/.bashrc
-# RUN echo ".container{width: 90%;}" >> /opt/conda/lib/python3.7/site-packages/notebook/static/custom/custom.css
-
-# RUN python compile_pin.py
-
-
-
-# RUN (cp -f /pin/source/tools/ManualExamples/obj-intel64/trace_tool.so /home/jovyan/work/setup/ ; ls -lrt;)
-
-
-#COPY --from=jupyter-image /home/jovyan .
-###########################

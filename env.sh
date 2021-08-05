@@ -17,6 +17,23 @@ else
 	fi
 	return 0
     }
+    function up-to-date() {
+	if [ "$1." = "." ]; then
+	    D=$PWD
+	else
+	    D=$1
+	fi
+
+	RED="\e[101m"
+	NC="\e[0m"
+
+	pushd $D > /dev/null
+	if ! git diff --exit-code --stat 2>&1 >/dev/null ; then echo -e "${RED}You have uncommitted changes in $D $NC"; return 1;fi
+	git remote update > /dev/null
+	if ! git status -uno| grep -q 'Your branch is up.to.date with'; then echo -e "${RED}$D is not up-to-date with upstream $NC";return 1; fi
+	popd
+    }
+    
 
     export HTTP_ROOT_REPO=https://github.com/NVSL/CSE141pp-Root.git
     export ROOT_REPO_BRANCH=main
@@ -27,11 +44,24 @@ else
     export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
-    export DOCKER_IMAGE_VERSION=s21-dev
-    export DOCKER_CORE_IMAGE=$DOCKER_ORG/cse142l-core:$DOCKER_IMAGE_VERSION
-    export DOCKER_DEVEL_IMAGE=$DOCKER_ORG/cse142l-dev:$DOCKER_IMAGE_VERSION
-    export DOCKER_RUNNER_IMAGE=$DOCKER_ORG/cse142l-runner:$DOCKER_IMAGE_VERSION
-    export DOCKER_SERVICE_IMAGE=$DOCKER_ORG/cse142l-service:$DOCKER_IMAGE_VERSION
+
+    VERSION=$(cat $CSE142L_ROOT/VERSION)
+
+    [ ".$REAL_USER" = "." ] && REAL_USER=$USER
+
+    export DOCKER_IMAGE_VERSION=v$VERSION
+    
+    if [ $(git rev-parse --abbrev-ref HEAD) = "main" ] && up-to-date > /dev/null 2>&1 ; then
+	export DOCKER_IMAGE_INFIX=
+    else
+	export DOCKER_IMAGE_INFIX=-$REAL_USER
+    fi
+    #export DOCKER_IMAGE_VERSION=s21-dev
+    
+    export DOCKER_CORE_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-core:$DOCKER_IMAGE_VERSION
+    export DOCKER_DEVEL_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-dev:$DOCKER_IMAGE_VERSION
+    export DOCKER_RUNNER_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-runner:$DOCKER_IMAGE_VERSION
+    export DOCKER_SERVICE_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-service:$DOCKER_IMAGE_VERSION
     #DOCKER_USER_IMAGE=$DOCKER_ORG/cse142l-user:$DOCKER_IMAGE_VERSION
 
     export DJR_JOB_TYPE=CSE142L.CSE142LJob.CSE142LJob
@@ -64,7 +94,34 @@ else
 
     
     # this checks if we are in an interactive shell.
+    # no idea how it works.
     if [[ $- == *i* ]]; then
+
+	function bump-version() {
+	    
+	    pushd $CSE142L_ROOT > /dev/null
+	    branch=$(git rev-parse --abbrev-ref HEAD)
+	    if [ "$branch." != "main." ]; then
+		echo "Only bump main branch"
+		return 1
+	    fi
+	    t=$(cat VERSION)
+	    echo $[t + 1] > VERSION
+	    git add VERSION
+	    git commit -m "new-version"
+	    git push
+	    echo "New version is $(cat VERSION)"
+	    reconfig
+	    popd > /dev/null
+	}
+
+	function reconfig () {
+	    __HERE=$PWD
+	    cd $CSE142L_ROOT
+	    . env.sh
+	    cd $__HERE
+	}
+
 
 	function ssh-login () {
 	    
@@ -93,10 +150,19 @@ else
 	
 	function prompter() {
 	    if git rev-parse --abbrev-ref HEAD 2> /dev/null > /dev/null; then
-		PS1="\h:\w $DEPLOYED_TEXT$MISMATCH($(git rev-parse --abbrev-ref HEAD))\$ "
+		GIT=[$(git rev-parse --abbrev-ref HEAD)]
 	    else
-		PS1="\h:\w $DEPLOYED_TEXT$MISMATCH\$ "
+		GIT=
 	    fi
+
+	    if [ ".$REAL_HOSTNAME" != "." ]; then
+		R_HOST="($REAL_HOSTNAME)"
+	    else
+		R_HOST=
+	    fi
+		
+	    PS1="\h$R_HOST:\w $DEPLOYED_TEXT$MISMATCH$GIT\$ "
+
 	}
 
 	

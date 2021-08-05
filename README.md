@@ -101,6 +101,9 @@ This will run for a while.  You can then do
 docker images
 ```
 
+to see them.
+ 
+
 Then, to get yourself into a development docker container:
 
 ```
@@ -462,7 +465,7 @@ adduser <your username> sudo
 adduser <your username> docker
 ```
 
-Then, install your ssh public key:
+Then, install your ssh public key (It seems to require and RSA key: `id_rsa.pub` rather than `id_dsa.pub`):
 
 ```
 su <your username>

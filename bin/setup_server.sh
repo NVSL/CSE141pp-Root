@@ -154,5 +154,8 @@ if tail -1 /etc/default/grub | grep -vq pstate  ; then
     reboot
 fi
 
+echo -ne  "#!/usr/bin/env bash\n sysctl -w kernel.perf_event_paranoid=-1\n" > /etc/rc.local
+chmod a+x /etc/rc.local
+
 ## enable access to perf counters
-sysctl -w kernel.perf_event_paranoid=-1
+
