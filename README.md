@@ -33,11 +33,53 @@ Followed this guide to install: https://docs.docker.com/engine/install/ubuntu/#i
 And this guide to run docker as a non-root user: https://docs.docker.com/engine/install/linux-postinstall/ 
 
 
-## Moneta Overview
+## Logging into the Development Server
 
-Moneta is our memory trace visualizer.  It uses a command line tool called
-`mtrace` to generate traces and `jupyter-notebook` to view them.  The process
-below includes the installation of Moneta as well.
+**If you are running on your own machine, this is not necessary**
+
+Get the IP address of the devel server from Steve, we'll call it `IP`.
+
+You have access to the root account on the server, but you shouln't use it.
+Create and use your own account below, it prevents us from getting in eachother's way.
+
+Do 
+
+```
+ssh root@IP
+```
+
+to log in as root.
+
+Create your account and allow it to `sudo` and use docker:
+
+```
+adduser <your @ucsd or @eng email without the @ part>
+adduser <your username> sudo
+adduser <your username> docker
+```
+
+Then, install your ssh public key (It seems to require and RSA key: `id_rsa.pub` rather than `id_dsa.pub`):
+
+```
+su <your username>
+mkdir ~/.ssh
+cat >> ~/.ssh/authorized_keys
+```
+
+And then paste in your public key.
+
+Then set perms on your `.ssh` directory:
+
+```
+chmod go-rwx -R ~/.ssh
+```
+
+Logout and then back in:
+
+```
+ssh <username>@IP
+```
+
 
 ## Getting into Docker
 
@@ -49,10 +91,22 @@ git clone --recurse-submodules git@github.com:NVSL/CSE141pp-Root.git
 
 This clones the root repo and several sub-repos.
 
+You should get something like:
+
+```
+Submodule path 'CSE141pp-Config': checked out 'fa0e4ebb3959df2a30c8a49570b0fed346bd2604'
+Submodule path 'CSE141pp-DJR': checked out 'b297949fd62dbb6c8e3e897c928a8acdf449df2d'
+Submodule path 'CSE141pp-LabPython': checked out '991e709477ea0a187c01c39a8c2fd7b8e3a0afd8'
+Submodule path 'CSE141pp-SimpleCNN': checked out '3656b5c5213434d437106f61eb0aaeb92dc7cbe8'
+Submodule path 'CSE141pp-Tool-Moneta': checked out '73213d9872f80f057d20e0527ebfd11381e3088a'
+Submodule path 'CSE141pp-Tool-Moneta-Pin': checked out 'ccad791816593cbff21d8599c3925fd1c0677c57'
+Submodule path 'cse141pp-archlab': checked out 'c5e2e711fbc59740bb6e14d19a3f9a4f2785524e'
+```
+
 You may need to do install python 3.9's `venv` package.  On linux you do it  like this:
 
 ```
-sudo apt install python3.9-venv python3.8-venv
+sudo apt install python3.9-venv python3.8-venv 
 ```
 
 Next build install the tools we use to build the docker images:
@@ -63,51 +117,33 @@ cd CSE141pp-Root
 make bootstrap # this creates a python virtual environment to hold the tools we use to invoke docker properly.
 ```
 
-If you are on the devel server (see instructions at the end of this document), the docker images are probably already there.  Check with 
+Next, you'll need to build the docker images locally with:
 
 ```
-docker images
-```
-
-and see them:
-
-```
-REPOSITORY                       TAG             IMAGE ID       CREATED         SIZE
-stevenjswanson/cse142l-runner    latest          e3cb52c116d7   2 hours ago     12.2GB
-stevenjswanson/cse142l-runner    s21-dev         e3cb52c116d7   2 hours ago     12.2GB
-stevenjswanson/cse142l-dev       latest          c90dcd27a70e   2 hours ago     7.84GB
-stevenjswanson/cse142l-dev       s21-dev         c90dcd27a70e   2 hours ago     7.84GB
-stevenjswanson/cse142l-service   latest          d28b327b0ada   2 hours ago     7.84GB
-stevenjswanson/cse142l-service   s21-dev         d28b327b0ada   2 hours ago     7.84GB
-```
-
-If they aren't there, you can try to download them with 
-
-```
-cd CSE141pp-Root
-make pull
-```
-
-If that doesn't work, you'll need to build the docker images locally with:
-
-```
-cd CSE141pp-Root
 make
 ```
-
 This will run for a while.  You can then do
 
 ```
 docker images
 ```
 
-to see them.
+to see them (It'll have your user name in the image name):
+
+```
+REPOSITORY                               TAG             IMAGE ID       CREATED         SIZE
+stevenjswanson/cse142l-swanson-runner    latest          e3cb52c116d7   2 hours ago     12.2GB
+stevenjswanson/cse142l-swanson-runner    s21-dev         e3cb52c116d7   2 hours ago     12.2GB
+stevenjswanson/cse142l-swanson-dev       latest          c90dcd27a70e   2 hours ago     7.84GB
+stevenjswanson/cse142l-swanson-dev       s21-dev         c90dcd27a70e   2 hours ago     7.84GB
+stevenjswanson/cse142l-swanson-service   latest          d28b327b0ada   2 hours ago     7.84GB
+stevenjswanson/cse142l-swanson-service   s21-dev         d28b327b0ada   2 hours ago     7.84GB
+```
  
 
 Then, to get yourself into a development docker container:
 
 ```
-cd CSE141pp-Root
 bin/cse142dev
 ```
 
@@ -116,7 +152,7 @@ the root of your `CSE141pp-Root` directory.  You can edit your files from
 outside the container using the editor of your choice and the changes will be
 reflected here.
 
-If `cse142dev` find a `.ssh` directory in your home direcotry, it will create
+If `cse142dev` find a `.ssh` directory in your home directory, it will create
 an `ssh-agent` to store your ssh key and invokes `ssh-add` to add it.  If
 `cse142dev` asks for a password, this is why.  It'll save you from having to
 type your password over and over again.
@@ -139,6 +175,10 @@ whereami
 ```
 
 ## Accessing Moneta
+
+Moneta is our memory trace visualizer.  It uses a command line tool called
+`mtrace` to generate traces and `jupyter-notebook` to view them.  The process
+below includes the installation of Moneta as well.
 
 From inside docker, you can run `jupyter-notebook --allow-root .` to start up
 jupyter notebook server.  The output will look something like this
@@ -164,6 +204,7 @@ jupyter notebook server.  The output will look something like this
 If you are running on your own machine, you should be able to acces it via the `127.0.0.1:8888` url at the end.
 
 If you are on the devolpment server, replace `127.0.0.1` with the IP address you used to connect to the devel server.
+
 
 ## Creating Your Job Runner Account
 
@@ -203,7 +244,7 @@ cse142 --no-http user list
 You should see yourself:
 
 ```
-3341f94e-254d-4f58-9f5c-a825e067f9a7	sjswanson@ucsd.edu	sjswanson@ucsd.edu	['USER']
+3341f94e-254d-4f58-9f5c-a825e067f9a7	sjswanson@ucsd.edu	    sjswanson@ucsd.edu	    ['USER']
 cb531cf4-2aa3-4e48-8629-3c36ffadee4c	swanson@eng.ucsd.edu	swanson@eng.ucsd.edu	['ADMIN']
 ```
 
@@ -400,6 +441,19 @@ In particular, `cse142` should meeting the following requirements
 3.  The use of color should be consistent.
 
 
+## Cloning Labs
+
+You should clone labs in the `labs` directory.  
+
+You can get a list of all the labs (including old and usued labs) here: https://github.com/NVSL?q=CSE141pp-Lab&type=&language
+
+For instance to clone the final project:
+
+```
+cd labs
+git clone git@github.com:NVSL/CSE141pp-Lab-FinalProject.git
+```
+
 ## Running a Lab 
 
 To get started working on lab, let's run the final project.  It's here:
@@ -424,7 +478,7 @@ cse142 job run --lab test 'make clean; make
 
 ## Starting the Runner Service
 
-!!! You probably don't need to do this.
+**Unless you are steve, You probably don't need to do this.**
 
 First, start a swarm:
 
@@ -436,54 +490,5 @@ Then start the runner service:
 
 ```
 cse142 dev --service --name runner-service --image stevenjswanson/cse142l-service:latest bash -c "cse142 cluster runner"
-```
-
-ignore this:
-#--mount type=bind,source=/home/swanson/CSE141pp-Root,dst=/cse142L --mount type=bind,source=/root,dst=/root --mount type=bind,source=/cse142L/CSE141pp-Config/secrets,dst=/cse142L/CSE141pp-Config/secrets
-
-
-## Logging into the Development Server
-
-Get the IP address of the devel server from Steve, we'll call it `IP`.
-
-You have access to the root account on the server, but you shouln't use it.
-Create and use your own account below, it prevents us from getting in eachother's way.
-
-Do 
-
-```
-ssh root@IP
-```
-
-to log in as root.
-
-Create your account and allow it to `sudo` and use docker:
-
-```
-adduser <your @ucsd or @eng email without the @ part>
-adduser <your username> sudo
-adduser <your username> docker
-```
-
-Then, install your ssh public key (It seems to require and RSA key: `id_rsa.pub` rather than `id_dsa.pub`):
-
-```
-su <your username>
-mkdir ~/.ssh
-cat >> ~/.ssh/authorized_keys
-```
-
-And then paste in your public key.
-
-Then set perms on your `.ssh` directory:
-
-```
-chmod go-rwx -R ~/.ssh
-```
-
-Logout and then back in:
-
-```
-ssh <username>@IP
 ```
 
