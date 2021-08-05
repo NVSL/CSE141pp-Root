@@ -124,12 +124,12 @@ else
 	}
 
 	function deployed() {
-	    export IN_DEPLOYMENT=yes
+	    export DEPLOYED=yes
 	    reconfig
 	}
 
 	function notdeployed() {
-	    undef IN_DEPLOYMENT
+	    undef DEPLOYED
 	    reconfig
 	}
 
