@@ -3,6 +3,9 @@
 ## Requirements For Class
 
 
+* unified tagging system
+
+
 * make benchmarks work
 * make gradescope work
 * fix autograder stuff
@@ -12,7 +15,6 @@
   * maybe have it email me when this happens.
 * ability to easily re-run a job.
 * make --limit show the most recent jobs instead of the oldest
-4. Figure out what to do with the secrets
 4. Fix app secret in REST/app.py
 3. Setup simpler cli for students.
      * alias for `cse142 job run`
@@ -23,6 +25,7 @@
  
 ##
 
+4. Figure out what to do with the secrets
 
 * standardize output formatting
   * put errors in stderr (err=True for click.echo)
