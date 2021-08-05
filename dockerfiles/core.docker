@@ -12,10 +12,10 @@ RUN ln -snf /usr/share/zoneinfo/$TZ /etc/localtime && echo $TZ > /etc/timezone
 RUN mkdir /cse142L
 
 ENV IN_DOCKER yes
-ARG THIS_DOCKER_IMAGE
-ENV THIS_DOCKER_IMAGE ${DOCKER_IMAGE}
-ARG THIS_DOCKER_IMAGE_UUID
-ENV THIS_DOCKER_IMAGE_UUID $THIS_DOCKER_IMAGE_UUID
+ARG ARG_THIS_DOCKER_IMAGE
+ENV THIS_DOCKER_IMAGE ${ARG_THIS_DOCKER_IMAGE}
+ARG ARG_THIS_DOCKER_IMAGE_UUID
+ENV THIS_DOCKER_IMAGE_UUID $ARG_THIS_DOCKER_IMAGE_UUID
 
 # the base image puts /opt/conda at the beginning of PATH.  Here we give our version of python priority.
 ENV PATH=/usr/bin:/usr/local/bin:$PATH

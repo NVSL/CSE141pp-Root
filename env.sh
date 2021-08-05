@@ -50,8 +50,9 @@ else
     [ ".$REAL_USER" = "." ] && REAL_USER=$USER
 
     export DOCKER_IMAGE_VERSION=v$VERSION
+
     
-    if [ $(git rev-parse --abbrev-ref HEAD) = "main" ] && up-to-date > /dev/null 2>&1 ; then
+    if [ ".$DEPLOYMENT" = ".yes" ]; then
 	export DOCKER_IMAGE_INFIX=
     else
 	export DOCKER_IMAGE_INFIX=-$REAL_USER
@@ -122,6 +123,15 @@ else
 	    cd $__HERE
 	}
 
+	function deployed() {
+	    export IN_DEPLOYMENT=DEPLOYED
+	    reconfig
+	}
+
+	function notdeployed() {
+	    undef IN_DEPLOYMENT
+	    reconfig
+	}
 
 	function ssh-login () {
 	    

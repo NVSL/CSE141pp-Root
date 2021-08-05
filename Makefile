@@ -12,25 +12,19 @@ requirements.txt:
 BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)\
 --build-arg GOOGLE_CLOUD_PROJECT=$(GOOGLE_CLOUD_PROJECT)\
---build-arg PUBSUB_TOPIC=$(PUBSUB_TOPIC)\
---build-arg PUBSUB_SUBSCRIPTION=$(PUBSUB_SUBSCRIPTION)\
 --build-arg DJR_DOCKER_SCRATCH=$(DJR_DOCKER_SCRATCH)\
---build-arg THIS_DOCKER_IMAGE=$(IMAGE_NAME)\
 --build-arg DOCKER_DEVEL_IMAGE=$(DOCKER_DEVEL_IMAGE)\
 --build-arg DOCKER_CORE_IMAGE=$(DOCKER_CORE_IMAGE)\
 --build-arg DOCKER_RUNNER_IMAGE=$(DOCKER_RUNNER_IMAGE)\
---build-arg DOCKER_SERVICE_IMAGE=$(DOCKER_SERVICE_IMAGE)#\
-#--build-arg DOCKER_USER_IMAGE=$(DOCKER_USER_IMAGE)
+--build-arg DOCKER_SERVICE_IMAGE=$(DOCKER_SERVICE_IMAGE)
 
-#djr-docker-job.image: IMAGE_NAME=djr-docker-job
 
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
-moneta_core.image: IMAGE_NAME=moneta_core
 dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)
 test.image: IMAGE_NAME=test-image
-#user.image: IMAGE_NAME=$(DOCKER_USER_IMAGE)
+test2.image: IMAGE_NAME=test2-image
 
 IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE)
 
@@ -51,7 +45,7 @@ endif
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
-	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) --build-arg THIS_DOCKER_IMAGE_UUID=$(shell uuidgen) .
+	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg ARG_THIS_DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) --build-arg ARG_THIS_DOCKER_IMAGE_UUID=$(shell uuidgen) .
 #2>&1 | tee $*.log
 	docker tag $(IMAGE_NAME) $(subst $(DOCKER_IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
@@ -68,7 +62,7 @@ clean:
 .PHONY:bootstrap
 bootstrap:
 	python3 -m venv ./.bootstrap-venv
-	(. .bootstrap-venv/bin/activate; cd CSE141pp-LabPython; make setup; cd ../CSE141pp-DJR; make setup)
+	(. .bootstrap-venv/bin/activate; pip install wheel;cd CSE141pp-LabPython; make setup; cd ../CSE141pp-DJR; make setup)
 
 .PHONY:test
 test:
