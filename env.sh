@@ -124,7 +124,7 @@ else
 	}
 
 	function deployed() {
-	    export DEPLOYED=yes
+	    export DEPLOYMENT=yes
 	    reconfig
 	}
 
