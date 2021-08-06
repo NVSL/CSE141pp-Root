@@ -26,6 +26,7 @@
 ##
 
 4. Figure out what to do with the secrets
+* remove --json option from djrrun
 
 * standardize output formatting
   * put errors in stderr (err=True for click.echo)
