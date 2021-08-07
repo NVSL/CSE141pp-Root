@@ -50,6 +50,12 @@ else
 	docker container stop proxy-service
 	docker container rm proxy-service
     }
-    
+
+    function each() {
+	pushd $CS142L_ROOT
+	$@
+	git submodule foreach $@
+	popd
+    }
 fi
 
