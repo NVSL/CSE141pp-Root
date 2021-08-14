@@ -3,8 +3,29 @@
 ## Requirements For Class
 
 
+* Add function to check if we are in jupyter Notebook.
+  
+  * remove interactivity in jupyter notebook
+	* make login work in jupyter notebook
+	* kill running jobs automatically in jupyter notebook.
+	* add command line option '--force' to avoid interactivity.
+	
+  * see about formatting the output of cse142 so it looks nice in jupyter notebook.
+  
+* Insert newlin after "Updated these files: ./build/hello_world.cpp" in file output writing.
+
+	* colorize cse142 job run output
+	
+* move 'whereaim' and other bash functions into scripts so they will work in JupyterNotebook
+
+* cse142dev  should check for existing containers that are created but not running.
+* progress bar for mtrace
+* Remove trailing , in libarchlab output.
+* remove 'make: runlab: Command not found' from output
+
 * unified tagging system
 
+* Script to strip 'outputs' from jupyter notebooks for deploying labs.
 
 * make benchmarks work
 * make gradescope work
@@ -50,10 +71,11 @@
 * compute_create_args should probably be a method of the LocalObjecStore
   instead of the API.  Otherwise, compute_create_args never get's called unless
   you are going through the REST api.
-* There should probably be a singleton ObjectStore for each type and global registry so you can access them from anywhere.  I went through some messiness to get access LabSpec inside CSE142L.x
+* There should probably be a singleton ObjectStore for each type and global registry so you can access them from anywhere.  I went through some messiness to get access LabSpec inside CSE142L.
 
 # Done
 
+* make archlab work
 * make jobs cancelable while running.
 * make 'LAST' return the last job for the current user
 * maybe add email/username to Job 
