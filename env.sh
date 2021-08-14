@@ -181,6 +181,15 @@ else
 	PROMPT_COMMAND=prompter
 	whereami
 	ssh-login
+
+	if [ "$THUNK_TO_HOME" = "yes" ]; then # this is for students using the
+					      # runner image.  We source the
+					      # this file and then take them
+					      # home.
+	    cd $HOME
+	fi
+	   
     fi
+    
 fi
 
