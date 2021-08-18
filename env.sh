@@ -102,38 +102,39 @@ else
     
     # this checks if we are in an interactive shell.
     # no idea how it works.
+
+
+    function bump-version() {
+	
+	pushd $CSE142L_ROOT > /dev/null
+	branch=$(git rev-parse --abbrev-ref HEAD)
+	if [ "$branch." != "main." ]; then
+	    echo "Only bump main branch"
+	    return 1
+	fi
+	t=$(cat VERSION)
+	echo $[t + 1] > VERSION
+	git add VERSION
+	git commit -m "new-version"
+	git push
+	echo "New version is $(cat VERSION)"
+	reconfig
+	popd > /dev/null
+    }
+
+    function reconfig () {
+	__HERE=$PWD
+	cd $CSE142L_ROOT
+	. env.sh
+	cd $__HERE
+    }
+
+    function deployed() {
+	export DEPLOYMENT=yes
+	reconfig
+    }
+
     if [[ $- == *i* ]]; then
-
-	function bump-version() {
-	    
-	    pushd $CSE142L_ROOT > /dev/null
-	    branch=$(git rev-parse --abbrev-ref HEAD)
-	    if [ "$branch." != "main." ]; then
-		echo "Only bump main branch"
-		return 1
-	    fi
-	    t=$(cat VERSION)
-	    echo $[t + 1] > VERSION
-	    git add VERSION
-	    git commit -m "new-version"
-	    git push
-	    echo "New version is $(cat VERSION)"
-	    reconfig
-	    popd > /dev/null
-	}
-
-	function reconfig () {
-	    __HERE=$PWD
-	    cd $CSE142L_ROOT
-	    . env.sh
-	    cd $__HERE
-	}
-
-	function deployed() {
-	    export DEPLOYMENT=yes
-	    reconfig
-	}
-
 	function notdeployed() {
 	    undef DEPLOYED
 	    reconfig
