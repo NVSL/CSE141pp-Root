@@ -16,12 +16,19 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg DOCKER_DEVEL_IMAGE=$(DOCKER_DEVEL_IMAGE)\
 --build-arg DOCKER_CORE_IMAGE=$(DOCKER_CORE_IMAGE)\
 --build-arg DOCKER_RUNNER_IMAGE=$(DOCKER_RUNNER_IMAGE)\
---build-arg DOCKER_SERVICE_IMAGE=$(DOCKER_SERVICE_IMAGE)
+--build-arg DOCKER_SERVICE_IMAGE=$(DOCKER_SERVICE_IMAGE)\
+--build-arg DOCKER_BASE_IMAGE=$(DOCKER_BASE_IMAGE) \
+--build-arg CLOUD_MODE=$(CLOUD_MODE) \
+--build-arg DJR_SERVER=$(DJR_SERVER) \
+--build-arg DJR_CLUSTER=$(DJR_CLUSTER)
+
+export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
 
 
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
 dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
+base.image: IMAGE_NAME=$(DOCKER_BASE_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)
 test.image: IMAGE_NAME=test-image
 test2.image: IMAGE_NAME=test2-image
@@ -30,8 +37,9 @@ IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKE
 
 core.image:
 dev.image: service.image
-service.image: runner.image
-runner.image : core.image
+service.image: base.image
+base.image: core.image
+runner.image : base.image
 
 test.image:
 
