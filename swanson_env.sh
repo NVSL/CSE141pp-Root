@@ -53,6 +53,7 @@ else
 
     function each() {
 	pushd $CS142L_ROOT
+	git submodule foreach "$@"
 	"$@" || true
 	git submodule foreach "$@" || true
 	popd
