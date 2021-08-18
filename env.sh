@@ -63,6 +63,7 @@ else
     export DOCKER_DEVEL_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-dev:$DOCKER_IMAGE_VERSION
     export DOCKER_DEVEL_IMAGE_LATEST=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-dev:latest
     export DOCKER_RUNNER_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-runner:$DOCKER_IMAGE_VERSION
+    export DOCKER_BASE_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-base:$DOCKER_IMAGE_VERSION
     export DOCKER_SERVICE_IMAGE=$DOCKER_ORG/cse142l$DOCKER_IMAGE_INFIX-service:$DOCKER_IMAGE_VERSION
     #DOCKER_USER_IMAGE=$DOCKER_ORG/cse142l-user:$DOCKER_IMAGE_VERSION
 
@@ -87,6 +88,10 @@ else
     export CANELA_ROOT=$CSE142L_ROOT/CSE141pp-SimpleCNN
 
     export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
+
+    #CLOUD_MODE
+    #DJR_SERVER
+    #DJR_CLUSTER=djr-default-cluster
     
     export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
 
@@ -179,16 +184,21 @@ else
 	
 
 	PROMPT_COMMAND=prompter
+
+	# if [ ".$THUNK_TO_HOME" = ".yes" ]; then # this is for students using the
+	# 				      # runner image.  We source the
+	# 				      # this file and then take them
+	# 				      # home.
+	#     echo Changing to $HOME
+	#     cd $HOME
+	#     unset THUNK_TO_HOME
+	# else
+	#     echo Not thunking
+	# fi
+	   
 	whereami
 	ssh-login
 
-	if [ "$THUNK_TO_HOME" = "yes" ]; then # this is for students using the
-					      # runner image.  We source the
-					      # this file and then take them
-					      # home.
-	    cd $HOME
-	fi
-	   
     fi
     
 fi

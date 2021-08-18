@@ -2,6 +2,7 @@
 
 ## Requirements For Class
 
+* get the secrets out of runner.docker!
 
 * Add function to check if we are in jupyter Notebook.
   
