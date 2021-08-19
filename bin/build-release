@@ -1,0 +1,16 @@
+#!/usr/bin/env bash
+
+. env.sh
+bump-version
+
+rm -rf build_release
+
+mkdir build_release
+cd build_release
+git clone --recurse-submodules git@github.com:NVSL/CSE141pp-Root.git || (echo "clone failed"; exit 1)
+cd CSE141pp-Root
+deployed
+make
+
+
+    

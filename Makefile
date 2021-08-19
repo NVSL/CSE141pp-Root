@@ -23,8 +23,8 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg ARCHLAB_ROOT=$(ARCHLAB_ROOT) \
 --build-arg PIN_ROOT=$(PIN_ROOT) \
 --build-arg MONETA_ROOT=$(MONETA_ROOT) \
+--build-arg CANELA_ROOT=$(CANELA_ROOT) \
 --build-arg DJR_JOB_TYPE=$(DJR_JOB_TYPE) \
---build-arg DJR_SERVER=$(CANELA_ROOT) \
 --build-arg DJR_CLUSTER=$(DJR_CLUSTER)
 
 export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
