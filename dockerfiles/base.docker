@@ -2,7 +2,23 @@ ARG DOCKER_CORE_IMAGE
 FROM $DOCKER_CORE_IMAGE
 USER root
 WORKDIR /cse142L
-ADD ./ ./
+ADD ./bin \
+    ./cse141pp-archlab \
+    ./CSE141pp-DJR \
+    ./CSE141pp-LabPython \
+    ./CSE141pp-SimpleCNN \
+    ./CSE141pp-Tool-Moneta \
+    ./CSE141pp-Tool-Moneta-Pin \
+    ./env.sh \
+    ./Makefile \
+    ./README.md \
+    ./requirements.txt \
+    ./setup.py \
+    ./setup.sh \
+    ./VERSION \
+    ./
+
+
 RUN make manifest.txt
 RUN bash -c '. env.sh; bash ./setup.sh'
 ARG ARG_THIS_DOCKER_IMAGE

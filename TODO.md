@@ -2,7 +2,16 @@
 
 ## Requirements For Class
 
+* notebook sanitizer:
+	* Mark everything but the question cells as immutable.
+    * strip outputs
+	* Parse metadata annotations in cells and apply them.
+
+* add time stamp to `cse142 job run` output.
+
 * get the secrets out of runner.docker!
+
+* make get-cpu-freqs behave itself when it can't actually run.
 
 * Add function to check if we are in jupyter Notebook.
   
