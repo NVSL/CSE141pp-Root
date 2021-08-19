@@ -492,3 +492,13 @@ Then start the runner service:
 cse142 dev --service --name runner-service --image stevenjswanson/cse142l-service:latest bash -c "cse142 cluster runner"
 ```
 
+## Debugging The STudent experience
+
+The `runner` docker image is self-contained so it'll work as a student image running on campus servers via dsmlp.
+
+Here's a command line to mimic what they do:
+
+```
+docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publish published=8888,target=8888  stevenjswanson/cse142l-runner:latest
+```
+
