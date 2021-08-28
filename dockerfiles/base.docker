@@ -7,7 +7,6 @@ COPY bin ./bin
 COPY env.sh \
      Makefile \
      README.md \
-     requirements.txt \
      setup.py \
      setup.sh \
      VERSION \
