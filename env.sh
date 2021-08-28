@@ -1,5 +1,5 @@
 
-if ! ( [ -e env.sh ] && [ -d CSE141pp-Config ] && [ -d CSE141pp-DJR ] ); then
+if ! ( [ -e env.sh ] && [ -e VERSION ] ); then
     echo "Doesn't look like you are in the root directory.  Source this from the config directory."
     CONFIG_FAILED=yes
 else
@@ -45,6 +45,7 @@ else
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
 
+    export JUPYTER_CONFIG_DIR=$CSE142L_ROOT/jupyter_config
     VERSION=$(cat $CSE142L_ROOT/VERSION)
 
     [ ".$REAL_USER" = "." ] && REAL_USER=$USER
@@ -78,10 +79,14 @@ else
     export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets
     export PACKET_PROJECT_ID=1a5e2c60-b31f-49f9-85a1-84b4c5d8033f
     export DOCKER_USERNAME=stevenjswanson
-    export DOCKER_ACCESS_TOKEN=$(cat $SECRETS_DIRECTORY/docker_hub_token)
+    if [ -d $SECRETS_DIRECTORY ]; then
+	export DOCKER_ACCESS_TOKEN=$(cat $SECRETS_DIRECTORY/docker_hub_token)
+    fi
     export GOOGLE_CREDENTIALS_FILE=cse142l-dev-c775b40fa9bf.json
     export GOOGLE_APPLICATION_CREDENTIALS=$SECRETS_DIRECTORY/$GOOGLE_CREDENTIALS_FILE
-    export GITHUB_OAUTH_TOKEN=$(cat $SECRETS_DIRECTORY/git_oauth_token)
+    if [ -d $SECRETS_DIRECTORY ]; then
+	export GITHUB_OAUTH_TOKEN=$(cat $SECRETS_DIRECTORY/git_oauth_token)
+    fi
     export ALLOWED_GOOGLE_DOMAINS="ucsd.edu,eng.ucsd.edu"
 
     export MONETA_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta
