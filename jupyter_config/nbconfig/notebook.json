@@ -1,0 +1,20 @@
+{
+  "load_extensions": {
+    "collapsible_headings/main": true,
+    "table_beautifier/main": false,
+    "spellchecker/main": true,
+    "toc2/main": true,
+    "freeze/main": true,
+    "scratchpad/main": true,
+    "exercise2/main": true,
+    "rubberband/main": true,
+    "init_cell/main": true
+  },
+  "toc2": {
+    "threshold": "3",
+    "toc_window_display": true
+  },
+  "collapsible_headings": {
+    "add_all_cells_button": true
+  }
+}
