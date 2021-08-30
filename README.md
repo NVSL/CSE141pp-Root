@@ -499,6 +499,13 @@ The `runner` docker image is self-contained so it'll work as a student image run
 Here's a command line to mimic what they do:
 
 ```
-docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publish published=8888,target=8888  stevenjswanson/cse142l-runner:latest
+docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publish published=8888,target=8888  stevenjswanson/cse142l-swanson-runner:latest jupyter-notebook --allow-root 
 ```
 
+## Building Docker Images
+
+OUr images are based on the Jupyter notebook scipy image, but the published version use an old version of python, so we built it ourselves:
+
+```
+make docker-stacks
+```

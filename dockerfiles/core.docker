@@ -45,7 +45,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev radare2  libradare2-dev linux-tools-5.4.0-80-generic linux-cloud-tools-5.4.0-80-generic
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-math-dev libboost-dev libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev linux-tools-5.4.0-80-generic linux-cloud-tools-5.4.0-80-generic libpcre3-dev
 RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get clean -y
 #RUN apt-get install -y linux-tools-5.8.0-63-generic linux-cloud-tools-5.8.0-63-generic  && apt-get clean -y
 
@@ -54,10 +54,18 @@ RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get 
 
 RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
 
+RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2-dev_5.3.1_amd64.deb -o /tmp/radare2-dev_5.3.1_amd64.deb
+RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2_5.3.1_amd64.deb -o /tmp/radare2_5.3.1_amd64.deb
+RUN apt install /tmp/radare2_5.3.1_amd64.deb  /tmp/radare2-dev_5.3.1_amd64.deb
+
 WORKDIR /tmp
+USER root
 
 # Update requirements.txt occasionally with pip --freeze so most of the stuff we need is already load.  Therefore rebuilding the derived images much faster.
-COPY requirements.txt ./ 
-RUN pip3 install -r requirements.txt
+# This doesn't work when we base things off the custom-built scipy notebook
+#COPY requirements.txt ./
+#RUN mkdir /home/jovyan/.cache/pip
+
+#RUN  pip install -r requirements.txt
 WORKDIR /cse142L
 

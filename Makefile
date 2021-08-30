@@ -5,9 +5,10 @@ default: runner.image dev.image core.image service.image
 setup:
 	pip install -e .
 
-.PHONY: require	ments.txt
-requirements.txt:
-	pip freeze  --all  --local --exclude-editable > $@
+#.PHONY: requirements.txt
+#requirements.txt: 
+#	pip freeze  --all  --local --exclude-editable | grep -v DJR | grep -v LabPython  | grep -v pygobject | grep -v python-apt > $@
+#	#	python -m pip freeze  --all  --local --exclude-editable jupyter_requirements.txt
 
 BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg GOOGLE_APPLICATION_CREDENTIALS=$(GOOGLE_APPLICATION_CREDENTIALS)\
@@ -25,9 +26,11 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg MONETA_ROOT=$(MONETA_ROOT) \
 --build-arg CANELA_ROOT=$(CANELA_ROOT) \
 --build-arg DJR_JOB_TYPE=$(DJR_JOB_TYPE) \
+--build-arg JUPYTER_CONFIG_DIR=$(JUPYTER_CONFIG_DIR) \
 --build-arg DJR_CLUSTER=$(DJR_CLUSTER)
 
-export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
+SUBDIRS=cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin
+export SUBDIRS
 
 
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
@@ -92,7 +95,13 @@ pull: perms
 	for i in $(IMAGES); do docker pull $$i; done
 	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
 
-.PHONY: manifest.txt
-manifest.txt:
-	for d in . $(SUBDIRS); do (cd $$d;  echo =========== $$d ==============; git rev-parse HEAD; git status; git diff);done > $@
+
+DOCKER_STACKS_DEP_CHAIN=base-notebook minimal-notebook scipy-notebook
+
+.PHONY: docker-stacks
+docker-stacks:
+	[ -d docker-stacks ] || git clone https://github.com/jupyter/docker-stacks.git
+	for i in $(DOCKER_STACKS_DEP_CHAIN); do $(MAKE) -C docker-stacks build/$$i OWNER=stevenjswanson DARGS="--build-arg PYTHON_VERSION=3.7 --no-cache"; done
+	for i in $(DOCKER_STACKS_DEP_CHAIN); do $(MAKE) -C docker-stacks push/$$i  OWNER=stevenjswanson ;done
+
 
