@@ -56,8 +56,7 @@ else
     if [ ".$DEPLOYMENT" = ".yes" ]; then
 	export DOCKER_IMAGE_INFIX=
     else
-	DOCKER_IMAGE_INFIX=${DOCKER_IMAGE_INFIX:--$REAL_USER}
-	export DOCKER_IMAGE_INFIX
+	export DOCKER_IMAGE_INFIX=-$REAL_USER
     fi
     #export DOCKER_IMAGE_VERSION=s21-dev
     

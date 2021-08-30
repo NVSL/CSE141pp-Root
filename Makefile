@@ -29,8 +29,7 @@ BUILD_ARGS=--build-arg GOOGLE_CREDENTIALS_FILE=$(GOOGLE_CREDENTIALS_FILE)\
 --build-arg JUPYTER_CONFIG_DIR=$(JUPYTER_CONFIG_DIR) \
 --build-arg DJR_CLUSTER=$(DJR_CLUSTER)
 
-SUBDIRS=cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin
-export SUBDIRS
+export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
 
 
 core.image: IMAGE_NAME=$(DOCKER_CORE_IMAGE)
@@ -95,13 +94,13 @@ pull: perms
 	for i in $(IMAGES); do docker pull $$i; done
 	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
 
-
-DOCKER_STACKS_DEP_CHAIN=base-notebook minimal-notebook scipy-notebook
+.PHONY: manifest.txt
+manifest.txt:
+	for d in . $(SUBDIRS); do (cd $$d;  echo =========== $$d ==============; git rev-parse HEAD; git status; git diff);done > $@
 
 .PHONY: docker-stacks
 docker-stacks:
-	[ -d docker-stacks ] || git clone https://github.com/jupyter/docker-stacks.git
-	for i in $(DOCKER_STACKS_DEP_CHAIN); do $(MAKE) -C docker-stacks build/$$i OWNER=stevenjswanson DARGS="--build-arg PYTHON_VERSION=3.7 --no-cache"; done
-	for i in $(DOCKER_STACKS_DEP_CHAIN); do $(MAKE) -C docker-stacks push/$$i  OWNER=stevenjswanson ;done
-
+	git clone https://github.com/jupyter/docker-stacks.git
+	$(MAKE) -C docker-stacks build/scipy-notebook OWNER=stevenjswanson
+	$(MAKE) -C docker-stacks push/scipy-notebook OWNER=stevenjswanson
 
