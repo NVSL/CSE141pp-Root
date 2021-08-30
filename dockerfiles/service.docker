@@ -3,12 +3,6 @@ FROM $DOCKER_BASE_IMAGE
 USER root
 WORKDIR /cse142L
 
-COPY dockerfiles ./dockerfiles 
-COPY CSE141pp-Config ./CSE141pp-Config
-COPY swanson_env.sh  ./
-COPY test.sh  ./
-COPY TODO.md  ./
-
 ENV GOOGLE_APPLICATION_CREDENTIALS ./CSE141pp-Config/secrets/$GOOGLE_CREDENTIALS_FILE
 
 ARG ARG_THIS_DOCKER_IMAGE

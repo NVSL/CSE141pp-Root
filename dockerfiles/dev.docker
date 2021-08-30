@@ -5,7 +5,14 @@ ARG DEVEL_ROOT
 USER root
 
 WORKDIR /cse142L
-     
+ADD ./labs \
+    ./dockerfiles \
+    ./CSE141pp-Config \
+    ./src \
+    ./swanson_env.sh \
+    ./test.sh \
+    ./TODO.md \
+    ./
 RUN mkdir -p /tmp/emulation
 
 # In the service container, we used pip install -e (via setup.sh).  That

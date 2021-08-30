@@ -2,13 +2,10 @@
 
 ## Requirements For Class
 
-* rename "login.ipynb" to "authenticate.ipynb"
-
 * notebook sanitizer:
 	* Mark everything but the question cells as immutable.
     * strip outputs
 	* Parse metadata annotations in cells and apply them.
-https://nbformat.readthedocs.io/en/latest/format_description.html#top-level-structure
 
 * add time stamp to `cse142 job run` output.
 

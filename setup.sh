@@ -11,3 +11,4 @@ for d in . $SUBDIRS; do
      fi
     )
 done
+
