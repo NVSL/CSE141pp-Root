@@ -94,8 +94,6 @@ else
 
     export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
 
-    PATH=/opt/conda/bin:$PATH
-    
     #CLOUD_MODE
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster
