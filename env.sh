@@ -95,8 +95,7 @@ else
 
     export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
 
-    PATH=$CSE142L_ROOT/bin:$PATH
-    
+    export PATH=$CSE142L_ROOT/bin:$PATH
     #CLOUD_MODE
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster
@@ -107,7 +106,7 @@ else
 	source-env $d
     done
 
-    
+
     # this checks if we are in an interactive shell.
     # no idea how it works.
 
@@ -209,6 +208,5 @@ else
 	ssh-login
 
     fi
-    
 fi
 
