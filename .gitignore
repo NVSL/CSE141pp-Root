@@ -18,3 +18,4 @@ job-*
 .ipynb_checkpoints
 .DS_Store
 labs
+docker-stacks
