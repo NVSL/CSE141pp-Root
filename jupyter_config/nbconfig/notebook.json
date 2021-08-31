@@ -8,7 +8,9 @@
     "scratchpad/main": true,
     "exercise2/main": true,
     "rubberband/main": true,
-    "init_cell/main": true
+    "init_cell/main": true,
+    "nbextensions_configurator/config_menu/main": true,
+    "contrib_nbextensions_help_item/main": true
   },
   "toc2": {
     "threshold": "3",

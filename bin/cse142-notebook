@@ -1,0 +1,3 @@
+#!/usr/bin/env bash 
+
+/opt/conda/bin/python `which jupyter-notebook` --allow-root $CSE142L_ROOT
