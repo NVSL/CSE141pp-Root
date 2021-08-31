@@ -95,6 +95,8 @@ else
 
     export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
 
+    PATH=$CSE142L_ROOT/bin:$PATH
+    
     #CLOUD_MODE
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster

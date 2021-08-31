@@ -4,6 +4,7 @@ default: runner.image dev.image core.image service.image
 .PHONY: setup
 setup:
 	pip install -e .
+	python -m pip install -e .
 
 #.PHONY: requirements.txt
 #requirements.txt: 
