@@ -10,7 +10,8 @@
     "rubberband/main": true,
     "init_cell/main": true,
     "nbextensions_configurator/config_menu/main": true,
-    "contrib_nbextensions_help_item/main": true
+    "contrib_nbextensions_help_item/main": true,
+    "exercise/main": false
   },
   "toc2": {
     "threshold": "3",
@@ -18,5 +19,10 @@
   },
   "collapsible_headings": {
     "add_all_cells_button": true
+  },
+  "Cell": {
+    "cm_config": {
+      "lineNumbers": false
+    }
   }
 }

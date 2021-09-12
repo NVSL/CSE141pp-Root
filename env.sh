@@ -76,6 +76,9 @@ else
     export CLOUD_MODE=CLOUD
     export DJR_DOCKER_SCRATCH=/tmp/djr_scratch
     export GOOGLE_CLOUD_PROJECT=cse142l-dev
+
+    export LABS="intro-bench compiler-bench"
+
     
     export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets
     export PACKET_PROJECT_ID=1a5e2c60-b31f-49f9-85a1-84b4c5d8033f
@@ -95,7 +98,7 @@ else
 
     export PIN_ROOT=$CSE142L_ROOT/CSE141pp-Tool-Moneta-Pin/
 
-    export PATH=$CSE142L_ROOT/bin:$PATH
+    export PATH=$CSE142L_ROOT/bin:/opt/conda/bin/:$PATH
     #CLOUD_MODE
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster

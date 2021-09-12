@@ -4,7 +4,7 @@ setup(
     name="CSE142LBoot",
     version="0.1",
     install_requires = [
-        "click",
+        "click==8",
      ],
     packages=find_packages('src'),
     package_dir={'': 'src'},

@@ -1,0 +1,15 @@
+#FROM stevenjswanson/cse142l-swanson-base
+FROM gradescope/auto-builds:ubuntu-18.04
+ARG ZIP_BALL
+RUN apt-get update --fix-missing; apt-get update
+RUN apt-get install -y zip
+RUN mkdir -p /autograder/source
+WORKDIR /autograder/source
+COPY $ZIP_BALL ./zip_ball.zip
+RUN unzip -q zip_ball.zip
+RUN ls -l
+RUN bash setup.sh
+WORKDIR /autograder
+RUN cp /autograder/source/run_autograder ./
+CMD bash ./run_autograder
+

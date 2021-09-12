@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+pushd /cse142L
+. env.sh
+. gradescope_env.sh
+. venv/bin/activate
+
+pushd /autograder/source/
+#for i in CSE141pp-DJR CSE141pp-LabPython; do
+#    (cd $i;
+#     git pull
+#     python3.9 -m pip install -e .
+#    )
+#done
+
+(cd lab; git pull)
+pushd /autograder/submission
+python3.9 `which cse142` --no-http job run --force --lab $LAB autograde
+cd /autograder/
+python3.9 /autograder/source/lab/autograde.py --submission /autograder/submission/autograde --results /autograder/results/results.json
+
+
+
+

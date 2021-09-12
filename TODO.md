@@ -2,47 +2,40 @@
 
 ## Requirements For Class
 
-* rename "login.ipynb" to "authenticate.ipynb"
+* make benchmarks work
+* make gradescope work
+* fix autograder stuff
+* add bulk useradd/update
+* Move standard error mtrace into notebook
+* 
 
-* notebook sanitizer:
-	* Mark everything but the question cells as immutable.
-    * strip outputs
-	* Parse metadata annotations in cells and apply them.
-https://nbformat.readthedocs.io/en/latest/format_description.html#top-level-structure
+* Fluid interface for running and collecting data about fiddles.
+* merge utility function for panda dataframes
+
+* Only display compiler etc. output on error.
+
+* fix intermittent error with cfg generation.
+
+
+* rename "login.ipynb" to "authenticate.ipynb"
 
 * add time stamp to `cse142 job run` output.
 
-* get the secrets out of runner.docker!
-
 * make get-cpu-freqs behave itself when it can't actually run.
 
-* Add function to check if we are in jupyter Notebook.
-  
-  * remove interactivity in jupyter notebook
-	* make login work in jupyter notebook
-	* kill running jobs automatically in jupyter notebook.
-	* add command line option '--force' to avoid interactivity.
-	
-  * see about formatting the output of cse142 so it looks nice in jupyter notebook.
+* see about formatting the output of cse142 so it looks nice in jupyter notebook.
+	* colorize cse142 job run output
   
 * Insert newlin after "Updated these files: ./build/hello_world.cpp" in file output writing.
-
-	* colorize cse142 job run output
 	
 * move 'whereaim' and other bash functions into scripts so they will work in JupyterNotebook
 
-* cse142dev  should check for existing containers that are created but not running.
 * progress bar for mtrace
 * Remove trailing , in libarchlab output.
-* remove 'make: runlab: Command not found' from output
 
 * unified tagging system
 
 * Script to strip 'outputs' from jupyter notebooks for deploying labs.
-
-* make benchmarks work
-* make gradescope work
-* fix autograder stuff
 
 * add cron job to cleanup stalled jobs
   * to create a stalled job, start a job and then kill the runner.
@@ -86,7 +79,21 @@ https://nbformat.readthedocs.io/en/latest/format_description.html#top-level-stru
   you are going through the REST api.
 * There should probably be a singleton ObjectStore for each type and global registry so you can access them from anywhere.  I went through some messiness to get access LabSpec inside CSE142L.
 
+* Job state changes should be transactional.  Otherwise, we have to be very lenient about state transitions.  For instance, Exec_time_out -> total_time_out shouldn't be allowed, but if the client and the subimtter race about it, it's a problem.
+
+
 # Done
+
+* remove 'make: runlab: Command not found' from output
+* cse142dev  should check for existing containers that are created but not running.
+* Add function to check if we are in jupyter Notebook.
+  
+  * remove interactivity in jupyter notebook
+	* make login work in jupyter notebook
+	* kill running jobs automatically in jupyter notebook.
+	* add command line option '--force' to avoid interactivity.
+
+* get the secrets out of runner.docker!
 
 * make archlab work
 * make jobs cancelable while running.
@@ -114,6 +121,14 @@ https://nbformat.readthedocs.io/en/latest/format_description.html#top-level-stru
 1. Google login.
 3. Merge deploy directory into config directory
 3. Implement 'djr user *' functionality to create/delete/etc. users
+
+* notebook sanitizer:
+	* Mark everything but the question cells as immutable.
+    * strip outputs
+	* Parse metadata annotations in cells and apply them.
+https://nbformat.readthedocs.io/en/latest/format_description.html#top-level-structure
+
+
 
 # Benchmark Algorithm
 

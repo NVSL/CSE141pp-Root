@@ -1,7 +1,23 @@
 <style type="text/css">
 
+.junk {
+}
+
+.namebox {
+    background: #eee;
+    padding:0.5em;
+    font-size: 75%;
+    line-height: 1.1;
+    border-radius:1em;
+    
+}
+.question {
+    padding: 1em;
+    border-radius:1em;
+    background: #f0f0f0;
+}
 .title {
-    font-size: 300% !important;
+    font-size: 300%;
     margin-top: 1.5em;
     margin-bottom: 1.5em;
     font-weight: bold;
@@ -9,24 +25,78 @@
     text-align:center;
 }
 
-.question {
-    padding: 1em;
-    border-radius:1em;
-    background: #f0f0f0;
-}
 .question pre, .answer {
     padding: 1em;
     margin: 1em;
     border-radius:1em;
-    background: white;
-}
-.question > h4 {
-    line-height: 1.5em;
-    font-size: 100%;
+    background: white ;
 }
 
+/*.question > h4 {
+    line-height: 1.5em;
+    font-size: 100%;
+}*/
+
+.solution:before {
+    content: "Solution";
+    font-size: 150%;
+    display: block;
+    margin-bottom: 1em;
+}
+
+
+div.question-text {
+    font-size: 120%;
+    font-weight: bold;
+}
+
+body {
+    counter-reset:  question_counter;
+    
+}
+.question:before {
+    counter-increment: question_counter;
+}
+
+.completeness:before {
+    content: "Question "counter(question_counter)" (Completeness)";
+    font-size: 150%;
+    display: block;
+    margin-bottom: 1em;
+    font-style: italic;
+}
+
+.optional:before {
+    content: "Question "counter(question_counter)" (Optional)";
+    font-size: 150%;
+    display: block;
+    margin-bottom: 1em;
+    font-style: italic;
+}
+
+
+h4 span.toc-item-num {
+    display: none;
+}
+.correctness:before {
+
+    content: "Question "counter(question_counter)" (Correctness)";
+    font-size: 150%;
+    display: block;
+    margin-bottom: 1em;
+    font-style: italic;
+}
+
+.solution ,._solution {
+    background: rgb(52 167 193 / 28%);
+    padding: 1em;
+}
 div.container{
     width:95%;
+}
+
+code, .rendered_html code, .rendered_html pre, .rendered_html pre code  {
+    background-color:rgb(52 167 193 / 0%);
 }
 
 div.sidebar {
@@ -55,6 +125,8 @@ div.sidebar div.title {
     margin-top: 1em  !important;
     margin-bottom: 1em  !important;
     padding-left: 1em !important;
+}
+.question {
     border-left-width : 2px !important;
     border-left-color : red !important;
     border-left-style : solid !important;
@@ -87,7 +159,7 @@ th {
 }
 
 .question code {
-    background: white;
+
 }
 .question-header {
     height:1em;
@@ -107,12 +179,8 @@ th {
     background:yellow;
 }
 
-/*    body {
-    counter-reset: h1_counter question_counter;
-
-    }
     
-    h1:before{
+/*    h1:before{
         content: counter(h1_counter)" ";
         counter-increment: h1_counter;
     }
@@ -140,11 +208,6 @@ th {
         content: counter(h1_counter)"."counter(h2_counter)"."counter(h3_counter)"."counter(h4_counter)" ";
     }
 */
-    .question h4:before {
-       counter-increment: question_counter;
-        content: "Q"counter(question_counter)": ";
-    }
-    
     
 </style>
 
