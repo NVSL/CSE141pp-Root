@@ -1,5 +1,5 @@
-#stevenjswanson/scipy-notebook
-FROM jupyter/scipy-notebook:dc9744740e12
+#jupyter/scipy-notebook:dc9744740e12
+FROM stevenjswanson/scipy-notebook
 #FROM ubuntu 
 USER root
 # this turns off some stupid prompting from apt-get install

@@ -25,3 +25,8 @@ test-gradescope:
 	git clone $(TEST_LAB) test_gradescope/submission
 	mkdir -p test_gradescope/results
 	docker run -it  --volume $(WORK_OUTSIDE_OF_DOCKER)/gradescope/test_gradescope/submission:/autograder/submission --volume  $(WORK_OUTSIDE_OF_DOCKER)/gradescope/test_gradescope/results:/autograder/results gradescope-test
+	cat test_gradescope/results/results.json
+
+tidy:
+	rm -rf test_gradescope
+	rm -rf gradescope

@@ -38,6 +38,6 @@ for LAB in $LABS; do
     rm -rf lab
     cse142 lab clone $LAB lab
     
-    zip -qr ../gradescope-zipballs/gradescope-$LAB.zip  *
+    zip -qr ../gradescope-zipballs/gradescope-$DJR_CLUSTER-$LAB.zip  *
 #    exit 0
 done 

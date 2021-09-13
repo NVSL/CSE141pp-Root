@@ -14,7 +14,8 @@ pushd /autograder/source/
 
 (cd lab; git pull)
 pushd /autograder/submission
-python3.9 `which cse142` --no-http job run --force --lab $LAB autograde
+THE_USER=$(jextract ../submission_metadata.json users 0 email)
+python3.9 `which cse142` --no-http --as-user $THE_USER job run --autograder --force --lab $LAB autograde
 cd /autograder/
 python3.9 /autograder/source/lab/autograde.py --submission /autograder/submission/autograde --results /autograder/results/results.json
 
