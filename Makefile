@@ -93,8 +93,8 @@ push: perms
 
 .PHONY: pull
 pull: perms
-	for i in $(IMAGES); do docker pull $$i; done
-	for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
+	-for i in $(IMAGES); do docker pull $$i; done
+	-for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
 
 
 DOCKER_STACKS_DEP_CHAIN=base-notebook minimal-notebook scipy-notebook
