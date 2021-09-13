@@ -9,7 +9,7 @@ RUN unzip -q zip_ball.zip
 RUN ls -l
 RUN bash setup.sh
 WORKDIR /autograder
-RUN copy example_submission_metadata.json submission_metadata.json
+COPY example_submission_metadata.json submission_metadata.json
 RUN cp /autograder/source/run_autograder ./
 CMD bash ./run_autograder
 
