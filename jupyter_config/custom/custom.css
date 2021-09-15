@@ -51,8 +51,7 @@ div.question-text {
 }
 
 body {
-    counter-reset:  question_counter;
-    
+    counter-reset:  question_counter points_counter;
 }
 .question:before {
     counter-increment: question_counter;
@@ -78,14 +77,49 @@ body {
 h4 span.toc-item-num {
     display: none;
 }
-.correctness:before {
 
-    content: "Question "counter(question_counter)" (Correctness)";
+
+
+
+.points-1:before {
+    counter-set: points_counter 1;
+}
+.points-2:before {
+    counter-set: points_counter 2;
+}
+.points-3:before {
+    counter-set: points_counter 3;
+}
+.points-4:before {
+    counter-set: points_counter 4;
+}
+.points-5:before {
+    counter-set: points_counter 5;
+}
+.points-6:before {
+    counter-set: points_counter 6;
+}
+.points-7:before {
+    counter-set: points_counter 7;
+}
+.points-8:before {
+    counter-set: points_counter 8;
+}
+.points-9:before {
+    counter-set: points_counter 9;
+}
+.points-10:before {
+    counter-set: points_counter 10;
+}
+
+.correctness:before {
+    content: "Question "counter(question_counter)" (Correctness - "counter(points_counter)"pts)";
     font-size: 150%;
     display: block;
     margin-bottom: 1em;
     font-style: italic;
 }
+
 
 .solution ,._solution {
     background: rgb(52 167 193 / 28%);
@@ -178,6 +212,7 @@ th {
     min-height:1em;
     background:yellow;
 }
+
 
     
 /*    h1:before{
