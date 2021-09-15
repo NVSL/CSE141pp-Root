@@ -37,6 +37,8 @@ apt-get install -y python3.9 python3.9-venv python3.9-dev && apt-get clean -y
 #update-alternatives --install /usr/bin/python3 python /usr/bin/python3.9 10
 python3.9 -m pip install --upgrade pip 
 python3.9 -m pip install --upgrade setuptools
+python3.9 -m pip install pyyaml pytz requests psutil grequests python-dateutil
+python3 -m pip install pyyaml pytz requests psutil grequests python-dateutil
 
 python3.9 -m venv venv
 . venv/bin/activate

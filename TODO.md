@@ -7,7 +7,7 @@
 * fix autograder stuff
 * add bulk useradd/update
 * Move standard error mtrace into notebook
-* 
+* Move rate-limiting logic onto the server side. Make it not apply to admins and "root" users.
 
 * Fluid interface for running and collecting data about fiddles.
 * merge utility function for panda dataframes
