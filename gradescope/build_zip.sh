@@ -1,7 +1,6 @@
 #!/usr/bin/env bash
 
 set -ex
-rm -rf gradescope-zipballs
 mkdir -p gradescope-zipballs
 
 rm -rf gradescope
@@ -37,7 +36,8 @@ for LAB in $LABS; do
     
     rm -rf lab
     cse142 lab clone $LAB lab
-    
+
+    rm -rf ../gradescope-zipballs/gradescope-$DJR_CLUSTER-$LAB.zip
     zip -qr ../gradescope-zipballs/gradescope-$DJR_CLUSTER-$LAB.zip  *
 #    exit 0
 done 
