@@ -108,7 +108,7 @@ else
     for d in $SUBDIRS; do 
 	source-env $d
     done
-
+    source-env shim
 
     # this checks if we are in an interactive shell.
     # no idea how it works.
