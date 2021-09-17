@@ -1,5 +1,11 @@
 #!/bin/bash
 
+#
+#mkdir /tmp/djr_scratch
+# I got this by running the contents of cse142dev by hand and then passing `-n` to `cse142 dev`.  Then, I updated the mount paths.  The advantage is that 'make bootstrap' doesn't have to work -- it actually depends on _a lot_ of stuff, which is not great.
+#
+# sudo docker run -it --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env WORK_OUTSIDE_OF_DOCKER --env HOME_OUTSIDE_OF_DOCKER --env REAL_IP_ADDR --env REAL_HOSTNAME --env EMULATION_DIR --env CLOUD_NAMESPACE --env REAL_USER --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=swanson-dev --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --mount type=bind,source=$HOME,dst=/root --mount type=bind,source=$PWD,dst=/cse142L --mount type=bind,source=/tmp/djr_scratch,dst=/tmp/djr_scratch --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name swanson-dev --hostname swanson-dev-192.168.4.21 stevenjswanson/cse142l-swanson-dev:latest bash --rcfile env.sh
+#
 ###############################################################################
 #	This script sets up a packet server
 ###############################################################################

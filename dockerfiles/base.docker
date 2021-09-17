@@ -21,6 +21,10 @@ COPY cse141pp-archlab ./cse141pp-archlab
 COPY CSE141pp-DJR  ./CSE141pp-DJR 
 COPY CSE141pp-LabPython ./CSE141pp-LabPython
 
+RUN conda install -y gh --channel conda-forge
+
+mkdir -p /tmp/djr_scratch
+
 RUN bash -c '. env.sh; bash ./setup.sh'
 ARG ARG_THIS_DOCKER_IMAGE
 ENV THIS_DOCKER_IMAGE ${ARG_THIS_DOCKER_IMAGE}

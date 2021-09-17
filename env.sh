@@ -34,6 +34,10 @@ else
 	popd
     }
     
+    export COURSE_NAME=CSE142L
+    export COURSE_INSTANCE=fa21 
+    export GITHUB_CLASSROOM_ORG=CSE142
+    export NB_RELEASE_INCLUDES=$CSE142L_ROOT/labs/CSE141pp-Lab-Common
 
     export HTTP_ROOT_REPO=https://github.com/NVSL/CSE141pp-Root.git
     export ROOT_REPO_BRANCH=main
@@ -108,7 +112,8 @@ else
     for d in $SUBDIRS; do 
 	source-env $d
     done
-
+    source-env shim
+    
 
     # this checks if we are in an interactive shell.
     # no idea how it works.
