@@ -66,6 +66,8 @@ USER root
 #COPY requirements.txt ./
 #RUN mkdir /home/jovyan/.cache/pip
 
+
+
 #RUN  pip install -r requirements.txt
 WORKDIR /cse142L
 
