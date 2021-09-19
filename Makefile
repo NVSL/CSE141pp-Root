@@ -1,5 +1,5 @@
 .PHONY: default
-default: runner.image dev.image core.image service.image
+default: runner.image dev.image core.image service.image dsmlp.image
 
 .PHONY: setup
 setup:
@@ -39,16 +39,18 @@ dev.image: IMAGE_NAME=$(DOCKER_DEVEL_IMAGE)
 runner.image: IMAGE_NAME=$(DOCKER_RUNNER_IMAGE)
 base.image: IMAGE_NAME=$(DOCKER_BASE_IMAGE)
 service.image: IMAGE_NAME=$(DOCKER_SERVICE_IMAGE)
+dsmlp.image: IMAGE_NAME=$(DOCKER_DSMLP_IMAGE)
 test.image: IMAGE_NAME=test-image
 test2.image: IMAGE_NAME=test2-image
 
-IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE)
+IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE) $(DOCKER_DSMLP_IMAGE)
 
 core.image:
 dev.image: service.image
 service.image: base.image
 base.image: core.image
 runner.image : base.image
+dsmlp.image: service.image
 
 test.image:
 
