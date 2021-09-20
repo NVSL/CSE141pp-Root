@@ -33,11 +33,14 @@ else
 	if ! git status -uno| grep -q 'Your branch is up.to.date with'; then echo -e "${RED}$D is not up-to-date with upstream $NC";return 1; fi
 	popd
     }
+
+    export CSE142L_ROOT=$PWD
     
     export COURSE_NAME=CSE142L
     export COURSE_INSTANCE=fa21 
     export GITHUB_CLASSROOM_ORG=CSE142
     export NB_RELEASE_INCLUDES=$CSE142L_ROOT/labs/CSE141pp-Lab-Common
+    
 
     export HTTP_ROOT_REPO=https://github.com/NVSL/CSE141pp-Root.git
     export ROOT_REPO_BRANCH=main
@@ -45,7 +48,6 @@ else
     export ARCHLAB_REPO_BRANCH=master
     
     export CLOUD_NAMESPACE=default
-    export CSE142L_ROOT=$PWD
     export DOCKER_ORG=stevenjswanson
     export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
 
