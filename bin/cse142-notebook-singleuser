@@ -1,0 +1,7 @@
+#!/usr/bin/env bash 
+
+pushd /cse142L
+. env.sh
+popd
+
+/opt/conda/bin/python `which jupyter-singleuser`  "$@"
