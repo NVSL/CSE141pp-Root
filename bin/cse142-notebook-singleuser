@@ -4,4 +4,4 @@ pushd /cse142L
 . env.sh
 popd
 
-/opt/conda/bin/python `which jupyter-singleuser`  "$@"
+/opt/conda/bin/python /opt/conda/bin/jupyterhub-singleuser  "$@"
