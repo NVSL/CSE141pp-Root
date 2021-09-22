@@ -2,6 +2,8 @@
 
 ## FA21 notes
 
+for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v28 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do echo ssh sjswanson@its-ieng6maas-$node.ucsd.edu  docker pull $image:$tag;done;done;done
+
 docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377
 
 for i in 03 04 05 06 07 08 09 10 11 ; do ssh sjswanson@its-ieng6maas-$i.ucsd.edu sudo docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377;done
