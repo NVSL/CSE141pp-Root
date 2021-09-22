@@ -45,6 +45,8 @@ test2.image: IMAGE_NAME=test2-image
 
 IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE) $(DOCKER_DSMLP_IMAGE)
 
+atest:
+	echo $(IMAGES)
 core.image:
 dev.image: service.image
 service.image: base.image
