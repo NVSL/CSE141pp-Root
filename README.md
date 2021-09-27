@@ -2,7 +2,12 @@
 
 ## FA21 notes
 
-for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v28 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do echo ssh sjswanson@its-ieng6maas-$node.ucsd.edu  docker pull $image:$tag;done;done;done
+
+Make the DSMP cluster fetch new images:
+```
+for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v38 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do ssh sjswanson@its-ieng6maas-$node.ucsd.edu  sudo docker pull $image:$tags;done;done&done
+```
+
 
 docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377
 
@@ -25,7 +30,11 @@ You can do this with a simple ssh command.
 sudo docker run -it --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env EMULATION_DIR --env CLOUD_NAMESPACE --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=runner-service --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name runner-service -w /cse142L/ stevenjswanson/cse142l-swanson-service:latest bash --rcfile /cse142L/env.sh -c '. env.sh; cse142 --no-http -v cluster runner'
 
 
-sudo docker service create --replicas 1  --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env EMULATION_DIR --env CLOUD_NAMESPACE --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=runner-service --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name runner-service -w /cse142L/ stevenjswanson/cse142l-swanson-service:latest bash -c '. env.sh; cse142 --no-http -v cluster runner'
+Start the runner service on the dsmlp cluster:
+
+```
+sudo docker service create --replicas 10  --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env EMULATION_DIR --env CLOUD_NAMESPACE --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=runner-service --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name runner-service -w /cse142L/ stevenjswanson/cse142l-service-dsmlp:latest bash -c '. env.sh; cse142 --no-http -v cluster runner'
+```
 
 ## Lab Job Runner Overview
 

@@ -82,34 +82,34 @@ h4 span.toc-item-num {
 
 
 .points-1:before {
-    counter-set: points_counter 1;
+    counter-reset: points_counter 1;
 }
 .points-2:before {
-    counter-set: points_counter 2;
+    counter-reset: points_counter 2;
 }
 .points-3:before {
-    counter-set: points_counter 3;
+    counter-reset: points_counter 3;
 }
 .points-4:before {
-    counter-set: points_counter 4;
+    counter-reset: points_counter 4;
 }
 .points-5:before {
-    counter-set: points_counter 5;
+    counter-reset: points_counter 5;
 }
 .points-6:before {
-    counter-set: points_counter 6;
+    counter-reset: points_counter 6;
 }
 .points-7:before {
-    counter-set: points_counter 7;
+    counter-reset: points_counter 7;
 }
 .points-8:before {
-    counter-set: points_counter 8;
+    counter-reset: points_counter 8;
 }
 .points-9:before {
-    counter-set: points_counter 9;
+    counter-reset: points_counter 9;
 }
 .points-10:before {
-    counter-set: points_counter 10;
+    counter-reset: points_counter 10;
 }
 
 .correctness:before {
