@@ -49,6 +49,15 @@ RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-esse
 RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get clean -y
 #RUN apt-get install -y linux-tools-5.8.0-63-generic linux-cloud-tools-5.8.0-63-generic  && apt-get clean -y
 
+##### Intel's MLC tool
+
+# https://software.intel.com/content/www/us/en/develop/articles/intelr-memory-latency-checker.html
+RUN curl https://software.intel.com/content/dam/develop/external/us/en/documents/mlc_v3.9a.tgz -o /tmp/mlc_v3.9a.tgz && (cd /tmp; tar xzf mlc_v3.9a.tgz; cp Linux/mlc/ /usr/local/bin)
+
+##### lmbench
+
+#http://lmbench.sourceforge.net/
+RUN curl -L  'https://downloads.sourceforge.net/project/lmbench/OldFiles/lmbench-3.0-a4.tgz?ts=gAAAAABhWpnhZ3EiIiP_1RcQ-QbBWRNwTIA-Z	-a8QHpGOW7QvtlleWW71MNQMXoVOR4hM7hreBXF1eplWCFq0b2jm9YIRbeV5g%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Flmbench%2Ffiles%2FOldFiles%2Flmbench-3.0-a4.tgz%2Fdownload' -o /tmp/lmbench-3.0-a4.tgz && (cd /tmp; tar xzf lmbench-3.0-a4.tgz; cd lmbench-3.0-a4; make; cp bin/*/* /usr/local/bin/; mkdir -p /usr/local/man/man8; cp doc/*.8 /usr/local/man/man8/)
 
 ##### Slow-building libraries we use
 
@@ -58,6 +67,10 @@ RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2_5.3.1_amd64.deb -o /tmp/radare2_5.3.1_amd64.deb
 RUN apt install /tmp/radare2_5.3.1_amd64.deb  /tmp/radare2-dev_5.3.1_amd64.deb
 
+#### PCM
+
+RUN (cd /tmp; git clone https://github.com/opcm/pcm.git; cd pcm; make; make install)
+ 
 WORKDIR /tmp
 USER root
 

@@ -1,5 +1,16 @@
 # Setting up CSE142L Development
 
+## Procedure for upgrading between labs
+
+1. Spin down cluster
+2. Deploy new version of server code google.
+3. Push new docker images to :latest
+4. Check that lab docker image is set correctly.
+5. Go to sleep
+6. Check that datahub is starting the right image.
+6. Spin up cluster.
+
+
 ## FA21 notes
 
 
