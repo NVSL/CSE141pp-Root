@@ -1,0 +1,6 @@
+#!/usr/bin/env bash
+
+cse142 --no-http job list > all_jobs
+cat all_jobs | cut -f 5 -d ' '  | sort |uniq -c |sort -n > job_counts
+cat job_counts
+wc -l job_counts
