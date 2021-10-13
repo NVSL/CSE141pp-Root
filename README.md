@@ -546,7 +546,7 @@ The `runner` docker image is self-contained so it'll work as a student image run
 Here's a command line to mimic what they do:
 
 ```
-docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publish published=8888,target=8888  stevenjswanson/cse142l-swanson-runner:latest jupyter-notebook --allow-root 
+docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publish published=8889,target=8888  stevenjswanson/cse142l-swanson-runner:latest cse142-notebook
 ```
 
 ## Building Docker Images
