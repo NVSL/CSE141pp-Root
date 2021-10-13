@@ -1,4 +1,3 @@
-
 if ! ( [ -e env.sh ] && [ -e VERSION ] ); then
     echo "Doesn't look like you are in the root directory.  Source this from the config directory."
     CONFIG_FAILED=yes
@@ -17,6 +16,7 @@ else
 	fi
 	return 0
     }
+    
     function up-to-date() {
 	if [ "$1." = "." ]; then
 	    D=$PWD
@@ -49,7 +49,7 @@ else
     
     export CLOUD_NAMESPACE=default
     export DOCKER_ORG=stevenjswanson
-    export DJR_SERVER=http://cse142l-dev.wl.r.appspot.com
+    export DJR_SERVER=https://cse142l-dev.wl.r.appspot.com
 
     export JUPYTER_CONFIG_DIR=$CSE142L_ROOT/jupyter_config
     VERSION=$(cat $CSE142L_ROOT/VERSION)

@@ -6,13 +6,12 @@ mkdir -p gradescope-zipballs
 rm -rf gradescope
 mkdir -p gradescope
 
-#cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin
-#for i in cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN; do
-for i in CSE141pp-DJR CSE141pp-LabPython ; do
+for i in cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN; do
     git clone ../$i gradescope/$i
 done
 cp ../env.sh gradescope
 cp ../VERSION gradescope
+cp -a ../shim gradescope
 
 SECRETS=gradescope/${SECRETS_DIRECTORY#${CSE142L_ROOT}}
 mkdir -p $SECRETS

@@ -2,12 +2,34 @@
 
 ## Requirements For Class
 
-* make benchmarks work
-* make gradescope work
-* fix autograder stuff
-* add bulk useradd/update
-* Move standard error mtrace into notebook
+* Check for memory allocation error in fiddle.cpp
+* 
+* Move standard error trace into notebook
 * Move rate-limiting logic onto the server side. Make it not apply to admins and "root" users.
+
+* For Lab 2:  Add more questions about trying to find the conditions under which the compiler won't apply an optimization -- complex loop bounds, aliasing through memory.
+* For Lab 1 PA: RTDSC?  Performance counters?
+* For long-running project:
+  * small matrix arithmetic library.
+  * Build slab allocator
+  * Optimize operations.
+	* matmul
+	* 4x4
+	* bigger
+	* 4x4 times long list of points.
+  * profiling 
+  * Labs
+	1. Build measurement tools, characterize reference implementation, benchmarks
+	2. ??
+	2. Build slab allocator.  Fix alignment.
+	3. Tile
+	4. Parallelize
+	5. add new benchmarks for each lab.
+* Next time
+  * rework lab2  (and later labs) to include more connections to earlier labs
+  * Explictily answer the "interesting questions" form Lab 1 in Lab N
+  
+* We badly need an easier region tagging system.  They need to be able to insert calls to STAR_TIMING()/STOP_TIMING() in their functions.
 
 * Fluid interface for running and collecting data about fiddles.
 * merge utility function for panda dataframes

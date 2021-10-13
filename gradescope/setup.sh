@@ -49,5 +49,3 @@ for i in CSE141pp-DJR CSE141pp-LabPython; do
     popd
 done
 
-
-
