@@ -30,6 +30,9 @@
   * Explictily answer the "interesting questions" form Lab 1 in Lab N
   
 * We badly need an easier region tagging system.  They need to be able to insert calls to STAR_TIMING()/STOP_TIMING() in their functions.
+  * nesting timing
+  * make it easy to time piece of code in the midst of a function.
+  
 
 * Fluid interface for running and collecting data about fiddles.
 * merge utility function for panda dataframes
