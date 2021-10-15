@@ -60,6 +60,10 @@ RUN curl https://software.intel.com/content/dam/develop/external/us/en/documents
 #http://lmbench.sourceforge.net/
 RUN curl -L  'https://downloads.sourceforge.net/project/lmbench/OldFiles/lmbench-3.0-a4.tgz?ts=gAAAAABhWpnhZ3EiIiP_1RcQ-QbBWRNwTIA-Z-a8QHpGOW7QvtlleWW71MNQMXoVOR4hM7hreBXF1eplWCFq0b2jm9YIRbeV5g%3D%3D&r=https%3A%2F%2Fsourceforge.net%2Fprojects%2Flmbench%2Ffiles%2FOldFiles%2Flmbench-3.0-a4.tgz%2Fdownload' -o /tmp/lmbench-3.0-a4.tgz && (cd /tmp; tar xzf lmbench-3.0-a4.tgz; cd lmbench-3.0-a4; make; cp bin/*/* /usr/local/bin/; mkdir -p /usr/local/man/man8; cp doc/*.8 /usr/local/man/man8/)
 
+##### Google test
+
+RUN (cd /tmp; git clone https://github.com/google/googletest.git && cd googletest && cmake CMakeLists.txt; make install)
+
 ##### Slow-building libraries we use
 
 RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
@@ -67,6 +71,7 @@ RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2-dev_5.3.1_amd64.deb -o /tmp/radare2-dev_5.3.1_amd64.deb
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2_5.3.1_amd64.deb -o /tmp/radare2_5.3.1_amd64.deb
 RUN apt install /tmp/radare2_5.3.1_amd64.deb  /tmp/radare2-dev_5.3.1_amd64.deb
+
 
 #### PCM
 
