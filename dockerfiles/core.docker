@@ -52,7 +52,7 @@ RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get 
 ##### Intel's MLC tool
 
 # https://software.intel.com/content/www/us/en/develop/articles/intelr-memory-latency-checker.html
-RUN curl https://software.intel.com/content/dam/develop/external/us/en/documents/mlc_v3.9a.tgz -o /tmp/mlc_v3.9a.tgz && (cd /tmp; tar xvf mlc_v3.9a.tgz; ls; cp Linux/mlc /usr/local/bin/)
+RUN curl https://www.intel.com/content/dam/develop/external/us/en/documents/mlc_v3.9a.tgz -o /tmp/mlc_v3.9a.tgz && (cd /tmp; tar xvf mlc_v3.9a.tgz; ls; cp Linux/mlc /usr/local/bin/)
 
 
 ##### lmbench
