@@ -25,6 +25,9 @@
     text-align:center;
 }
 
+.node g a {
+    text-decoration:none;
+}
 .question pre, .answer {
     padding: 1em;
     margin: 1em;
