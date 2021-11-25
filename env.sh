@@ -84,7 +84,7 @@ else
     export DJR_DOCKER_SCRATCH=/tmp/djr_scratch
     export GOOGLE_CLOUD_PROJECT=cse142l-dev
 
-    export LABS="intro-bench compiler-bench caches-bench"
+    export LABS="intro-bench compiler-bench caches-bench caches2-bench"
 
     
     export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets

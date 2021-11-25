@@ -74,7 +74,11 @@
 * Tool to monitor runners
 * Stream job output via telnet
 * build error for CANELA testes during docker build
- 
+* Make remote object listing work when there are many objects.  Right now we suck down everything in GAE and it runs out of memory.
+* Subscritpions to the server broadcast topic for the cluster aren't being cleaned up properly, leading to resourc exhaustion.
+  * Either fix it 
+	* or remove it.  It's not of much use at the moment.
+
 ##
 
 4. Figure out what to do with the secrets
