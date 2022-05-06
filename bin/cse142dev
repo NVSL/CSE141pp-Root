@@ -12,5 +12,7 @@ fi
 cd $CSE142L_ROOT
 . .bootstrap-venv/bin/activate
 . env.sh
+env
+
 cse142 dev --publish published=8888,target=8888 $@
 

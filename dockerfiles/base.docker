@@ -22,6 +22,8 @@ COPY CSE141pp-DJR  ./CSE141pp-DJR
 COPY CSE141pp-LabPython ./CSE141pp-LabPython
 COPY shim ./shim
 
+COPY fiddle ./fiddle
+
 RUN conda install -y gh --channel conda-forge
 
 RUN mkdir -p /tmp/djr_scratch

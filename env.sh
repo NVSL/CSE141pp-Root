@@ -84,7 +84,7 @@ else
     export DJR_DOCKER_SCRATCH=/tmp/djr_scratch
     export GOOGLE_CLOUD_PROJECT=cse142l-dev
 
-    export LABS="intro-bench compiler-bench caches-bench caches2-bench"
+    export LABS="intro-bench compiler-bench caches-bench caches2-bench parallel-bench"
 
     
     export SECRETS_DIRECTORY=$CSE142L_ROOT/CSE141pp-Config/secrets
@@ -110,7 +110,7 @@ else
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster
     
-    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
+    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin fiddle" #CSE141pp-Tool-Moneta 
 
     for d in $SUBDIRS; do 
 	source-env $d

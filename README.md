@@ -1,24 +1,27 @@
 # Setting up CSE142L Development
 
-## Procedure for upgrading between labs
+## Note for next time (written fa21)
 
-1. Spin down cluster
-2. Deploy new version of server code google.
-3. Push new docker images to :latest
-4. Check that lab docker image is set correctly.
-5. Go to sleep
-6. Check that datahub is starting the right image.
-6. Spin up cluster.
+1.  Have datahub folks setup 5 lab environments with different docke tags.
+2.  Add check in notebooks that tehy are running in the right docker env.
+3.  The job running infrastructure is pretty stable.  You shouldn't have to chaneg anything.
+4.  The execption is that some part of it creates google pubsubs scriptions and we slowly exceed the 10k limit on google pubsub. 
+	1.  Please fix
+	3.  To get cluster back on line:
+		1.  Spin down cluster.
+		2.  Delete heartbeat and broadcast topics
+		3.  Delete a few subscriptions by hand.
+		3.  restart cluster.
+		2.  `cse142 cluster clean-pubsub` will clean up subscriptions.  It takes a long time.
 
 
 ## FA21 notes
 
-
 Make the DSMP cluster fetch new images:
+
 ```
 for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v38 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do ssh sjswanson@its-ieng6maas-$node.ucsd.edu  sudo docker pull $image:$tags;done;done&done
 ```
-
 
 docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377
 
@@ -341,9 +344,6 @@ and get something like
     'secret': ''}
 ```
 
-
-
-
 ## Running A Job
 
 The job runner is supposed to approximate the experience of running command
@@ -539,7 +539,7 @@ Then start the runner service:
 cse142 dev --service --name runner-service --image stevenjswanson/cse142l-service:latest bash -c "cse142 cluster runner"
 ```
 
-## Debugging The STudent experience
+## Debugging The Student experience
 
 The `runner` docker image is self-contained so it'll work as a student image running on campus servers via dsmlp.
 
@@ -551,7 +551,7 @@ docker run -it -h $HOME -w $HOME --mount type=bind,source=$HOME,dst=/root --publ
 
 ## Building Docker Images
 
-OUr images are based on the Jupyter notebook scipy image, but the published version use an old version of python, so we built it ourselves:
+Our images are based on the Jupyter notebook scipy image, but the published version use an old version of python, so we built it ourselves:
 
 ```
 make docker-stacks
