@@ -110,7 +110,7 @@ else
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster
     
-    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin fiddle" #CSE141pp-Tool-Moneta 
+    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin cfiddle" #CSE141pp-Tool-Moneta 
 
     for d in $SUBDIRS; do 
 	source-env $d
