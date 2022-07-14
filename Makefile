@@ -6,6 +6,19 @@ setup:
 	pip install -e .
 	python -m pip install -e .
 
+
+.PHONY: lab-help
+help: lab-help
+
+lab-help:
+	@echo "make:           Build docker images"
+	@echo "make setup:     Install python packages"
+	@echo "make perms:     login to dockerhub"
+	@echo "make bootstrap: Do a minimal install to you can start the docker-based den environment."
+	@echo "make push :     Push docker images"
+	@echo "make pull :     Pull latest docker images"
+
+
 #.PHONY: requirements.txt
 #requirements.txt: 
 #	pip freeze  --all  --local --exclude-editable | grep -v DJR | grep -v LabPython  | grep -v pygobject | grep -v python-apt > $@
@@ -45,8 +58,6 @@ test2.image: IMAGE_NAME=test2-image
 
 IMAGES=$(DOCKER_DEVEL_IMAGE) $(DOCKER_CORE_IMAGE) $(DOCKER_RUNNER_IMAGE) $(DOCKER_SERVICE_IMAGE) $(DOCKER_USER_IMAGE) $(DOCKER_DSMLP_IMAGE)
 
-atest:
-	echo $(IMAGES)
 core.image:
 dev.image: service.image
 service.image: base.image

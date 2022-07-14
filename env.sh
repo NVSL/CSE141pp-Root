@@ -37,7 +37,7 @@ else
     export CSE142L_ROOT=$PWD
     
     export COURSE_NAME=CSE142L
-    export COURSE_INSTANCE=fa21 
+    export COURSE_INSTANCE=su22 
     export GITHUB_CLASSROOM_ORG=CSE142
     export NB_RELEASE_INCLUDES=$CSE142L_ROOT/labs/CSE141pp-Lab-Common
     
