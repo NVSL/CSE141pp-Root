@@ -22,7 +22,7 @@ COPY CSE141pp-DJR  ./CSE141pp-DJR
 COPY CSE141pp-LabPython ./CSE141pp-LabPython
 COPY shim ./shim
 
-COPY fiddle ./fiddle
+COPY cfiddle ./cfiddle
 
 RUN conda install -y gh --channel conda-forge
 

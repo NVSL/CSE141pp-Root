@@ -66,7 +66,7 @@ RUN (cd /tmp; git clone https://github.com/google/googletest.git && cd googletes
 
 ##### Slow-building libraries we use
 
-RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
+RUN curl https://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
 
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2-dev_5.3.1_amd64.deb -o /tmp/radare2-dev_5.3.1_amd64.deb
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2_5.3.1_amd64.deb -o /tmp/radare2_5.3.1_amd64.deb
