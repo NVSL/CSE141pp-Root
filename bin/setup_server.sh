@@ -13,6 +13,8 @@
 set -x #print out commands as we execute them.
 set -v
 
+INSTALL_ROOT=$PWD
+
 #. $CONFIG_REPO_ROOT/funcs.sh
 
 if [ "$APTGET." = "." ]; then
@@ -46,7 +48,7 @@ cd /bootstrap/cse142L
 $APTGET update --fix-missing
 echo -ne 'Y\n1\n' $APTGET dist-upgrade -y
 $APTGET -y install git emacs
-$APTGET install -y python3.9 python3-pip python3.9-venv
+$APTGET install -y python3.10 python3-pip python3.10-venv
 curl https://bootstrap.pypa.io/get-pip.py -o /tmp/get-pip.py; python3.9 /tmp/get-pip.py
 update-alternatives --install /usr/bin/python python /usr/bin/python3.9 10
 pip3 install --upgrade pip
@@ -128,6 +130,7 @@ $APTGET -y install kmod linux-headers-generic build-essential linux-headers-$EFF
 if [ "$(uname -r)" = "5.8.0-26-generic" ]; then 
     ln -sf /lib/modules/5.8.0-63-generic/build /lib/modules/5.8.0-26-generic/build
 fi
+
 
 pushd $INSTALL_ROOT/cse141pp-archlab/cache_control/
 make
