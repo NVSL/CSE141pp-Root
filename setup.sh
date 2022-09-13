@@ -10,7 +10,12 @@ for d in . $SUBDIRS; do
     (cd $d;
      if [ -e Makefile ] || [ -e makefile ]; then
 	 pwd
-	 make setup
+	 if [ $d = 'cfiddle' ]; then
+	     pip install -e .
+	     python -m pip install -e .
+	 else
+	     make setup
+	 fi
      fi
     )
 done

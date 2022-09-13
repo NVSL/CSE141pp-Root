@@ -2,9 +2,10 @@
 
 ## Note for next time (written fa21)
 
+0.  It's important rebuild the docker images periodically.  Dependenceies rot and cause python problems.
 1.  Have datahub folks setup 5 lab environments with different docke tags.
-2.  Add check in notebooks that tehy are running in the right docker env.
-3.  The job running infrastructure is pretty stable.  You shouldn't have to chaneg anything.
+2.  Add check in notebooks that they are running in the right docker env.
+3.  The job running infrastructure is pretty stable.  You shouldn't have to change anything.
 4.  The execption is that some part of it creates google pubsubs scriptions and we slowly exceed the 10k limit on google pubsub. 
 	1.  Please fix
 	3.  To get cluster back on line:
@@ -23,26 +24,35 @@ Make the DSMP cluster fetch new images:
 for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v38 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do ssh sjswanson@its-ieng6maas-$node.ucsd.edu  sudo docker pull $image:$tags;done;done&done
 ```
 
+I think these are steps to set up the datahub cluster nodes:
+
+```
 docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377
 
 for i in 03 04 05 06 07 08 09 10 11 ; do ssh sjswanson@its-ieng6maas-$i.ucsd.edu sudo docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377;done
 
 sudo docker node promote its-ieng6maas-11.ucsd.edu its-ieng6maas-10.ucsd.edu
+```
 
 headnode: ssh sjswanson@its-ieng6maas-12.ucsd.edu
 
 To start a service on the cluster, do 
 
+```
 cse142 -n  dev  --replicas 10 --service  --name runner-service  --image stevenjswanson/cse142l-swanson-service:latest bash -c "cse142 --no-http  cluster runner"
+```
 
 and the put the command at the end of the output in quotes:
 
+```
 docker service create --replicas 10 --replicas-max-per-node 1 --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env EMULATION_DIR --env CLOUD_NAMESPACE --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=runner-service --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name runner-service stevenjswanson/cse142l-swanson-service:latest bash -c 'cse142 --no-http  cluster runner'
+```
 
 You can do this with a simple ssh command.
 
+```
 sudo docker run -it --env GOOGLE_CLOUD_PROJECT --env DJR_CLUSTER --env DJR_DOCKER_SCRATCH --env CLOUD_MODE --env DJR_SERVER --env DJR_JOB_TYPE --env CSE142L_RUNNER_DOCKER_IMAGE --env EMULATION_DIR --env CLOUD_NAMESPACE --env SECRETS_DIRECTORY --env PACKET_PROJECT_ID --env DOCKER_USERNAME --env DOCKER_ACCESS_TOKEN --env GOOGLE_CREDENTIALS_FILE --env GITHUB_OAUTH_TOKEN --env THIS_DOCKER_CONTAINER=runner-service --env HOME=/root --mount type=bind,source=/var/run/docker.sock,dst=/var/run/docker.sock --mount type=bind,source=/tmp,dst=/tmp --env GOOGLE_APPLICATION_CREDENTIALS=/cse142L/CSE141pp-Config/secrets/cse142l-dev-c775b40fa9bf.json --workdir /cse142L --name runner-service -w /cse142L/ stevenjswanson/cse142l-swanson-service:latest bash --rcfile /cse142L/env.sh -c '. env.sh; cse142 --no-http -v cluster runner'
-
+```
 
 Start the runner service on the dsmlp cluster:
 
@@ -52,7 +62,7 @@ sudo docker service create --replicas 10  --env GOOGLE_CLOUD_PROJECT --env DJR_C
 
 ## Lab Job Runner Overview
 
-The course's lab runner provide allow students to run short-running jobs on
+The course's lab runner allows students to run short-running jobs on
 bare-metal servers in the cloud.  The basic flow is this:
 
 1.  Students edit their source code.
