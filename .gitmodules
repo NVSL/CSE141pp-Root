@@ -16,6 +16,3 @@
 [submodule "cse141pp-archlab"]
 	path = cse141pp-archlab
 	url = git@github.com:NVSL/cse141pp-archlab.git
-[submodule "CSE141pp-Tool-Moneta-Pin"]
-	path = CSE141pp-Tool-Moneta-Pin
-	url = git@github.com:NVSL/CSE141pp-Tool-Moneta-Pin.git
