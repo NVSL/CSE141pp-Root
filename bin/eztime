@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+
+args="$@"
+/usr/bin/time --format="${args},%e" $@
