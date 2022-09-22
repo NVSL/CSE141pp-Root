@@ -37,7 +37,7 @@ else
     export CSE142L_ROOT=$PWD
     
     export COURSE_NAME=CSE142L
-    export COURSE_INSTANCE=fa21 
+    export COURSE_INSTANCE=fa22
     export GITHUB_CLASSROOM_ORG=CSE142
     export NB_RELEASE_INCLUDES=$CSE142L_ROOT/labs/CSE141pp-Lab-Common
     
@@ -110,7 +110,7 @@ else
     #DJR_SERVER
     #DJR_CLUSTER=djr-default-cluster
     
-    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin"
+    export SUBDIRS="cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR CSE141pp-Tool-Moneta CSE141pp-SimpleCNN CSE141pp-Tool-Moneta-Pin cfiddle"
 
     for d in $SUBDIRS; do 
 	source-env $d

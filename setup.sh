@@ -8,9 +8,18 @@ fi
 
 for d in . $SUBDIRS; do
     (cd $d;
+     echo Entering directory
+     pwd
      if [ -e Makefile ] || [ -e makefile ]; then
-	 pwd
-	 make setup
+	 if make -n setup; then # see if it has the target
+	     make setup
+	 fi
      fi
     )
 done
+
+pushd cfiddle
+./install_prereqs.sh
+python -m pip install -e . --upgrade-strategy only-if-needed
+popd
+							     

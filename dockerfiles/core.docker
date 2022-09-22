@@ -1,5 +1,6 @@
 ##stevenjswanson/scipy-notebook
-FROM jupyter/scipy-notebook:dc9744740e12 
+FROM jupyter/scipy-notebook
+#:dc9744740e12 
 #FROM ubuntu 
 USER root
 # this turns off some stupid prompting from apt-get install
@@ -24,7 +25,7 @@ ENV PATH=/usr/bin:/usr/local/bin:$PATH
 #####  Basics
 
 RUN apt-get update --fix-missing; apt-get update
-RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git gcc-8 g++-8 libhdf5-dev uuid-runtime  openssh-client time  default-jdk && apt-get clean -y 
+RUN apt-get install -y less git emacs gcc make g++ gdb  vim  curl  build-essential docker.io man unzip zip cmake  software-properties-common curl git  libhdf5-dev uuid-runtime  openssh-client time  default-jdk && apt-get clean -y  #gcc-8 g++-8 
 
 ##### Python
 RUN add-apt-repository ppa:deadsnakes/ppa; apt-get update  # for python3.9
@@ -45,7 +46,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-math-dev libboost-dev libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc libomp-dev linux-tools-5.4.0-80-generic linux-cloud-tools-5.4.0-80-generic libpcre3-dev
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-math-dev libboost-dev libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc  libpcre3-dev #libomp-dev linux-tools-5.4.0-80-generic linux-cloud-tools-5.4.0-80-generic
 RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get clean -y
 #RUN apt-get install -y linux-tools-5.8.0-63-generic linux-cloud-tools-5.8.0-63-generic  && apt-get clean -y
 
@@ -66,7 +67,7 @@ RUN (cd /tmp; git clone https://github.com/google/googletest.git && cd googletes
 
 ##### Slow-building libraries we use
 
-RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
+#RUN curl http://icl.utk.edu/projects/papi/downloads/papi-5.7.0.tar.gz -o papi-5.7.0.tar.gz && tar xzf papi-5.7.0.tar.gz && (cd papi-5.7.0/src; ./configure --with-components=rapl; make -j4 ; make install ) &&  rm -rf papi-5.7.0 papi-5.7.0.tar.gz
 
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2-dev_5.3.1_amd64.deb -o /tmp/radare2-dev_5.3.1_amd64.deb
 RUN curl -L https://github.com/radareorg/radare2/releases/download/5.3.1/radare2_5.3.1_amd64.deb -o /tmp/radare2_5.3.1_amd64.deb
@@ -75,7 +76,7 @@ RUN apt install /tmp/radare2_5.3.1_amd64.deb  /tmp/radare2-dev_5.3.1_amd64.deb
 
 #### PCM
 
-RUN (cd /tmp; git clone https://github.com/opcm/pcm.git; cd pcm; make; make install)	
+#RUN (cd /tmp; git clone https://github.com/opcm/pcm.git; cd pcm; make; make install)	
  
 WORKDIR /tmp
 USER root
@@ -84,7 +85,6 @@ USER root
 # This doesn't work when we base things off the custom-built scipy notebook
 #COPY requirements.txt ./
 #RUN mkdir /home/jovyan/.cache/pip
-
 
 
 #RUN  pip install -r requirements.txt
