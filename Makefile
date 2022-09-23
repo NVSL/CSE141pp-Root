@@ -101,6 +101,11 @@ pull: perms
 	-for i in $(subst :$(DOCKER_IMAGE_VERSION),:latest,$(IMAGES)); do docker pull $$i; done
 
 
+.PHONY: update-lab-tag
+update-lab-tag:
+	@[ "$(LAB_NUM)" != "" ] || (echo You need to set LAB_NUM && false)
+	docker tag stevenjswanson/cse142l-runner:latest  stevenjswanson/cse142l-runner:22fa-lab-$(LAB_NUM); docker push stevenjswanson/cse142l-runner:22fa-lab-$(LAB_NUM)
+
 DOCKER_STACKS_DEP_CHAIN=base-notebook minimal-notebook scipy-notebook
 
 .PHONY: docker-stacks
