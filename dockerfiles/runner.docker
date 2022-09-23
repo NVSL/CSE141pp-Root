@@ -31,7 +31,7 @@ ENV JUPYTER_CONFIG_DIR=$JUPYTER_CONFIG_DIR
 
 
 
-ENV LD_LIBRARY_PATH=$CSE142L_ROOT/shim/lib:$ARCHLAB_ROO/installed/lib:/usr/local/lib
+ENV LD_LIBRARY_PATH=$CSE142L_ROOT/shim/lib:$ARCHLAB_ROO/installed/lib:/usr/local/lib:$CSE142L_ROOT/cfiddle/src/cfiddle/resources/libcfiddle/build/x86_64-linux-gnu
 ENV PATH=$CSE142L_ROOT/shim/bin:$ARCHLAB_ROOT/tools/:$CSE142L_ROOT/bin/:$ARCHLAB_ROOT/utils:$ARCHLAB_ROOT/archcloud:$PIN_ROOT/:$ARCHLAB_ROOT/installed/bin:$PATH
 
 WORKDIR /cse142L
