@@ -20,6 +20,9 @@ done
 
 pushd cfiddle
 ./install_prereqs.sh
+pushd src/cfiddle/resources/libcfiddle/
+make
+popd
 python -m pip install -e . --upgrade-strategy only-if-needed
 popd
 							     
