@@ -97,6 +97,7 @@ else
     export GOOGLE_APPLICATION_CREDENTIALS=$SECRETS_DIRECTORY/$GOOGLE_CREDENTIALS_FILE
     if [ -d $SECRETS_DIRECTORY ]; then
 	export GITHUB_OAUTH_TOKEN=$(cat $SECRETS_DIRECTORY/git_oauth_token)
+	export CSE142L_KEY=$(cat $SECRETS_DIRECTORY/lab_encryption_key)
     fi
     export ALLOWED_GOOGLE_DOMAINS="ucsd.edu,eng.ucsd.edu"
 
