@@ -1,10 +1,12 @@
 #!/usr/bin/env bash
+
 pushd /cse142L
 . env.sh
 . gradescope_env.sh
 . venv/bin/activate
 
 pushd /autograder/source/
+
 #for i in CSE141pp-DJR CSE141pp-LabPython; do
 #    (cd $i;
 #     git pull
@@ -12,10 +14,12 @@ pushd /autograder/source/
 #    )
 #done
 
+LD_LIBRARY_PATH=/cse142L/cfiddle/src/cfiddle/resources/libcfiddle/build/x86_64-pc-linux-gnu/:$LD_LIBRARY_PATH
+
 (cd lab; git pull)
 pushd /autograder/submission
 THE_USER=$(qjson ../submission_metadata.json users 0 email)
-python3.9 `which cse142` --no-http --as-user $THE_USER job run --autograder --force --lab $LAB autograde
+(unset CSE142L_KEY; python3.9 `which cse142` --no-http --as-user $THE_USER job run --autograder --force --lab $LAB autograde)
 cd /autograder/
 python3.9 /autograder/source/lab/autograde.py --submission /autograder/submission/autograde --results /autograder/results/results.json
 
