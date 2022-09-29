@@ -16,7 +16,7 @@
 
 Make the DSMP cluster fetch new images:
 ```
-for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v38 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do ssh sjswanson@its-ieng6maas-$node.ucsd.edu  sudo docker pull $image:$tags;done;done&done
+for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v60 22fa-lab-1 latest; do for image in stevenjswanson/cse142l-service-dsmlp stevenjswanson/cse142l-runner; do ssh sjswanson@its-ieng6maas-$node.ucsd.edu  sudo docker pull $image:$tags;done;done&done
 ```
 
 
