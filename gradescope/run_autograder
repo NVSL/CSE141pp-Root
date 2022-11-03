@@ -16,7 +16,7 @@ pushd /autograder/source/
 
 LD_LIBRARY_PATH=/cse142L/cfiddle/src/cfiddle/resources/libcfiddle/build/x86_64-pc-linux-gnu/:$LD_LIBRARY_PATH
 
-(cd lab; git pull)
+(cd lab; git pull --rebase)
 pushd /autograder/submission
 THE_USER=$(qjson ../submission_metadata.json users 0 email)
 (unset CSE142L_KEY; python3.9 `which cse142` --no-http --as-user $THE_USER job run --autograder --force --lab $LAB autograde)
