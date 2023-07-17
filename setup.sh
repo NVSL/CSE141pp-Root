@@ -19,7 +19,7 @@ for d in . $SUBDIRS; do
 done
 
 pushd cfiddle
-./install_prereqs.sh
+PATH=$PATH:$PWD/bin ./bin/cfiddle_install_prereqs.sh
 pushd src/cfiddle/resources/libcfiddle/
 make
 popd
