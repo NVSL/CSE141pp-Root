@@ -22,14 +22,14 @@ for node in 03 04 05 06 07 08 09 10 11 12; do for tags in v60 22fa-lab-1 latest;
 
 docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377
 
-for i in 03 04 05 06 07 08 09 10 11 ; do ssh sjswanson@its-ieng6maas-$i.ucsd.edu sudo docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377;done
+     sudo docker swarm join --token SWMTKN-1-0fqztdaagojadjzw3wcqfqksyp81duidygog9h7xblnj44ejdn-aozma6gikjgwa3ski5gjxbrys 172.17.77.30:2377;done
 
 sudo docker node promote its-ieng6maas-11.ucsd.edu its-ieng6maas-10.ucsd.edu
 
 headnode: ssh sjswanson@its-ieng6maas-12.ucsd.edu
 
-To start a service on the cluster, do 
-
+To start a service on the cluster, do         
+  .  d i                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                
 cse142 -n  dev  --replicas 10 --service  --name runner-service  --image stevenjswanson/cse142l-swanson-service:latest bash -c "cse142 --no-http  cluster runner"
 
 and the put the command at the end of the output in quotes:
