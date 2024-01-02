@@ -21,6 +21,7 @@ COPY cse141pp-archlab ./cse141pp-archlab
 COPY CSE141pp-DJR  ./CSE141pp-DJR 
 COPY CSE141pp-LabPython ./CSE141pp-LabPython
 COPY cfiddle ./cfiddle
+COPY delegate-function ./delegate-function
 COPY shim ./shim
 
 RUN conda install -y gh --channel conda-forge

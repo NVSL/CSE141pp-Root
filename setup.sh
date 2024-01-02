@@ -18,6 +18,10 @@ for d in . $SUBDIRS; do
     )
 done
 
+pushd delegate-function
+python -m pip install -e . --upgrade-strategy only-if-needed
+popd
+
 pushd cfiddle
 PATH=$PATH:$PWD/bin ./bin/cfiddle_install_prereqs.sh
 pushd src/cfiddle/resources/libcfiddle/
