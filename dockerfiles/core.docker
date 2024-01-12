@@ -46,7 +46,7 @@ RUN echo "deb [signed-by=/usr/share/keyrings/cloud.google.gpg] http://packages.c
 
 ##### Development
 
-RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-math-dev libboost-dev libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc  libpcre3-dev linux-tools-5.15.0-47-generic linux-cloud-tools-5.15.0-47-generic #libomp-dev 
+RUN apt-get install -y sysfsutils cpufrequtils numactl lshw dmidecode build-essential acpid  lm-sensors msr-tools libc6-dev-i386 libboost-math-dev libboost-dev libboost-program-options-dev gfortran clang graphviz libjpeg-dev libpng-dev golang-go groff pandoc  libpcre3-dev linux-tools-5.15.0-91-generic linux-cloud-tools-5.15.0-91-generic #libomp-dev 
 RUN apt-get install -y linux-tools-generic linux-cloud-tools-generic && apt-get clean -y
 
 

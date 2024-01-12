@@ -104,7 +104,7 @@ pull: perms
 .PHONY: update-lab-tag
 update-lab-tag:
 	@[ "$(LAB_NUM)" != "" ] || (echo You need to set LAB_NUM && false)
-	docker tag stevenjswanson/cse142l-runner:latest  stevenjswanson/cse142l-runner:22fa-lab-$(LAB_NUM); docker push stevenjswanson/cse142l-runner:22fa-lab-$(LAB_NUM)
+	docker tag stevenjswanson/cse142l-runner:latest  stevenjswanson/cse142l-runner:24wi-lab-$(LAB_NUM); docker push stevenjswanson/cse142l-runner:24wi-lab-$(LAB_NUM)
 
 DOCKER_STACKS_DEP_CHAIN=base-notebook minimal-notebook scipy-notebook
 
