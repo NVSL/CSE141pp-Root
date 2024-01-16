@@ -1,5 +1,5 @@
 ##stevenjswanson/scipy-notebook
-FROM jupyter/scipy-notebook
+FROM jupyter/scipy-notebook:x86_64-2023-02-17
 #:dc9744740e12 
 #FROM ubuntu 
 USER root
