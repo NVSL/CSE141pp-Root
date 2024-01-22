@@ -66,7 +66,8 @@ endif
 #>ifneq ($(REBUILD),yes)
 #		@[ "$$(docker images -q $(IMAGE_NAME))." = "." ] || (echo  "$(IMAGE_NAME) already exists\n\n" && false)
 #	endif
-	docker build --progress plain --file $< -t $(IMAGE_NAME) --build-arg ARG_THIS_DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) --build-arg ARG_THIS_DOCKER_IMAGE_UUID=$(shell uuidgen) .
+#--progress plain
+	docker build  --file $< -t $(IMAGE_NAME) --build-arg ARG_THIS_DOCKER_IMAGE=$(IMAGE_NAME) --build-arg CSE142L_ROOT=$(CSE142L_ROOT) $(BUILD_ARGS) $(BUILD_OPTS) --build-arg ARG_THIS_DOCKER_IMAGE_UUID=$(shell uuidgen) .
 #2>&1 | tee $*.log
 	docker tag $(IMAGE_NAME) $(subst $(DOCKER_IMAGE_VERSION),latest,$(IMAGE_NAME))
 	touch $@
