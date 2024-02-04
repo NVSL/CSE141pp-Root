@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -x
+
 pushd /cse142L
 . env.sh
 . gradescope_env.sh
@@ -7,7 +9,8 @@ pushd /cse142L
 
 pushd /autograder/source/
 
-#for i in CSE141pp-DJR CSE141pp-LabPython; do
+# don't do this because it will break deployed assignments.
+#for i in CSE141pp-DJR CSE141pp-LabPython ; do
 #    (cd $i;
 #     git pull
 #     python3.9 -m pip install -e .
@@ -21,7 +24,7 @@ pushd /autograder/submission
 THE_USER=$(qjson ../submission_metadata.json users 0 email)
 (unset CSE142L_KEY; python3.9 `which cse142` --no-http --as-user $THE_USER job run --autograder --force --lab $LAB autograde)
 cd /autograder/
-python3.9 cse142-autograde --submission /autograder/submission/autograde --targets /autograder/source/lab/targets.csv --results /autograder/results/results.json
+python3.9 `which cse142-autograde` --submission /autograder/submission/autograde --targets /autograder/source/lab/targets.csv --results /autograder/results/results.json
 
 
 

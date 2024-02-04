@@ -43,7 +43,7 @@ python3 -m pip install pyyaml pytz requests psutil grequests python-dateutil pan
 
 
 
-for i in CSE141pp-DJR CSE141pp-LabPython; do
+for i in CSE141pp-DJR CSE141pp-LabPython cfiddle delegate-function; do
     pushd $i
     python3.9 -m pip install  -e . # -e is important. Otherwise the encryption tools don't work because they are not in a module dir?
     popd

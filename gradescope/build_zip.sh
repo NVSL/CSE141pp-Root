@@ -6,7 +6,7 @@ mkdir -p gradescope-zipballs
 rm -rf gradescope
 mkdir -p gradescope
 
-for i in cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR; do # CSE141pp-Tool-Moneta CSE141pp-SimpleCNN; do
+for i in cse141pp-archlab CSE141pp-LabPython CSE141pp-DJR cfiddle delegate-function; do # CSE141pp-Tool-Moneta CSE141pp-SimpleCNN; do
     git clone ../$i gradescope/$i
 done
 cp ../env.sh gradescope
